@@ -1,0 +1,61 @@
+[package]
+name = "autogen-stedi"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Auto-generated, strongly-typed Rust client for the Stedi APIs"
+keywords = ["stedi", "edi", "healthcare", "api", "sdk"]
+categories = ["api-bindings"]
+repository = "https://github.com/steventhanna/autogen-stedi"
+readme = "README.md"
+
+# Ship only what consumers need; exclude regeneration tooling and generator markdown.
+exclude = [
+    "specs/",
+    "SPEC_HASH",
+    "generate.sh",
+    "scripts/",
+    ".github/",
+    ".openapi-generator-ignore",
+    "CLAUDE.md",
+]
+
+# Build docs.rs with every API enabled so the full surface is documented.
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+reqwest = { version = "^0.12", default-features = false, features = ["json", "multipart"] }
+serde = { version = "^1.0", features = ["derive"] }
+serde_json = "^1.0"
+serde_repr = "^0.1"
+serde_with = { version = "^3.8", default-features = false, features = ["base64", "std", "macros"] }
+url = "^2.5"
+uuid = { version = "^1.8", features = ["serde", "v4"] }
+
+[dev-dependencies]
+tokio = { version = "^1", features = ["macros", "rt-multi-thread"] }
+
+[features]
+default = ["all", "native-tls"]
+native-tls = ["reqwest/native-tls"]
+rustls = ["reqwest/rustls-tls"]
+
+# Each Stedi API is one feature. Selecting a subset compiles only those
+# services' endpoints AND models (each service is a self-contained module).
+all = [
+    "claims",
+    "core",
+    "enrollment",
+    "event-destinations",
+    "healthcare",
+    "manager",
+    "payers",
+]
+claims = []
+core = []
+enrollment = []
+event-destinations = []
+healthcare = []
+manager = []
+payers = []
