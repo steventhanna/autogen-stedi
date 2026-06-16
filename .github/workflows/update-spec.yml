@@ -43,13 +43,19 @@ jobs:
 
       - name: Detect changes
         id: diff
+        env:
+          OLD_HASH: ${{ steps.prev.outputs.old }}
         run: |
-          if [ -z "$(git status --porcelain)" ]; then
+          # Gate strictly on the spec hash, not `git status`: cargo check can touch Cargo.lock
+          # on its own, which must not masquerade as an upstream spec change.
+          NEW_HASH=$(cat SPEC_HASH)
+          if [ "$NEW_HASH" = "$OLD_HASH" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "Specs unchanged ($(cat SPEC_HASH))."
+            echo "Specs unchanged ($NEW_HASH)."
+            git checkout -- . 2>/dev/null || true  # discard any incidental Cargo.lock churn
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "new=$(cat SPEC_HASH)" >> "$GITHUB_OUTPUT"
+            echo "new=$NEW_HASH" >> "$GITHUB_OUTPUT"
             echo "short=$(cut -c1-12 SPEC_HASH)" >> "$GITHUB_OUTPUT"
           fi
 
