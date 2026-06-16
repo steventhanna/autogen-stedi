@@ -8,8 +8,9 @@ set -euo pipefail
 # absolute `crate::apis` / `crate::models` paths to `crate::<service>::…` so the code compiles
 # inside a submodule. The run is idempotent: an unchanged spec reproduces the committed tree.
 #
-# Requires: openapi-generator (brew install openapi-generator) and a JDK.
-# In CI set OPENAPI_GENERATOR=openapi-generator-cli.
+# Requires only a JDK. The openapi-generator version is pinned and the JAR is fetched directly
+# from Maven Central (cached under ~/.cache), so local and CI runs are byte-for-byte identical —
+# no dependence on a brew/npm install whose default generator version drifts.
 
 # Portable in-place sed (macOS uses -i '', Linux uses -i).
 sedi() {
@@ -23,7 +24,19 @@ sedi() {
 SPEC_BASE="https://raw.githubusercontent.com/Stedi/openapi/main"
 # Feature name == rust module name, except '-' becomes '_' for the module.
 SERVICES="claims core enrollment event-destinations healthcare manager payers"
-GEN="${OPENAPI_GENERATOR:-openapi-generator}"
+
+# Pinned generator version. Bumping this is a deliberate act (it can change generated output, e.g.
+# the String -> chrono date-time switch in 7.15+); regenerate and review the diff when you change it.
+GENERATOR_VERSION="${GENERATOR_VERSION:-7.23.0}"
+JAR_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/openapi-generator"
+JAR="$JAR_CACHE/openapi-generator-cli-${GENERATOR_VERSION}.jar"
+if [ ! -f "$JAR" ]; then
+  echo "==> Fetching openapi-generator ${GENERATOR_VERSION} JAR..."
+  mkdir -p "$JAR_CACHE"
+  curl -sS -L --fail -o "$JAR" \
+    "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${GENERATOR_VERSION}/openapi-generator-cli-${GENERATOR_VERSION}.jar"
+fi
+GEN=(java -jar "$JAR")
 
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
@@ -44,7 +57,7 @@ for svc in $SERVICES; do
   echo "==> Generating '$svc' -> src/$module ..."
 
   rm -rf "$WORK/gen-$svc"
-  "$GEN" generate \
+  "${GEN[@]}" generate \
     -i "$WORK/$svc.json" \
     -g rust \
     --library reqwest \

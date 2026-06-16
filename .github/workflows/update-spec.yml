@@ -24,14 +24,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Install openapi-generator
-        run: npm install -g @openapitools/openapi-generator-cli
       - uses: dtolnay/rust-toolchain@stable
       - uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
+            ~/.cache/openapi-generator
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
 
@@ -40,9 +39,7 @@ jobs:
         run: echo "old=$(cat SPEC_HASH)" >> "$GITHUB_OUTPUT"
 
       - name: Regenerate from latest specs
-        env:
-          OPENAPI_GENERATOR: openapi-generator-cli
-        run: ./generate.sh  # fetches specs, rewrites SPEC_HASH, regenerates, and cargo-checks
+        run: ./generate.sh  # fetches specs + pinned generator JAR, rewrites SPEC_HASH, regenerates, cargo-checks
 
       - name: Detect changes
         id: diff

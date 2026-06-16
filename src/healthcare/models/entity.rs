@@ -66,7 +66,7 @@ pub enum Entity {
     #[serde(rename = "Public Health Service Indian Service Facility")]
     PublicHealthServiceIndianServiceFacility,
     #[serde(rename = "Hospital Unit of an Institution (prison hospital, college infirmary, etc.)")]
-    HospitalUnitOfAnInstitutionLeftParenthesisPrisonHospitalCommaCollegeInfirmaryCommaEtcPeriodRightParenthesis,
+    HospitalUnitOfAnInstitutionLeftParenthesisPrisonHospitalCommaCollegeInfirmaryCommaEtcRightParenthesis,
     #[serde(rename = "Dependent")]
     Dependent,
     #[serde(rename = "Hospital Unit Within an Institution for the Mentally Retarded")]
@@ -496,7 +496,7 @@ impl std::fmt::Display for Entity {
             Self::PublicHealthServiceFacility => write!(f, "Public Health Service Facility"),
             Self::VeteransAdministrationFacility => write!(f, "Veterans Administration Facility"),
             Self::PublicHealthServiceIndianServiceFacility => write!(f, "Public Health Service Indian Service Facility"),
-            Self::HospitalUnitOfAnInstitutionLeftParenthesisPrisonHospitalCommaCollegeInfirmaryCommaEtcPeriodRightParenthesis => write!(f, "Hospital Unit of an Institution (prison hospital, college infirmary, etc.)"),
+            Self::HospitalUnitOfAnInstitutionLeftParenthesisPrisonHospitalCommaCollegeInfirmaryCommaEtcRightParenthesis => write!(f, "Hospital Unit of an Institution (prison hospital, college infirmary, etc.)"),
             Self::Dependent => write!(f, "Dependent"),
             Self::HospitalUnitWithinAnInstitutionForTheMentallyRetarded => write!(f, "Hospital Unit Within an Institution for the Mentally Retarded"),
             Self::TuberculosisAndOtherRespiratoryDiseasesFacility => write!(f, "Tuberculosis and Other Respiratory Diseases Facility"),

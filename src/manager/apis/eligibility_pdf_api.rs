@@ -31,9 +31,9 @@ pub enum GetEligibilityCheckPdfError {
 /// Retrieve a PDF version of the 271 benefits response for the specified eligibility check
 pub async fn get_eligibility_check_pdf(configuration: &configuration::Configuration, eligibility_check_id: &str) -> Result<String, Error<GetEligibilityCheckPdfError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_eligibility_check_id = eligibility_check_id;
+    let p_path_eligibility_check_id = eligibility_check_id;
 
-    let uri_str = format!("{}/eligibility-manager/eligibility-checks/{eligibilityCheckId}/pdf", configuration.base_path, eligibilityCheckId=crate::manager::apis::urlencode(p_eligibility_check_id));
+    let uri_str = format!("{}/eligibility-manager/eligibility-checks/{eligibilityCheckId}/pdf", configuration.base_path, eligibilityCheckId=crate::manager::apis::urlencode(p_path_eligibility_check_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {

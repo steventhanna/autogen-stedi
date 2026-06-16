@@ -25,7 +25,7 @@ pub struct GetTransactionFragmentResponseContent {
     pub mode: models::Mode,
     /// The date and time when Stedi processed the transaction containing the fragment, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "processedAt")]
-    pub processed_at: String,
+    pub processed_at: chrono::DateTime<chrono::FixedOffset>,
     /// The identifier for the fragment within a processed transaction.
     #[serde(rename = "fragmentIndex")]
     pub fragment_index: f64,
@@ -44,7 +44,7 @@ pub struct GetTransactionFragmentResponseContent {
 }
 
 impl GetTransactionFragmentResponseContent {
-    pub fn new(transaction_id: String, file_execution_id: String, direction: models::Direction, mode: models::Mode, processed_at: String, fragment_index: f64, fragments: models::TransactionFragmentsSummary, transaction_url: String, artifacts: Vec<models::Artifact>, partnership: models::Partnership) -> GetTransactionFragmentResponseContent {
+    pub fn new(transaction_id: String, file_execution_id: String, direction: models::Direction, mode: models::Mode, processed_at: chrono::DateTime<chrono::FixedOffset>, fragment_index: f64, fragments: models::TransactionFragmentsSummary, transaction_url: String, artifacts: Vec<models::Artifact>, partnership: models::Partnership) -> GetTransactionFragmentResponseContent {
         GetTransactionFragmentResponseContent {
             transaction_id,
             file_execution_id,

@@ -143,8 +143,8 @@ pub enum InstitutionalClaimsSubmissionError {
 /// Submit an 837P professional claim in raw X12 EDI format
 pub async fn claims_raw_x12_submission(configuration: &configuration::Configuration, claims_raw_x12_submission_request_content: models::ClaimsRawX12SubmissionRequestContent, idempotency_key: Option<&str>) -> Result<models::ClaimsRawX12SubmissionResponseContent, Error<ClaimsRawX12SubmissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_claims_raw_x12_submission_request_content = claims_raw_x12_submission_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_body_claims_raw_x12_submission_request_content = claims_raw_x12_submission_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
     let uri_str = format!("{}/change/medicalnetwork/professionalclaims/v3/raw-x12-submission", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -152,7 +152,7 @@ pub async fn claims_raw_x12_submission(configuration: &configuration::Configurat
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -163,7 +163,7 @@ pub async fn claims_raw_x12_submission(configuration: &configuration::Configurat
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_claims_raw_x12_submission_request_content);
+    req_builder = req_builder.json(&p_body_claims_raw_x12_submission_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -193,8 +193,8 @@ pub async fn claims_raw_x12_submission(configuration: &configuration::Configurat
 /// Submit an 837P professional claim in JSON format
 pub async fn claims_submission(configuration: &configuration::Configuration, claims_submission_request_content: models::ClaimsSubmissionRequestContent, idempotency_key: Option<&str>) -> Result<models::ClaimsSubmissionResponseContent, Error<ClaimsSubmissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_claims_submission_request_content = claims_submission_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_body_claims_submission_request_content = claims_submission_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
     let uri_str = format!("{}/change/medicalnetwork/professionalclaims/v3/submission", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -202,7 +202,7 @@ pub async fn claims_submission(configuration: &configuration::Configuration, cla
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -213,7 +213,7 @@ pub async fn claims_submission(configuration: &configuration::Configuration, cla
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_claims_submission_request_content);
+    req_builder = req_builder.json(&p_body_claims_submission_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -243,8 +243,8 @@ pub async fn claims_submission(configuration: &configuration::Configuration, cla
 /// Submit an 837D dental claim in raw X12 EDI format
 pub async fn dental_claims_raw_x12_submission(configuration: &configuration::Configuration, dental_claims_raw_x12_submission_request_content: models::DentalClaimsRawX12SubmissionRequestContent, idempotency_key: Option<&str>) -> Result<models::DentalClaimsRawX12SubmissionResponseContent, Error<DentalClaimsRawX12SubmissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_dental_claims_raw_x12_submission_request_content = dental_claims_raw_x12_submission_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_body_dental_claims_raw_x12_submission_request_content = dental_claims_raw_x12_submission_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
     let uri_str = format!("{}/dental-claims/raw-x12-submission", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -252,7 +252,7 @@ pub async fn dental_claims_raw_x12_submission(configuration: &configuration::Con
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -263,7 +263,7 @@ pub async fn dental_claims_raw_x12_submission(configuration: &configuration::Con
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_dental_claims_raw_x12_submission_request_content);
+    req_builder = req_builder.json(&p_body_dental_claims_raw_x12_submission_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -293,8 +293,8 @@ pub async fn dental_claims_raw_x12_submission(configuration: &configuration::Con
 /// Submit an 837D dental claim in JSON format
 pub async fn dental_claims_submission(configuration: &configuration::Configuration, dental_claims_submission_request_content: models::DentalClaimsSubmissionRequestContent, idempotency_key: Option<&str>) -> Result<models::DentalClaimsSubmissionResponseContent, Error<DentalClaimsSubmissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_dental_claims_submission_request_content = dental_claims_submission_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_body_dental_claims_submission_request_content = dental_claims_submission_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
     let uri_str = format!("{}/dental-claims/submission", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -302,7 +302,7 @@ pub async fn dental_claims_submission(configuration: &configuration::Configurati
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -313,7 +313,7 @@ pub async fn dental_claims_submission(configuration: &configuration::Configurati
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_dental_claims_submission_request_content);
+    req_builder = req_builder.json(&p_body_dental_claims_submission_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -343,14 +343,14 @@ pub async fn dental_claims_submission(configuration: &configuration::Configurati
 /// Retrieve a Stedi generatedCMS-1500 Claim Form PDF for a submitted 837P (professional) claim by business identifier
 pub async fn export_pdf(configuration: &configuration::Configuration, business_id: &str, background: Option<bool>) -> Result<models::ExportPdfResponseContent, Error<ExportPdfError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_business_id = business_id;
-    let p_background = background;
+    let p_query_business_id = business_id;
+    let p_query_background = background;
 
     let uri_str = format!("{}/export/pdf", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    req_builder = req_builder.query(&[("businessId", &p_business_id.to_string())]);
-    if let Some(ref param_value) = p_background {
+    req_builder = req_builder.query(&[("businessId", &p_query_business_id.to_string())]);
+    if let Some(ref param_value) = p_query_background {
         req_builder = req_builder.query(&[("background", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -393,13 +393,13 @@ pub async fn export_pdf(configuration: &configuration::Configuration, business_i
 /// Retrieve the generated CMS-1500 Claim Form PDF for a submitted 837P professional claim
 pub async fn get_pdf1500(configuration: &configuration::Configuration, transaction_id: &str, background: Option<bool>) -> Result<String, Error<GetPdf1500Error>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
-    let p_background = background;
+    let p_path_transaction_id = transaction_id;
+    let p_query_background = background;
 
-    let uri_str = format!("{}/export/{transactionId}/1500/pdf", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/export/{transactionId}/1500/pdf", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_background {
+    if let Some(ref param_value) = p_query_background {
         req_builder = req_builder.query(&[("background", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -442,8 +442,8 @@ pub async fn get_pdf1500(configuration: &configuration::Configuration, transacti
 /// Submit an 837I institutional claim in raw X12 EDI format
 pub async fn institutional_claims_raw_x12_submission(configuration: &configuration::Configuration, institutional_claims_raw_x12_submission_request_content: models::InstitutionalClaimsRawX12SubmissionRequestContent, idempotency_key: Option<&str>) -> Result<models::InstitutionalClaimsRawX12SubmissionResponseContent, Error<InstitutionalClaimsRawX12SubmissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_institutional_claims_raw_x12_submission_request_content = institutional_claims_raw_x12_submission_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_body_institutional_claims_raw_x12_submission_request_content = institutional_claims_raw_x12_submission_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
     let uri_str = format!("{}/change/medicalnetwork/institutionalclaims/v1/raw-x12-submission", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -451,7 +451,7 @@ pub async fn institutional_claims_raw_x12_submission(configuration: &configurati
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -462,7 +462,7 @@ pub async fn institutional_claims_raw_x12_submission(configuration: &configurati
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_institutional_claims_raw_x12_submission_request_content);
+    req_builder = req_builder.json(&p_body_institutional_claims_raw_x12_submission_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -492,8 +492,8 @@ pub async fn institutional_claims_raw_x12_submission(configuration: &configurati
 /// Submit an 837I institutional claim in JSON format
 pub async fn institutional_claims_submission(configuration: &configuration::Configuration, institutional_claims_submission_request_content: models::InstitutionalClaimsSubmissionRequestContent, idempotency_key: Option<&str>) -> Result<models::InstitutionalClaimsSubmissionResponseContent, Error<InstitutionalClaimsSubmissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_institutional_claims_submission_request_content = institutional_claims_submission_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_body_institutional_claims_submission_request_content = institutional_claims_submission_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
     let uri_str = format!("{}/change/medicalnetwork/institutionalclaims/v1/submission", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -501,7 +501,7 @@ pub async fn institutional_claims_submission(configuration: &configuration::Conf
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -512,7 +512,7 @@ pub async fn institutional_claims_submission(configuration: &configuration::Conf
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_institutional_claims_submission_request_content);
+    req_builder = req_builder.json(&p_body_institutional_claims_submission_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

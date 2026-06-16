@@ -42,9 +42,9 @@ pub enum ListEventsError {
 /// Retrieves the details of an existing event by its identifier.
 pub async fn get_event(configuration: &configuration::Configuration, event_id: &str) -> Result<models::GetEventResponseContent, Error<GetEventError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_event_id = event_id;
+    let p_path_event_id = event_id;
 
-    let uri_str = format!("{}/events/{eventId}", configuration.base_path, eventId=crate::event_destinations::apis::urlencode(p_event_id));
+    let uri_str = format!("{}/events/{eventId}", configuration.base_path, eventId=crate::event_destinations::apis::urlencode(p_path_event_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -87,35 +87,35 @@ pub async fn get_event(configuration: &configuration::Configuration, event_id: &
 /// Lists all events for your account. Results are paginated.
 pub async fn list_events(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, event_id: Option<&str>, status: Option<Vec<models::EventStatus>>, event_type: Option<&str>, created: Option<Vec<String>>) -> Result<models::ListEventsResponseContent, Error<ListEventsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_event_id = event_id;
-    let p_status = status;
-    let p_event_type = event_type;
-    let p_created = created;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_event_id = event_id;
+    let p_query_status = status;
+    let p_query_event_type = event_type;
+    let p_query_created = created;
 
     let uri_str = format!("{}/events", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_event_id {
+    if let Some(ref param_value) = p_query_event_id {
         req_builder = req_builder.query(&[("eventId", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_status {
+    if let Some(ref param_value) = p_query_status {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("status".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("status", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_event_type {
+    if let Some(ref param_value) = p_query_event_type {
         req_builder = req_builder.query(&[("eventType", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_created {
+    if let Some(ref param_value) = p_query_created {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("created".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("created", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),

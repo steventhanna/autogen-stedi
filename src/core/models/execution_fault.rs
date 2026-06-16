@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct ExecutionFault {
     /// The date and time when the resource was created, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "id")]
     pub id: String,
     /// A unique identifier for the processed file within Stedi.
@@ -45,7 +45,7 @@ pub struct ExecutionFault {
 
 impl ExecutionFault {
     /// A failure to process a given file within stedi.
-    pub fn new(created_at: String, id: String, execution_id: String, fault_code: models::ExecutionFaultCode, fault_message: String) -> ExecutionFault {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, id: String, execution_id: String, fault_code: models::ExecutionFaultCode, fault_message: String) -> ExecutionFault {
         ExecutionFault {
             created_at,
             id,

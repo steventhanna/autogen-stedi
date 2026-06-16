@@ -47,8 +47,8 @@ pub enum EligibilityRawX12CheckError {
 /// Submit a real-time 270/271 eligibility check in JSON format
 pub async fn eligibility_check(configuration: &configuration::Configuration, eligibility_check_request_content: models::EligibilityCheckRequestContent, x_forwarded_for: Option<&str>) -> Result<models::EligibilityCheckResponseContent, Error<EligibilityCheckError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_eligibility_check_request_content = eligibility_check_request_content;
-    let p_x_forwarded_for = x_forwarded_for;
+    let p_body_eligibility_check_request_content = eligibility_check_request_content;
+    let p_header_x_forwarded_for = x_forwarded_for;
 
     let uri_str = format!("{}/change/medicalnetwork/eligibility/v3", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -56,7 +56,7 @@ pub async fn eligibility_check(configuration: &configuration::Configuration, eli
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_x_forwarded_for {
+    if let Some(param_value) = p_header_x_forwarded_for {
         req_builder = req_builder.header("X-Forwarded-For", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -67,7 +67,7 @@ pub async fn eligibility_check(configuration: &configuration::Configuration, eli
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_eligibility_check_request_content);
+    req_builder = req_builder.json(&p_body_eligibility_check_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -97,8 +97,8 @@ pub async fn eligibility_check(configuration: &configuration::Configuration, eli
 /// Submit a real-time 270/271 eligibility check in raw X12 EDI format
 pub async fn eligibility_raw_x12_check(configuration: &configuration::Configuration, eligibility_raw_x12_check_request_content: models::EligibilityRawX12CheckRequestContent, x_forwarded_for: Option<&str>) -> Result<models::EligibilityRawX12CheckResponseContent, Error<EligibilityRawX12CheckError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_eligibility_raw_x12_check_request_content = eligibility_raw_x12_check_request_content;
-    let p_x_forwarded_for = x_forwarded_for;
+    let p_body_eligibility_raw_x12_check_request_content = eligibility_raw_x12_check_request_content;
+    let p_header_x_forwarded_for = x_forwarded_for;
 
     let uri_str = format!("{}/change/medicalnetwork/eligibility/v3/raw-x12", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -106,7 +106,7 @@ pub async fn eligibility_raw_x12_check(configuration: &configuration::Configurat
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_x_forwarded_for {
+    if let Some(param_value) = p_header_x_forwarded_for {
         req_builder = req_builder.header("X-Forwarded-For", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -117,7 +117,7 @@ pub async fn eligibility_raw_x12_check(configuration: &configuration::Configurat
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_eligibility_raw_x12_check_request_content);
+    req_builder = req_builder.json(&p_body_eligibility_raw_x12_check_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

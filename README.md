@@ -25,7 +25,7 @@ top.
 
 ```toml
 [dependencies]
-autogen-stedi = "0.1"
+autogen-stedi = "0.2"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
 
@@ -33,7 +33,7 @@ Compile only the APIs you need (faster builds):
 
 ```toml
 [dependencies]
-autogen-stedi = { version = "0.1", default-features = false, features = ["healthcare", "native-tls"] }
+autogen-stedi = { version = "0.2", default-features = false, features = ["healthcare", "native-tls"] }
 ```
 
 > **Note:** with `default-features = false` you must enable a TLS backend — either `native-tls`
@@ -118,7 +118,7 @@ match some_call(&config).await {
 ## How It's Generated
 
 ```bash
-# Requires: brew install openapi-generator
+# Requires only a JDK (the generator JAR is fetched automatically).
 ./generate.sh
 ```
 
@@ -127,8 +127,13 @@ match some_call(&config).await {
 `SPEC_HASH`, runs openapi-generator (rust + reqwest template) on each, and vendors the generated
 `apis/` and `models/` into a per-service module under `src/<service>/`. Because the rust generator
 emits absolute `crate::apis` / `crate::models` paths, the script rewrites them to
-`crate::<service>::…` so the code compiles inside a submodule. Finally it runs `cargo check`. The run
-is idempotent: a fresh generation reproduces the committed tree exactly.
+`crate::<service>::…` so the code compiles inside a submodule. Finally it runs `cargo check`.
+
+The generator version is **pinned** (`GENERATOR_VERSION` in `generate.sh`) and the JAR is downloaded
+directly from Maven Central, so local and CI runs are byte-for-byte identical — there's no dependence
+on a brew/npm install whose default generator version drifts. The run is idempotent: a fresh
+generation reproduces the committed tree exactly. Date-time fields are typed as
+`chrono::DateTime<chrono::FixedOffset>` (generator 7.15+).
 
 Only the entry points are hand-written and protected from regeneration: `Cargo.toml`, `src/lib.rs`,
 `src/client.rs`, plus `README.md` and `CLAUDE.md`. Everything under `src/<service>/` is generated —

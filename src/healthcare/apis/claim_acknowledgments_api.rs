@@ -33,9 +33,9 @@ pub enum ConvertReport277Error {
 /// Retrieve a 277CA claim acknowledgment in JSON format
 pub async fn convert_report277(configuration: &configuration::Configuration, transaction_id: &str) -> Result<models::ConvertReport277ResponseContent, Error<ConvertReport277Error>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
+    let p_path_transaction_id = transaction_id;
 
-    let uri_str = format!("{}/change/medicalnetwork/reports/v2/{transactionId}/277", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/change/medicalnetwork/reports/v2/{transactionId}/277", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {

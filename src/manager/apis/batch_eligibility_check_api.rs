@@ -68,8 +68,8 @@ pub enum GetBatchItemsError {
 /// Submit multiple eligibility checks for Stedi to process asynchronously
 pub async fn batch_eligibility_checks(configuration: &configuration::Configuration, batch_eligibility_checks_request_content: models::BatchEligibilityChecksRequestContent, x_forwarded_for: Option<&str>) -> Result<models::BatchEligibilityChecksResponseContent, Error<BatchEligibilityChecksError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_batch_eligibility_checks_request_content = batch_eligibility_checks_request_content;
-    let p_x_forwarded_for = x_forwarded_for;
+    let p_body_batch_eligibility_checks_request_content = batch_eligibility_checks_request_content;
+    let p_header_x_forwarded_for = x_forwarded_for;
 
     let uri_str = format!("{}/eligibility-manager/batch-eligibility", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -77,7 +77,7 @@ pub async fn batch_eligibility_checks(configuration: &configuration::Configurati
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_x_forwarded_for {
+    if let Some(param_value) = p_header_x_forwarded_for {
         req_builder = req_builder.header("X-Forwarded-For", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -88,7 +88,7 @@ pub async fn batch_eligibility_checks(configuration: &configuration::Configurati
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_batch_eligibility_checks_request_content);
+    req_builder = req_builder.json(&p_body_batch_eligibility_checks_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -116,26 +116,26 @@ pub async fn batch_eligibility_checks(configuration: &configuration::Configurati
 }
 
 /// Retrieve batch eligibility check results
-pub async fn batch_eligibility_polling(configuration: &configuration::Configuration, page_size: Option<i32>, page_token: Option<&str>, batch_id: Option<&str>, start_date_time: Option<String>) -> Result<models::BatchEligibilityPollingResponseContent, Error<BatchEligibilityPollingError>> {
+pub async fn batch_eligibility_polling(configuration: &configuration::Configuration, page_size: Option<i32>, page_token: Option<&str>, batch_id: Option<&str>, start_date_time: Option<chrono::DateTime<chrono::FixedOffset>>) -> Result<models::BatchEligibilityPollingResponseContent, Error<BatchEligibilityPollingError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_batch_id = batch_id;
-    let p_start_date_time = start_date_time;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_batch_id = batch_id;
+    let p_query_start_date_time = start_date_time;
 
     let uri_str = format!("{}/eligibility-manager/polling/batch-eligibility", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_batch_id {
+    if let Some(ref param_value) = p_query_batch_id {
         req_builder = req_builder.query(&[("batchId", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_start_date_time {
+    if let Some(ref param_value) = p_query_start_date_time {
         req_builder = req_builder.query(&[("startDateTime", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -178,9 +178,9 @@ pub async fn batch_eligibility_polling(configuration: &configuration::Configurat
 /// Retrieve the status of an eligibility check batch submitted through the API or CSV upload
 pub async fn get_batch(configuration: &configuration::Configuration, batch_id: &str) -> Result<models::GetBatchResponseContent, Error<GetBatchError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_batch_id = batch_id;
+    let p_path_batch_id = batch_id;
 
-    let uri_str = format!("{}/eligibility-manager/batch/{batchId}", configuration.base_path, batchId=crate::manager::apis::urlencode(p_batch_id));
+    let uri_str = format!("{}/eligibility-manager/batch/{batchId}", configuration.base_path, batchId=crate::manager::apis::urlencode(p_path_batch_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -223,28 +223,28 @@ pub async fn get_batch(configuration: &configuration::Configuration, batch_id: &
 /// Retrieve status information for all eligibility checks within a batch, regardless of processing status
 pub async fn get_batch_items(configuration: &configuration::Configuration, batch_id: &str, page_size: Option<i32>, page_token: Option<&str>, state: Option<Vec<models::BatchItemState>>, eligibility_search_outcome: Option<Vec<models::EligibilitySearchOutcome>>) -> Result<models::GetBatchItemsResponseContent, Error<GetBatchItemsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_batch_id = batch_id;
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_state = state;
-    let p_eligibility_search_outcome = eligibility_search_outcome;
+    let p_path_batch_id = batch_id;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_state = state;
+    let p_query_eligibility_search_outcome = eligibility_search_outcome;
 
-    let uri_str = format!("{}/eligibility-manager/batch/{batchId}/items", configuration.base_path, batchId=crate::manager::apis::urlencode(p_batch_id));
+    let uri_str = format!("{}/eligibility-manager/batch/{batchId}/items", configuration.base_path, batchId=crate::manager::apis::urlencode(p_path_batch_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_state {
+    if let Some(ref param_value) = p_query_state {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("state".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("state", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_eligibility_search_outcome {
+    if let Some(ref param_value) = p_query_eligibility_search_outcome {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("eligibilitySearchOutcome".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("eligibilitySearchOutcome", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),

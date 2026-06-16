@@ -18,7 +18,7 @@ pub struct CreateTransactionGroupResponseContent {
     pub transaction_group_id: String,
     /// The time Stedi staged the transaction.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// A unique ID for the staged transaction Stedi created within the group.
     #[serde(rename = "transactionId")]
     pub transaction_id: String,
@@ -28,7 +28,7 @@ pub struct CreateTransactionGroupResponseContent {
 }
 
 impl CreateTransactionGroupResponseContent {
-    pub fn new(transaction_group_id: String, created_at: String, transaction_id: String) -> CreateTransactionGroupResponseContent {
+    pub fn new(transaction_group_id: String, created_at: chrono::DateTime<chrono::FixedOffset>, transaction_id: String) -> CreateTransactionGroupResponseContent {
         CreateTransactionGroupResponseContent {
             transaction_group_id,
             created_at,

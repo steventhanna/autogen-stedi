@@ -61,9 +61,9 @@ pub enum SearchPayersError {
 /// Retrieve a single payer record by its Stedi payer ID.
 pub async fn get_payer_record(configuration: &configuration::Configuration, stedi_id: &str) -> Result<models::GetPayerRecordResponseContent, Error<GetPayerRecordError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_stedi_id = stedi_id;
+    let p_path_stedi_id = stedi_id;
 
-    let uri_str = format!("{}/payer/{stediId}", configuration.base_path, stediId=crate::payers::apis::urlencode(p_stedi_id));
+    let uri_str = format!("{}/payer/{stediId}", configuration.base_path, stediId=crate::payers::apis::urlencode(p_path_stedi_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -106,16 +106,16 @@ pub async fn get_payer_record(configuration: &configuration::Configuration, sted
 /// List Stedi's supported payers in JSON format
 pub async fn list_payer_records(configuration: &configuration::Configuration, page_size: Option<i32>, page_token: Option<&str>) -> Result<models::ListPayerRecordsResponseContent, Error<ListPayerRecordsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
 
     let uri_str = format!("{}/payers", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -201,63 +201,63 @@ pub async fn list_payer_records_csv(configuration: &configuration::Configuration
 /// Search for payers by name, ID, or alias.
 pub async fn search_payers(configuration: &configuration::Configuration, page_size: Option<i32>, page_token: Option<&str>, query: Option<&str>, eligibility_check: Option<models::TransactionFilterValue>, claim_status: Option<models::TransactionFilterValue>, professional_claim_submission: Option<models::TransactionFilterValue>, dental_claim_submission: Option<models::TransactionFilterValue>, institutional_claim_submission: Option<models::TransactionFilterValue>, claim_payment: Option<models::TransactionFilterValue>, coordination_of_benefits: Option<models::TransactionFilterValue>, unsolicited_claim_attachment: Option<models::TransactionFilterValue>, coverage_types: Option<Vec<models::CoverageType>>, operating_states: Option<Vec<models::OperatingStateCode>>) -> Result<models::SearchPayersResponseContent, Error<SearchPayersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_query = query;
-    let p_eligibility_check = eligibility_check;
-    let p_claim_status = claim_status;
-    let p_professional_claim_submission = professional_claim_submission;
-    let p_dental_claim_submission = dental_claim_submission;
-    let p_institutional_claim_submission = institutional_claim_submission;
-    let p_claim_payment = claim_payment;
-    let p_coordination_of_benefits = coordination_of_benefits;
-    let p_unsolicited_claim_attachment = unsolicited_claim_attachment;
-    let p_coverage_types = coverage_types;
-    let p_operating_states = operating_states;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_query = query;
+    let p_query_eligibility_check = eligibility_check;
+    let p_query_claim_status = claim_status;
+    let p_query_professional_claim_submission = professional_claim_submission;
+    let p_query_dental_claim_submission = dental_claim_submission;
+    let p_query_institutional_claim_submission = institutional_claim_submission;
+    let p_query_claim_payment = claim_payment;
+    let p_query_coordination_of_benefits = coordination_of_benefits;
+    let p_query_unsolicited_claim_attachment = unsolicited_claim_attachment;
+    let p_query_coverage_types = coverage_types;
+    let p_query_operating_states = operating_states;
 
     let uri_str = format!("{}/payers/search", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_query {
+    if let Some(ref param_value) = p_query_query {
         req_builder = req_builder.query(&[("query", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_eligibility_check {
+    if let Some(ref param_value) = p_query_eligibility_check {
         req_builder = req_builder.query(&[("eligibilityCheck", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_claim_status {
+    if let Some(ref param_value) = p_query_claim_status {
         req_builder = req_builder.query(&[("claimStatus", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_professional_claim_submission {
+    if let Some(ref param_value) = p_query_professional_claim_submission {
         req_builder = req_builder.query(&[("professionalClaimSubmission", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_dental_claim_submission {
+    if let Some(ref param_value) = p_query_dental_claim_submission {
         req_builder = req_builder.query(&[("dentalClaimSubmission", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_institutional_claim_submission {
+    if let Some(ref param_value) = p_query_institutional_claim_submission {
         req_builder = req_builder.query(&[("institutionalClaimSubmission", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_claim_payment {
+    if let Some(ref param_value) = p_query_claim_payment {
         req_builder = req_builder.query(&[("claimPayment", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_coordination_of_benefits {
+    if let Some(ref param_value) = p_query_coordination_of_benefits {
         req_builder = req_builder.query(&[("coordinationOfBenefits", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_unsolicited_claim_attachment {
+    if let Some(ref param_value) = p_query_unsolicited_claim_attachment {
         req_builder = req_builder.query(&[("unsolicitedClaimAttachment", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_coverage_types {
+    if let Some(ref param_value) = p_query_coverage_types {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("coverageTypes".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("coverageTypes", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_operating_states {
+    if let Some(ref param_value) = p_query_operating_states {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("operatingStates".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("operatingStates", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),

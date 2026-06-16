@@ -19,7 +19,7 @@ pub struct V1EventPayload {
     pub account: String,
     /// An ISO 8601 timestamp of when the event was created.
     #[serde(rename = "created")]
-    pub created: String,
+    pub created: chrono::DateTime<chrono::FixedOffset>,
     /// The environment in which the event was produced.
     #[serde(rename = "environment")]
     pub environment: models::EventEnvironment,
@@ -42,7 +42,7 @@ pub struct V1EventPayload {
 
 impl V1EventPayload {
     /// A v1 thin event envelope that signals a state change. Consumers fetch current resource state via API using the resource reference. This is the exact payload delivered to webhook destinations.
-    pub fn new(account: String, created: String, environment: models::EventEnvironment, object: models::EventPayloadObjectType, resource: models::EventPayloadResourceRef) -> V1EventPayload {
+    pub fn new(account: String, created: chrono::DateTime<chrono::FixedOffset>, environment: models::EventEnvironment, object: models::EventPayloadObjectType, resource: models::EventPayloadResourceRef) -> V1EventPayload {
         V1EventPayload {
             account,
             created,

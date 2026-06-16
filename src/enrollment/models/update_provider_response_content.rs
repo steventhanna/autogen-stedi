@@ -19,7 +19,7 @@ pub struct UpdateProviderResponseContent {
     pub contacts: Option<Vec<models::ProviderContact>>,
     /// The date and time Stedi created the provider record.
     #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// A unique identifier Stedi assigns to this provider.
     #[serde(rename = "id")]
     pub id: String,
@@ -37,7 +37,7 @@ pub struct UpdateProviderResponseContent {
     pub tax_id_type: Option<models::TaxIdType>,
     /// The date and time Stedi last updated the provider record.
     #[serde(rename = "updatedAt", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
+    pub updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
 }
 
 impl UpdateProviderResponseContent {

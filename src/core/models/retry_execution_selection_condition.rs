@@ -28,10 +28,10 @@ pub struct RetryExecutionSelectionCondition {
     pub status: Option<models::ExecutionStatus>,
     /// Specify executions processed after this timestamp, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "from", skip_serializing_if = "Option::is_none")]
-    pub from: Option<String>,
+    pub from: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Specify executions processed before this timestamp, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "to", skip_serializing_if = "Option::is_none")]
-    pub to: Option<String>,
+    pub to: Option<chrono::DateTime<chrono::FixedOffset>>,
 }
 
 impl RetryExecutionSelectionCondition {

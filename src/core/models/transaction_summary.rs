@@ -28,7 +28,7 @@ pub struct TransactionSummary {
     pub mode: models::Mode,
     /// The date and time when Stedi processed the transaction, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "processedAt")]
-    pub processed_at: String,
+    pub processed_at: chrono::DateTime<chrono::FixedOffset>,
     /// A list of artifacts related to the transaction.
     #[serde(rename = "artifacts")]
     pub artifacts: Vec<models::Artifact>,
@@ -48,7 +48,7 @@ pub struct TransactionSummary {
 
 impl TransactionSummary {
     /// The processed transactions that match the request criteria. The `items` array is empty if there are no matching transactions.
-    pub fn new(transaction_id: String, file_execution_id: String, status: models::TransactionStatus, direction: models::Direction, mode: models::Mode, processed_at: String, artifacts: Vec<models::Artifact>, partnership: models::Partnership) -> TransactionSummary {
+    pub fn new(transaction_id: String, file_execution_id: String, status: models::TransactionStatus, direction: models::Direction, mode: models::Mode, processed_at: chrono::DateTime<chrono::FixedOffset>, artifacts: Vec<models::Artifact>, partnership: models::Partnership) -> TransactionSummary {
         TransactionSummary {
             transaction_id,
             file_execution_id,

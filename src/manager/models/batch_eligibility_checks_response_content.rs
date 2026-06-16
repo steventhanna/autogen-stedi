@@ -18,11 +18,11 @@ pub struct BatchEligibilityChecksResponseContent {
     pub batch_id: String,
     /// The date and time that the batch of eligibility checks was submitted to Stedi for processing.
     #[serde(rename = "submittedAt")]
-    pub submitted_at: String,
+    pub submitted_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl BatchEligibilityChecksResponseContent {
-    pub fn new(batch_id: String, submitted_at: String) -> BatchEligibilityChecksResponseContent {
+    pub fn new(batch_id: String, submitted_at: chrono::DateTime<chrono::FixedOffset>) -> BatchEligibilityChecksResponseContent {
         BatchEligibilityChecksResponseContent {
             batch_id,
             submitted_at,

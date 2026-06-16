@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct EventSummary {
     /// An ISO 8601 timestamp of when the event was created.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// The type of event, such as `enrollment.activated`.
     #[serde(rename = "eventType")]
     pub event_type: String,
@@ -30,7 +30,7 @@ pub struct EventSummary {
 
 impl EventSummary {
     /// A summary representation of an event, returned in list responses.
-    pub fn new(created_at: String, event_type: String, id: String, status: models::EventStatus) -> EventSummary {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_type: String, id: String, status: models::EventStatus) -> EventSummary {
         EventSummary {
             created_at,
             event_type,

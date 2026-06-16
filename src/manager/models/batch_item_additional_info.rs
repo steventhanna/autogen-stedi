@@ -11,6 +11,7 @@
 use crate::manager::models;
 use serde::{Deserialize, Serialize};
 
+/// BatchItemAdditionalInfo : Additional information about the batch item, based on the batch type.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct BatchItemAdditionalInfo {
     /// Additional information specific to eligibility batch items.
@@ -19,6 +20,7 @@ pub struct BatchItemAdditionalInfo {
 }
 
 impl BatchItemAdditionalInfo {
+    /// Additional information about the batch item, based on the batch type.
     pub fn new(eligibility: models::EligibilityBatchItemInfo) -> BatchItemAdditionalInfo {
         BatchItemAdditionalInfo {
             eligibility: Box::new(eligibility),

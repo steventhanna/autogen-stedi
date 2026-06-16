@@ -16,10 +16,10 @@ use serde::{Deserialize, Serialize};
 pub struct ExecutionSummary {
     /// The date and time when the resource was created, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// The date and time when the resource was last updated, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// A unique identifier for the processed file within Stedi. This ID is included in the transaction processed event. You can also retrieve it manually from the file's details page in the Stedi portal.
     #[serde(rename = "executionId")]
     pub execution_id: String,
@@ -63,7 +63,7 @@ pub struct ExecutionSummary {
 
 impl ExecutionSummary {
     /// The processed executions that match the request criteria. The `items` array is empty if there are no matching executions.
-    pub fn new(created_at: String, updated_at: String, execution_id: String, status: models::ExecutionStatus, direction: models::Direction) -> ExecutionSummary {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, execution_id: String, status: models::ExecutionStatus, direction: models::Direction) -> ExecutionSummary {
         ExecutionSummary {
             created_at,
             updated_at,

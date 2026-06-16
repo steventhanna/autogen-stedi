@@ -47,9 +47,9 @@ pub enum GetElectronicRemittanceAdvicePdfError {
 /// Retrieve an 835 Electronic Remittance Advice (ERA) in JSON format
 pub async fn convert_report835(configuration: &configuration::Configuration, transaction_id: &str) -> Result<models::ConvertReport835ResponseContent, Error<ConvertReport835Error>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
+    let p_path_transaction_id = transaction_id;
 
-    let uri_str = format!("{}/change/medicalnetwork/reports/v2/{transactionId}/835", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/change/medicalnetwork/reports/v2/{transactionId}/835", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -92,13 +92,13 @@ pub async fn convert_report835(configuration: &configuration::Configuration, tra
 /// Retrieve the generated PDF of an 835 Electronic Remittance Advice (ERA).
 pub async fn get_electronic_remittance_advice_pdf(configuration: &configuration::Configuration, transaction_id: &str, logo: Option<bool>) -> Result<String, Error<GetElectronicRemittanceAdvicePdfError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
-    let p_logo = logo;
+    let p_path_transaction_id = transaction_id;
+    let p_query_logo = logo;
 
-    let uri_str = format!("{}/electronic-remittance-advice/{transactionId}/pdf", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/electronic-remittance-advice/{transactionId}/pdf", configuration.base_path, transactionId=crate::healthcare::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_logo {
+    if let Some(ref param_value) = p_query_logo {
         req_builder = req_builder.query(&[("logo", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {

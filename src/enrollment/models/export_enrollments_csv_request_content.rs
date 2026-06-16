@@ -16,10 +16,10 @@ use serde::{Deserialize, Serialize};
 pub struct ExportEnrollmentsCsvRequestContent {
     /// Filter for enrollments created from a specific date.  For example, if you set this to `2025-01-01T00:00:00Z`, Stedi returns enrollments with a `createdAt` timestamp on or after this date.
     #[serde(rename = "createdFrom", skip_serializing_if = "Option::is_none")]
-    pub created_from: Option<String>,
+    pub created_from: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Filter for enrollments created before a specific date. The time must be later than `createdFrom`, if present.  For example, if you set this to `2025-01-01T00:00:00Z`, Stedi only returns enrollments with a `createdAt` timestamp before this date.
     #[serde(rename = "createdTo", skip_serializing_if = "Option::is_none")]
-    pub created_to: Option<String>,
+    pub created_to: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Filter for enrollments with properties matching a query string.  You can provide all or part of a provider name, NPI, or tax ID. You can also provide all or part of a payer's [Stedi payer ID](https://www.stedi.com/docs/healthcare/supported-payers#stedi-payer-id) - primary payer IDs and aliases aren't supported. The search is case-insensitive and supports fuzzy matching.  For example, providing `?filter=OS` returns enrollments with `provider.name` containing `os` or `OS` (such as `Joseph`) and Stedi payer IDs containing `OS`, such as `OSBLI` for OptumHealth Salt Lake County.
     #[serde(rename = "filter", skip_serializing_if = "Option::is_none")]
     pub filter: Option<String>,
@@ -28,10 +28,10 @@ pub struct ExportEnrollmentsCsvRequestContent {
     pub import_id: Option<String>,
     /// Filter for enrollments with a `lastEraReceivedAt` timestamp on or after this value. Only enrollments with an ERA are included.  You can use this filter with `lastEraReceivedTo` to define a date range. For example, setting this to `2025-01-01T00:00:00Z` returns enrollments with a `lastEraReceivedAt` on or after that date.
     #[serde(rename = "lastEraReceivedFrom", skip_serializing_if = "Option::is_none")]
-    pub last_era_received_from: Option<String>,
+    pub last_era_received_from: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Filter for enrollments with a `lastEraReceivedAt` timestamp on or before this value. Only enrollments with an ERA are included. This value must be later than `lastEraReceivedFrom`, if present.  For example, setting this to `2025-01-01T00:00:00Z` returns enrollments with a `lastEraReceivedAt` on or before that date.
     #[serde(rename = "lastEraReceivedTo", skip_serializing_if = "Option::is_none")]
-    pub last_era_received_to: Option<String>,
+    pub last_era_received_to: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Filter for enrollments associated with specific [Stedi payer IDs](https://www.stedi.com/docs/healthcare/supported-payers#stedi-payer-id).  This parameter only supports Stedi payer IDs, not primary payer IDs or aliases. It also doesn't support fuzzy matching. The payer ID you provide must match the Stedi payer ID exactly, including capitalization. You must include leading `0` characters - for example, use `00540` for SISCO, not `540`.   You can include this parameter multiple times to filter for multiple payer IDs. For example, `?payerIds=HGJLR&payerIds=EWDCI` returns enrollments associated with either of the specified payer IDs.
     #[serde(rename = "payerIds", skip_serializing_if = "Option::is_none")]
     pub payer_ids: Option<Vec<String>>,
@@ -61,10 +61,10 @@ pub struct ExportEnrollmentsCsvRequestContent {
     pub status: Option<Vec<models::EnrollmentStatus>>,
     /// Filter for enrollments whose status was last updated from a specific date.  For example, if you set this to `2025-01-01T00:00:00Z`, Stedi returns enrollments with a `statusLastUpdatedAt` timestamp on or after this date.
     #[serde(rename = "statusUpdatedFrom", skip_serializing_if = "Option::is_none")]
-    pub status_updated_from: Option<String>,
+    pub status_updated_from: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Filter for enrollments whose status was last updated before a specific date. The time must be later than `statusUpdatedFrom`, if present.  For example, if you set this to `2025-01-01T00:00:00Z`, Stedi only returns enrollments with a `statusLastUpdatedAt` before this date.
     #[serde(rename = "statusUpdatedTo", skip_serializing_if = "Option::is_none")]
-    pub status_updated_to: Option<String>,
+    pub status_updated_to: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Filter for enrollments for specific transaction types.  You can include this parameter multiple times to filter for multiple types. For example, `?transactions=eligibilityCheck&transactions=claimStatus` returns enrollments for both 270/271 eligibility checks and 276/277 real-time claim status.
     #[serde(rename = "transactions", skip_serializing_if = "Option::is_none")]
     pub transactions: Option<Vec<models::TransactionType>>,

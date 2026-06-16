@@ -47,9 +47,9 @@ pub enum InsuranceDiscoveryCheckError {
 /// Retrieve insurance discovery check results by `discoveryId`
 pub async fn get_insurance_discovery_check(configuration: &configuration::Configuration, discovery_id: &str) -> Result<models::GetInsuranceDiscoveryCheckResponseContent, Error<GetInsuranceDiscoveryCheckError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_discovery_id = discovery_id;
+    let p_path_discovery_id = discovery_id;
 
-    let uri_str = format!("{}/insurance-discovery/check/v1/{discoveryId}", configuration.base_path, discoveryId=crate::healthcare::apis::urlencode(p_discovery_id));
+    let uri_str = format!("{}/insurance-discovery/check/v1/{discoveryId}", configuration.base_path, discoveryId=crate::healthcare::apis::urlencode(p_path_discovery_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -92,7 +92,7 @@ pub async fn get_insurance_discovery_check(configuration: &configuration::Config
 /// Submit an insurance discovery check in JSON format
 pub async fn insurance_discovery_check(configuration: &configuration::Configuration, insurance_discovery_check_request_content: models::InsuranceDiscoveryCheckRequestContent) -> Result<models::InsuranceDiscoveryCheckResponseContent, Error<InsuranceDiscoveryCheckError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_insurance_discovery_check_request_content = insurance_discovery_check_request_content;
+    let p_body_insurance_discovery_check_request_content = insurance_discovery_check_request_content;
 
     let uri_str = format!("{}/insurance-discovery/check/v1", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -108,7 +108,7 @@ pub async fn insurance_discovery_check(configuration: &configuration::Configurat
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_insurance_discovery_check_request_content);
+    req_builder = req_builder.json(&p_body_insurance_discovery_check_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

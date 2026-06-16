@@ -47,7 +47,7 @@ pub enum ClaimStatusRawX12Error {
 /// Submit a 276/277 real-time claim status check in JSON format
 pub async fn claim_status(configuration: &configuration::Configuration, claim_status_request_content: models::ClaimStatusRequestContent) -> Result<models::ClaimStatusResponseContent, Error<ClaimStatusError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_claim_status_request_content = claim_status_request_content;
+    let p_body_claim_status_request_content = claim_status_request_content;
 
     let uri_str = format!("{}/change/medicalnetwork/claimstatus/v2", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -63,7 +63,7 @@ pub async fn claim_status(configuration: &configuration::Configuration, claim_st
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_claim_status_request_content);
+    req_builder = req_builder.json(&p_body_claim_status_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -93,7 +93,7 @@ pub async fn claim_status(configuration: &configuration::Configuration, claim_st
 /// Submit a 276/277 real-time claim status check in raw X12 EDI format
 pub async fn claim_status_raw_x12(configuration: &configuration::Configuration, claim_status_raw_x12_request_content: models::ClaimStatusRawX12RequestContent) -> Result<models::ClaimStatusRawX12ResponseContent, Error<ClaimStatusRawX12Error>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_claim_status_raw_x12_request_content = claim_status_raw_x12_request_content;
+    let p_body_claim_status_raw_x12_request_content = claim_status_raw_x12_request_content;
 
     let uri_str = format!("{}/change/medicalnetwork/claimstatus/v2/raw-x12", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -109,7 +109,7 @@ pub async fn claim_status_raw_x12(configuration: &configuration::Configuration, 
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_claim_status_raw_x12_request_content);
+    req_builder = req_builder.json(&p_body_claim_status_raw_x12_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

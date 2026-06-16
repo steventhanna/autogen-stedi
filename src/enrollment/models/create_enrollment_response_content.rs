@@ -19,7 +19,7 @@ pub struct CreateEnrollmentResponseContent {
     pub aggregation_preference: Option<Box<models::AggregationPreference>>,
     /// The date and time when the enrollment was created within Stedi.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// Documents associated with this enrollment, excluding deleted documents.
     #[serde(rename = "documents", skip_serializing_if = "Option::is_none")]
     pub documents: Option<Vec<models::EnrollmentDocument>>,
@@ -31,7 +31,7 @@ pub struct CreateEnrollmentResponseContent {
     pub id: String,
     /// The timestamp of the most recent 835 ERA (Electronic Remittance Advice) Stedi received for this enrollment, based on the enrollment's payer ID, provider NPI, and provider tax ID. Stedi automatically updates this property for each new ERA.   - This property is only returned for ERA enrollments in `LIVE` status with at least one matching ERA from the payer.   - If this timestamp doesn't match your expected timeline for ERA processing, there may be an upstream issue. Contact Stedi support for assistance.
     #[serde(rename = "lastEraReceivedAt", skip_serializing_if = "Option::is_none")]
-    pub last_era_received_at: Option<String>,
+    pub last_era_received_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Information about the payer the provider is enrolling with.
     #[serde(rename = "payer")]
     pub payer: Box<models::EnrolledPayerOutput>,
@@ -58,10 +58,10 @@ pub struct CreateEnrollmentResponseContent {
     pub status: Option<models::EnrollmentStatus>,
     /// The date and time when the enrollment status was last updated. This timestamp is used to track enrollment processing durations and enables filtering to identify recently changed enrollments. It automatically updates whenever an enrollment's status changes but remains unchanged during other updates.
     #[serde(rename = "statusLastUpdatedAt")]
-    pub status_last_updated_at: String,
+    pub status_last_updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// The date and time when the enrollment was submitted. If the enrollment is in `DRAFT` status, `submittedAt` is not present. When the enrollment transitions from draft to `STEDI_ACTION_REQUIRED`, `submittedAt` is updated to the submission time. If the enrollment was created and submitted immediately, the `submittedAt` time will be equal or close to the `createdAt` time.
     #[serde(rename = "submittedAt", skip_serializing_if = "Option::is_none")]
-    pub submitted_at: Option<String>,
+    pub submitted_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Tasks associated with this enrollment representing work that needs to be completed. Each task has a responsible party and specific definition.
     #[serde(rename = "tasks", skip_serializing_if = "Option::is_none")]
     pub tasks: Option<Vec<models::Task>>,
@@ -70,7 +70,7 @@ pub struct CreateEnrollmentResponseContent {
     pub transactions: Box<models::EnrolledTransactionsList>,
     /// The date and time when the enrollment was updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// The email address where Stedi should send updates about the enrollment. We'll use it to notify you when there are next steps and send updates on the enrollment's status.  - This email address can be different from the `primaryContact.email` where the payer sends communications about the enrollment.  - For [automatic enrollment requests](https://www.stedi.com/docs/healthcare/create-manage-transaction-enrollments#automatic-enrollment-requests), Stedi sets this to the oldest account member with the Admin role.
     #[serde(rename = "userEmail")]
     pub user_email: String,
@@ -78,7 +78,7 @@ pub struct CreateEnrollmentResponseContent {
 
 impl CreateEnrollmentResponseContent {
     /// Output containing the created enrollment details.
-    pub fn new(created_at: String, id: String, payer: models::EnrolledPayerOutput, primary_contact: models::ProviderContact, provider: models::AllEnrolledProviderFields, status_last_updated_at: String, transactions: models::EnrolledTransactionsList, updated_at: String, user_email: String) -> CreateEnrollmentResponseContent {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, id: String, payer: models::EnrolledPayerOutput, primary_contact: models::ProviderContact, provider: models::AllEnrolledProviderFields, status_last_updated_at: chrono::DateTime<chrono::FixedOffset>, transactions: models::EnrolledTransactionsList, updated_at: chrono::DateTime<chrono::FixedOffset>, user_email: String) -> CreateEnrollmentResponseContent {
         CreateEnrollmentResponseContent {
             aggregation_preference: None,
             created_at,

@@ -241,7 +241,7 @@ pub enum UpdateTaskPostError {
 /// Creates a new transaction enrollment request. Transaction enrollment registers a provider to exchange specific transaction types with a payer.
 pub async fn create_enrollment(configuration: &configuration::Configuration, create_enrollment_request_content: models::CreateEnrollmentRequestContent) -> Result<models::CreateEnrollmentResponseContent, Error<CreateEnrollmentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_create_enrollment_request_content = create_enrollment_request_content;
+    let p_body_create_enrollment_request_content = create_enrollment_request_content;
 
     let uri_str = format!("{}/enrollments", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -257,7 +257,7 @@ pub async fn create_enrollment(configuration: &configuration::Configuration, cre
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_create_enrollment_request_content);
+    req_builder = req_builder.json(&p_body_create_enrollment_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -287,9 +287,9 @@ pub async fn create_enrollment(configuration: &configuration::Configuration, cre
 /// Returns a pre-signed URL to download the specified enrollment document.
 pub async fn create_enrollment_document_download(configuration: &configuration::Configuration, document_id: &str) -> Result<models::CreateEnrollmentDocumentDownloadResponseContent, Error<CreateEnrollmentDocumentDownloadError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_document_id = document_id;
+    let p_path_document_id = document_id;
 
-    let uri_str = format!("{}/documents/{documentId}/download", configuration.base_path, documentId=crate::enrollment::apis::urlencode(p_document_id));
+    let uri_str = format!("{}/documents/{documentId}/download", configuration.base_path, documentId=crate::enrollment::apis::urlencode(p_path_document_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -332,10 +332,10 @@ pub async fn create_enrollment_document_download(configuration: &configuration::
 /// Returns a pre-signed URL to upload a PDF document for the specified transaction enrollment.
 pub async fn create_enrollment_document_upload(configuration: &configuration::Configuration, enrollment_id: &str, create_enrollment_document_upload_request_content: models::CreateEnrollmentDocumentUploadRequestContent) -> Result<models::CreateEnrollmentDocumentUploadResponseContent, Error<CreateEnrollmentDocumentUploadError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_enrollment_id = enrollment_id;
-    let p_create_enrollment_document_upload_request_content = create_enrollment_document_upload_request_content;
+    let p_path_enrollment_id = enrollment_id;
+    let p_body_create_enrollment_document_upload_request_content = create_enrollment_document_upload_request_content;
 
-    let uri_str = format!("{}/enrollments/{enrollmentId}/documents", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_enrollment_id));
+    let uri_str = format!("{}/enrollments/{enrollmentId}/documents", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_path_enrollment_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -349,7 +349,7 @@ pub async fn create_enrollment_document_upload(configuration: &configuration::Co
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_create_enrollment_document_upload_request_content);
+    req_builder = req_builder.json(&p_body_create_enrollment_document_upload_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -379,7 +379,7 @@ pub async fn create_enrollment_document_upload(configuration: &configuration::Co
 /// Creates a new provider record. Providers must be created before they can be enrolled with payers.
 pub async fn create_provider(configuration: &configuration::Configuration, create_provider_request_content: models::CreateProviderRequestContent) -> Result<models::CreateProviderResponseContent, Error<CreateProviderError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_create_provider_request_content = create_provider_request_content;
+    let p_body_create_provider_request_content = create_provider_request_content;
 
     let uri_str = format!("{}/providers", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -395,7 +395,7 @@ pub async fn create_provider(configuration: &configuration::Configuration, creat
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_create_provider_request_content);
+    req_builder = req_builder.json(&p_body_create_provider_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -425,9 +425,9 @@ pub async fn create_provider(configuration: &configuration::Configuration, creat
 /// Deletes an enrollment request. Only enrollments in DRAFT status can be deleted. This operation is idempotent.
 pub async fn delete_enrollment(configuration: &configuration::Configuration, enrollment_id: &str) -> Result<(), Error<DeleteEnrollmentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_enrollment_id = enrollment_id;
+    let p_path_enrollment_id = enrollment_id;
 
-    let uri_str = format!("{}/enrollments/{enrollmentId}", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_enrollment_id));
+    let uri_str = format!("{}/enrollments/{enrollmentId}", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_path_enrollment_id));
     let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -459,9 +459,9 @@ pub async fn delete_enrollment(configuration: &configuration::Configuration, enr
 /// Deletes the specified PDF document associated with a transaction enrollment.
 pub async fn delete_enrollment_document(configuration: &configuration::Configuration, document_id: &str) -> Result<(), Error<DeleteEnrollmentDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_document_id = document_id;
+    let p_path_document_id = document_id;
 
-    let uri_str = format!("{}/documents/{documentId}", configuration.base_path, documentId=crate::enrollment::apis::urlencode(p_document_id));
+    let uri_str = format!("{}/documents/{documentId}", configuration.base_path, documentId=crate::enrollment::apis::urlencode(p_path_document_id));
     let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -493,9 +493,9 @@ pub async fn delete_enrollment_document(configuration: &configuration::Configura
 /// Deletes a provider record. Providers can only be deleted if they have no associated enrollments. This operation is idempotent.
 pub async fn delete_provider(configuration: &configuration::Configuration, provider_id: &str) -> Result<(), Error<DeleteProviderError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_provider_id = provider_id;
+    let p_path_provider_id = provider_id;
 
-    let uri_str = format!("{}/providers/{providerId}", configuration.base_path, providerId=crate::enrollment::apis::urlencode(p_provider_id));
+    let uri_str = format!("{}/providers/{providerId}", configuration.base_path, providerId=crate::enrollment::apis::urlencode(p_path_provider_id));
     let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -527,7 +527,7 @@ pub async fn delete_provider(configuration: &configuration::Configuration, provi
 /// Exports enrollment records as a CSV file with optional filtering. Supports the same filtering parameters as ListEnrollments operation. Returns a presigned URL to download the generated CSV file from S3.
 pub async fn export_enrollments_csv(configuration: &configuration::Configuration, export_enrollments_csv_request_content: Option<models::ExportEnrollmentsCsvRequestContent>) -> Result<models::ExportEnrollmentsCsvResponseContent, Error<ExportEnrollmentsCsvError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_export_enrollments_csv_request_content = export_enrollments_csv_request_content;
+    let p_body_export_enrollments_csv_request_content = export_enrollments_csv_request_content;
 
     let uri_str = format!("{}/enrollments/export", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -543,7 +543,7 @@ pub async fn export_enrollments_csv(configuration: &configuration::Configuration
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_export_enrollments_csv_request_content);
+    req_builder = req_builder.json(&p_body_export_enrollments_csv_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -573,9 +573,9 @@ pub async fn export_enrollments_csv(configuration: &configuration::Configuration
 /// Retrieves an enrollment request by its ID. This operation returns the complete enrollment details including provider and payer information.
 pub async fn get_enrollment(configuration: &configuration::Configuration, enrollment_id: &str) -> Result<models::GetEnrollmentResponseContent, Error<GetEnrollmentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_enrollment_id = enrollment_id;
+    let p_path_enrollment_id = enrollment_id;
 
-    let uri_str = format!("{}/enrollments/{enrollmentId}", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_enrollment_id));
+    let uri_str = format!("{}/enrollments/{enrollmentId}", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_path_enrollment_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -618,9 +618,9 @@ pub async fn get_enrollment(configuration: &configuration::Configuration, enroll
 /// Retrieves a provider record by its ID. This operation returns the complete provider details including contact information.
 pub async fn get_provider(configuration: &configuration::Configuration, provider_id: &str) -> Result<models::GetProviderResponseContent, Error<GetProviderError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_provider_id = provider_id;
+    let p_path_provider_id = provider_id;
 
-    let uri_str = format!("{}/providers/{providerId}", configuration.base_path, providerId=crate::enrollment::apis::urlencode(p_provider_id));
+    let uri_str = format!("{}/providers/{providerId}", configuration.base_path, providerId=crate::enrollment::apis::urlencode(p_path_provider_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -661,125 +661,125 @@ pub async fn get_provider(configuration: &configuration::Configuration, provider
 }
 
 /// Lists transaction enrollment records with optional filtering and pagination.
-pub async fn list_enrollments(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, filter: Option<&str>, status: Option<Vec<models::EnrollmentStatus>>, provider_npis: Option<Vec<String>>, provider_tax_ids: Option<Vec<String>>, provider_names: Option<Vec<String>>, provider_ids: Option<Vec<String>>, payer_ids: Option<Vec<String>>, sources: Option<Vec<models::EnrollmentSource>>, transactions: Option<Vec<models::TransactionType>>, created_from: Option<String>, created_to: Option<String>, status_updated_from: Option<String>, status_updated_to: Option<String>, import_id: Option<&str>, requested_effective_date_from: Option<&str>, requested_effective_date_to: Option<&str>, last_era_received_from: Option<String>, last_era_received_to: Option<String>, user_emails: Option<Vec<String>>, sort_by: Option<Vec<String>>) -> Result<models::ListEnrollmentsResponseContent, Error<ListEnrollmentsError>> {
+pub async fn list_enrollments(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, filter: Option<&str>, status: Option<Vec<models::EnrollmentStatus>>, provider_npis: Option<Vec<String>>, provider_tax_ids: Option<Vec<String>>, provider_names: Option<Vec<String>>, provider_ids: Option<Vec<String>>, payer_ids: Option<Vec<String>>, sources: Option<Vec<models::EnrollmentSource>>, transactions: Option<Vec<models::TransactionType>>, created_from: Option<chrono::DateTime<chrono::FixedOffset>>, created_to: Option<chrono::DateTime<chrono::FixedOffset>>, status_updated_from: Option<chrono::DateTime<chrono::FixedOffset>>, status_updated_to: Option<chrono::DateTime<chrono::FixedOffset>>, import_id: Option<&str>, requested_effective_date_from: Option<&str>, requested_effective_date_to: Option<&str>, last_era_received_from: Option<chrono::DateTime<chrono::FixedOffset>>, last_era_received_to: Option<chrono::DateTime<chrono::FixedOffset>>, user_emails: Option<Vec<String>>, sort_by: Option<Vec<String>>) -> Result<models::ListEnrollmentsResponseContent, Error<ListEnrollmentsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_filter = filter;
-    let p_status = status;
-    let p_provider_npis = provider_npis;
-    let p_provider_tax_ids = provider_tax_ids;
-    let p_provider_names = provider_names;
-    let p_provider_ids = provider_ids;
-    let p_payer_ids = payer_ids;
-    let p_sources = sources;
-    let p_transactions = transactions;
-    let p_created_from = created_from;
-    let p_created_to = created_to;
-    let p_status_updated_from = status_updated_from;
-    let p_status_updated_to = status_updated_to;
-    let p_import_id = import_id;
-    let p_requested_effective_date_from = requested_effective_date_from;
-    let p_requested_effective_date_to = requested_effective_date_to;
-    let p_last_era_received_from = last_era_received_from;
-    let p_last_era_received_to = last_era_received_to;
-    let p_user_emails = user_emails;
-    let p_sort_by = sort_by;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_filter = filter;
+    let p_query_status = status;
+    let p_query_provider_npis = provider_npis;
+    let p_query_provider_tax_ids = provider_tax_ids;
+    let p_query_provider_names = provider_names;
+    let p_query_provider_ids = provider_ids;
+    let p_query_payer_ids = payer_ids;
+    let p_query_sources = sources;
+    let p_query_transactions = transactions;
+    let p_query_created_from = created_from;
+    let p_query_created_to = created_to;
+    let p_query_status_updated_from = status_updated_from;
+    let p_query_status_updated_to = status_updated_to;
+    let p_query_import_id = import_id;
+    let p_query_requested_effective_date_from = requested_effective_date_from;
+    let p_query_requested_effective_date_to = requested_effective_date_to;
+    let p_query_last_era_received_from = last_era_received_from;
+    let p_query_last_era_received_to = last_era_received_to;
+    let p_query_user_emails = user_emails;
+    let p_query_sort_by = sort_by;
 
     let uri_str = format!("{}/enrollments", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_filter {
+    if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_status {
+    if let Some(ref param_value) = p_query_status {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("status".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("status", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_provider_npis {
+    if let Some(ref param_value) = p_query_provider_npis {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("providerNpis".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("providerNpis", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_provider_tax_ids {
+    if let Some(ref param_value) = p_query_provider_tax_ids {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("providerTaxIds".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("providerTaxIds", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_provider_names {
+    if let Some(ref param_value) = p_query_provider_names {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("providerNames".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("providerNames", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_provider_ids {
+    if let Some(ref param_value) = p_query_provider_ids {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("providerIds".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("providerIds", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_payer_ids {
+    if let Some(ref param_value) = p_query_payer_ids {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("payerIds".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("payerIds", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_sources {
+    if let Some(ref param_value) = p_query_sources {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("sources".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("sources", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_transactions {
+    if let Some(ref param_value) = p_query_transactions {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("transactions".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("transactions", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_created_from {
+    if let Some(ref param_value) = p_query_created_from {
         req_builder = req_builder.query(&[("createdFrom", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_created_to {
+    if let Some(ref param_value) = p_query_created_to {
         req_builder = req_builder.query(&[("createdTo", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_status_updated_from {
+    if let Some(ref param_value) = p_query_status_updated_from {
         req_builder = req_builder.query(&[("statusUpdatedFrom", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_status_updated_to {
+    if let Some(ref param_value) = p_query_status_updated_to {
         req_builder = req_builder.query(&[("statusUpdatedTo", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_import_id {
+    if let Some(ref param_value) = p_query_import_id {
         req_builder = req_builder.query(&[("importId", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_requested_effective_date_from {
+    if let Some(ref param_value) = p_query_requested_effective_date_from {
         req_builder = req_builder.query(&[("requestedEffectiveDateFrom", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_requested_effective_date_to {
+    if let Some(ref param_value) = p_query_requested_effective_date_to {
         req_builder = req_builder.query(&[("requestedEffectiveDateTo", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_last_era_received_from {
+    if let Some(ref param_value) = p_query_last_era_received_from {
         req_builder = req_builder.query(&[("lastEraReceivedFrom", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_last_era_received_to {
+    if let Some(ref param_value) = p_query_last_era_received_to {
         req_builder = req_builder.query(&[("lastEraReceivedTo", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_user_emails {
+    if let Some(ref param_value) = p_query_user_emails {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("userEmails".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("userEmails", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_sort_by {
+    if let Some(ref param_value) = p_query_sort_by {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("sortBy".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("sortBy", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
@@ -825,31 +825,31 @@ pub async fn list_enrollments(configuration: &configuration::Configuration, page
 /// Lists providers with optional filtering and pagination.
 pub async fn list_providers(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, filter: Option<&str>, provider_npis: Option<Vec<String>>, provider_tax_ids: Option<Vec<String>>) -> Result<models::ListProvidersResponseContent, Error<ListProvidersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_filter = filter;
-    let p_provider_npis = provider_npis;
-    let p_provider_tax_ids = provider_tax_ids;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_filter = filter;
+    let p_query_provider_npis = provider_npis;
+    let p_query_provider_tax_ids = provider_tax_ids;
 
     let uri_str = format!("{}/providers", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_filter {
+    if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_provider_npis {
+    if let Some(ref param_value) = p_query_provider_npis {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("providerNpis".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("providerNpis", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_provider_tax_ids {
+    if let Some(ref param_value) = p_query_provider_tax_ids {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("providerTaxIds".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("providerTaxIds", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
@@ -895,10 +895,10 @@ pub async fn list_providers(configuration: &configuration::Configuration, page_s
 /// Updates an existing enrollment request. Only enrollments in DRAFT status can be updated. Once an enrollment is submitted, it cannot be modified.
 pub async fn update_enrollment(configuration: &configuration::Configuration, enrollment_id: &str, update_enrollment_request_content: models::UpdateEnrollmentRequestContent) -> Result<models::UpdateEnrollmentResponseContent, Error<UpdateEnrollmentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_enrollment_id = enrollment_id;
-    let p_update_enrollment_request_content = update_enrollment_request_content;
+    let p_path_enrollment_id = enrollment_id;
+    let p_body_update_enrollment_request_content = update_enrollment_request_content;
 
-    let uri_str = format!("{}/enrollments/{enrollmentId}", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_enrollment_id));
+    let uri_str = format!("{}/enrollments/{enrollmentId}", configuration.base_path, enrollmentId=crate::enrollment::apis::urlencode(p_path_enrollment_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -912,7 +912,7 @@ pub async fn update_enrollment(configuration: &configuration::Configuration, enr
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_update_enrollment_request_content);
+    req_builder = req_builder.json(&p_body_update_enrollment_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -942,10 +942,10 @@ pub async fn update_enrollment(configuration: &configuration::Configuration, enr
 /// Updates an existing provider's information. Note that NPI and tax ID cannot be changed after creation.
 pub async fn update_provider(configuration: &configuration::Configuration, provider_id: &str, update_provider_request_content: models::UpdateProviderRequestContent) -> Result<models::UpdateProviderResponseContent, Error<UpdateProviderError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_provider_id = provider_id;
-    let p_update_provider_request_content = update_provider_request_content;
+    let p_path_provider_id = provider_id;
+    let p_body_update_provider_request_content = update_provider_request_content;
 
-    let uri_str = format!("{}/providers/{providerId}", configuration.base_path, providerId=crate::enrollment::apis::urlencode(p_provider_id));
+    let uri_str = format!("{}/providers/{providerId}", configuration.base_path, providerId=crate::enrollment::apis::urlencode(p_path_provider_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -959,7 +959,7 @@ pub async fn update_provider(configuration: &configuration::Configuration, provi
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_update_provider_request_content);
+    req_builder = req_builder.json(&p_body_update_provider_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -989,10 +989,10 @@ pub async fn update_provider(configuration: &configuration::Configuration, provi
 /// Updates a task associated with an enrollment.
 pub async fn update_task_post(configuration: &configuration::Configuration, task_id: &str, update_task_post_request_content: Option<models::UpdateTaskPostRequestContent>) -> Result<models::UpdateTaskPostResponseContent, Error<UpdateTaskPostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_task_id = task_id;
-    let p_update_task_post_request_content = update_task_post_request_content;
+    let p_path_task_id = task_id;
+    let p_body_update_task_post_request_content = update_task_post_request_content;
 
-    let uri_str = format!("{}/tasks/{taskId}", configuration.base_path, taskId=crate::enrollment::apis::urlencode(p_task_id));
+    let uri_str = format!("{}/tasks/{taskId}", configuration.base_path, taskId=crate::enrollment::apis::urlencode(p_path_task_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1006,7 +1006,7 @@ pub async fn update_task_post(configuration: &configuration::Configuration, task
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_update_task_post_request_content);
+    req_builder = req_builder.json(&p_body_update_task_post_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

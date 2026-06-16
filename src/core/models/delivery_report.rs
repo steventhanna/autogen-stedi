@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 pub struct DeliveryReport {
     /// The date and time when the resource was created, in ISO 8601 format. For example, `2023-08-28T00:00:00Z`.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// A unique identifier for the delivery attempt.
     #[serde(rename = "id")]
     pub id: String,
@@ -46,7 +46,7 @@ pub struct DeliveryReport {
 }
 
 impl DeliveryReport {
-    pub fn new(created_at: String, id: String, execution_id: String, partnership_id: String, connection_type: models::CoreConnectionType, connection_id: String, attempt: f64, filename: String, status: models::DeliveryReportStatus, message: String) -> DeliveryReport {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, id: String, execution_id: String, partnership_id: String, connection_type: models::CoreConnectionType, connection_id: String, attempt: f64, filename: String, status: models::DeliveryReportStatus, message: String) -> DeliveryReport {
         DeliveryReport {
             created_at,
             id,

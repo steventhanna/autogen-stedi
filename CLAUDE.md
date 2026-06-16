@@ -38,6 +38,12 @@ combined SHA-256 in `SPEC_HASH`, generates each into a temp dir, vendors `apis/`
 The run is idempotent. Do not hand-edit anything under `src/<service>/` — fix the spec upstream or
 the `generate.sh` post-processing instead.
 
+The generator version is **pinned** via `GENERATOR_VERSION` in `generate.sh`; the JAR is fetched from
+Maven Central (cached under `~/.cache/openapi-generator`), so local and CI produce identical output
+with only a JDK installed — no brew/npm generator needed. Bumping `GENERATOR_VERSION` is deliberate:
+it can change generated output (e.g. the String→`chrono` date-time switch in 7.15+, which is why
+`chrono` is a dependency). Regenerate and review the diff when changing it.
+
 CI: `update-spec.yml` runs `generate.sh` daily; on any change it bumps the patch version and opens a
 PR. Merging a `update/stedi-spec-*` PR triggers `tag-release.yml`, which tags the release and then
 publishes to crates.io (`cargo publish`, gated on the tag being newly created). Publishing needs a

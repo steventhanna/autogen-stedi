@@ -22,7 +22,7 @@ pub struct BatchItem {
     pub batch_id: String,
     /// The date and time when the eligibility check was created.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// Only relevant for batches submitted through the JSON API. This is the index of the item in the batch. It starts at 0.
     #[serde(rename = "index", skip_serializing_if = "Option::is_none")]
     pub index: Option<i32>,
@@ -37,12 +37,12 @@ pub struct BatchItem {
     pub state: models::BatchItemState,
     /// The date and time when the eligibility check was last updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl BatchItem {
     /// A batch item representing an individual record in a batch.
-    pub fn new(batch_id: String, created_at: String, state: models::BatchItemState, updated_at: String) -> BatchItem {
+    pub fn new(batch_id: String, created_at: chrono::DateTime<chrono::FixedOffset>, state: models::BatchItemState, updated_at: chrono::DateTime<chrono::FixedOffset>) -> BatchItem {
         BatchItem {
             additional_info: None,
             batch_id,

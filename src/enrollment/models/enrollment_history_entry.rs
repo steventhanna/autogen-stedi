@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct EnrollmentHistoryEntry {
     /// The date and time when this change occurred.
     #[serde(rename = "changedAt")]
-    pub changed_at: String,
+    pub changed_at: chrono::DateTime<chrono::FixedOffset>,
     /// The source or system that triggered this change.
     #[serde(rename = "changedBy")]
     pub changed_by: String,
@@ -33,7 +33,7 @@ pub struct EnrollmentHistoryEntry {
 
 impl EnrollmentHistoryEntry {
     /// An update to an enrollment, such as a change in the enrollment's status. This object is experimental and may change in the future.
-    pub fn new(changed_at: String, changed_by: String, new_status: models::EnrollmentStatus, r#type: models::EnrollmentHistoryChangeType) -> EnrollmentHistoryEntry {
+    pub fn new(changed_at: chrono::DateTime<chrono::FixedOffset>, changed_by: String, new_status: models::EnrollmentStatus, r#type: models::EnrollmentHistoryChangeType) -> EnrollmentHistoryEntry {
         EnrollmentHistoryEntry {
             changed_at,
             changed_by,

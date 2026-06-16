@@ -60,15 +60,15 @@ pub enum DeliveryOrCalendarPatternQualifier {
     #[serde(rename = "As Directed")]
     AsDirected,
     #[serde(rename = "Daily Mon. Through Fri.")]
-    DailyMonPeriodThroughFriPeriod,
+    DailyMonThroughFri,
     #[serde(rename = "1/2 Mon. & 1/2 Tues.")]
-    Variant1Slash2MonPeriodAmpersand1Slash2TuesPeriod,
+    Variant1Slash2MonAmpersand1Slash2Tues,
     #[serde(rename = "1/2 Tues. & 1/2 Thurs.")]
-    Variant1Slash2TuesPeriodAmpersand1Slash2ThursPeriod,
+    Variant1Slash2TuesAmpersand1Slash2Thurs,
     #[serde(rename = "1/2 Wed. & 1/2 Fri.")]
-    Variant1Slash2WedPeriodAmpersand1Slash2FriPeriod,
+    Variant1Slash2WedAmpersand1Slash2Fri,
     #[serde(rename = "Once Anytime Mon. through Fri.")]
-    OnceAnytimeMonPeriodThroughFriPeriod,
+    OnceAnytimeMonThroughFri,
     #[serde(rename = "Tuesday through Friday")]
     TuesdayThroughFriday,
     #[serde(rename = "Monday, Tuesday and Thursday")]
@@ -82,15 +82,15 @@ pub enum DeliveryOrCalendarPatternQualifier {
     #[serde(rename = "Tuesday, Thursday and Friday")]
     TuesdayCommaThursdayAndFriday,
     #[serde(rename = "1/2 Tues. & 1/2 Fri.")]
-    Variant1Slash2TuesPeriodAmpersand1Slash2FriPeriod,
+    Variant1Slash2TuesAmpersand1Slash2Fri,
     #[serde(rename = "1/2 Mon. & 1/2 Wed.")]
-    Variant1Slash2MonPeriodAmpersand1Slash2WedPeriod,
+    Variant1Slash2MonAmpersand1Slash2Wed,
     #[serde(rename = "1/3 Mon., 1/3 Wed., 1/3 Fri.")]
-    Variant1Slash3MonPeriodComma1Slash3WedPeriodComma1Slash3FriPeriod,
+    Variant1Slash3MonComma1Slash3WedComma1Slash3Fri,
     #[serde(rename = "Whenever Necessary")]
     WheneverNecessary,
     #[serde(rename = "1/2 By Wed. Bal. By Fri.")]
-    Variant1Slash2ByWedPeriodBalPeriodByFriPeriod,
+    Variant1Slash2ByWedBalByFri,
     #[serde(rename = "None (Also Used to Cancel or Override a Previous Pattern)")]
     NoneLeftParenthesisAlsoUsedToCancelOrOverrideAPreviousPatternRightParenthesis,
 
@@ -121,22 +121,22 @@ impl std::fmt::Display for DeliveryOrCalendarPatternQualifier {
             Self::MondayThroughThursday => write!(f, "Monday through Thursday"),
             Self::Immediately => write!(f, "Immediately"),
             Self::AsDirected => write!(f, "As Directed"),
-            Self::DailyMonPeriodThroughFriPeriod => write!(f, "Daily Mon. Through Fri."),
-            Self::Variant1Slash2MonPeriodAmpersand1Slash2TuesPeriod => write!(f, "1/2 Mon. & 1/2 Tues."),
-            Self::Variant1Slash2TuesPeriodAmpersand1Slash2ThursPeriod => write!(f, "1/2 Tues. & 1/2 Thurs."),
-            Self::Variant1Slash2WedPeriodAmpersand1Slash2FriPeriod => write!(f, "1/2 Wed. & 1/2 Fri."),
-            Self::OnceAnytimeMonPeriodThroughFriPeriod => write!(f, "Once Anytime Mon. through Fri."),
+            Self::DailyMonThroughFri => write!(f, "Daily Mon. Through Fri."),
+            Self::Variant1Slash2MonAmpersand1Slash2Tues => write!(f, "1/2 Mon. & 1/2 Tues."),
+            Self::Variant1Slash2TuesAmpersand1Slash2Thurs => write!(f, "1/2 Tues. & 1/2 Thurs."),
+            Self::Variant1Slash2WedAmpersand1Slash2Fri => write!(f, "1/2 Wed. & 1/2 Fri."),
+            Self::OnceAnytimeMonThroughFri => write!(f, "Once Anytime Mon. through Fri."),
             Self::TuesdayThroughFriday => write!(f, "Tuesday through Friday"),
             Self::MondayCommaTuesdayAndThursday => write!(f, "Monday, Tuesday and Thursday"),
             Self::MondayCommaTuesdayAndFriday => write!(f, "Monday, Tuesday and Friday"),
             Self::WednesdayAndThursday => write!(f, "Wednesday and Thursday"),
             Self::MondayCommaWednesdayAndThursday => write!(f, "Monday, Wednesday and Thursday"),
             Self::TuesdayCommaThursdayAndFriday => write!(f, "Tuesday, Thursday and Friday"),
-            Self::Variant1Slash2TuesPeriodAmpersand1Slash2FriPeriod => write!(f, "1/2 Tues. & 1/2 Fri."),
-            Self::Variant1Slash2MonPeriodAmpersand1Slash2WedPeriod => write!(f, "1/2 Mon. & 1/2 Wed."),
-            Self::Variant1Slash3MonPeriodComma1Slash3WedPeriodComma1Slash3FriPeriod => write!(f, "1/3 Mon., 1/3 Wed., 1/3 Fri."),
+            Self::Variant1Slash2TuesAmpersand1Slash2Fri => write!(f, "1/2 Tues. & 1/2 Fri."),
+            Self::Variant1Slash2MonAmpersand1Slash2Wed => write!(f, "1/2 Mon. & 1/2 Wed."),
+            Self::Variant1Slash3MonComma1Slash3WedComma1Slash3Fri => write!(f, "1/3 Mon., 1/3 Wed., 1/3 Fri."),
             Self::WheneverNecessary => write!(f, "Whenever Necessary"),
-            Self::Variant1Slash2ByWedPeriodBalPeriodByFriPeriod => write!(f, "1/2 By Wed. Bal. By Fri."),
+            Self::Variant1Slash2ByWedBalByFri => write!(f, "1/2 By Wed. Bal. By Fri."),
             Self::NoneLeftParenthesisAlsoUsedToCancelOrOverrideAPreviousPatternRightParenthesis => write!(f, "None (Also Used to Cancel or Override a Previous Pattern)"),
         }
     }

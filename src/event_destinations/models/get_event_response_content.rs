@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct GetEventResponseContent {
     /// An ISO 8601 timestamp of when the event was created.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// The event payload Stedi delivers to event destinations.
     #[serde(rename = "eventPayload")]
     pub event_payload: Box<models::EventPayload>,
@@ -33,7 +33,7 @@ pub struct GetEventResponseContent {
 
 impl GetEventResponseContent {
     /// Output containing the event details.
-    pub fn new(created_at: String, event_payload: models::EventPayload, event_type: String, id: String, status: models::EventStatus) -> GetEventResponseContent {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_payload: models::EventPayload, event_type: String, id: String, status: models::EventStatus) -> GetEventResponseContent {
         GetEventResponseContent {
             created_at,
             event_payload: Box::new(event_payload),

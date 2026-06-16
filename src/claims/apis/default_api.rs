@@ -43,7 +43,7 @@ pub enum SubmitClaimAttachmentRawX12Error {
 /// Generate a pre-signed URL to upload a 275 claim attachment file
 pub async fn create_claim_attachment_file(configuration: &configuration::Configuration, create_claim_attachment_file_request_content: models::CreateClaimAttachmentFileRequestContent) -> Result<models::CreateClaimAttachmentFileResponseContent, Error<CreateClaimAttachmentFileError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_create_claim_attachment_file_request_content = create_claim_attachment_file_request_content;
+    let p_body_create_claim_attachment_file_request_content = create_claim_attachment_file_request_content;
 
     let uri_str = format!("{}/claim-attachments/file", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -59,7 +59,7 @@ pub async fn create_claim_attachment_file(configuration: &configuration::Configu
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_create_claim_attachment_file_request_content);
+    req_builder = req_builder.json(&p_body_create_claim_attachment_file_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -89,7 +89,7 @@ pub async fn create_claim_attachment_file(configuration: &configuration::Configu
 /// Submit a 275 claim attachment in X12 EDI format
 pub async fn submit_claim_attachment_raw_x12(configuration: &configuration::Configuration, submit_claim_attachment_raw_x12_request_content: models::SubmitClaimAttachmentRawX12RequestContent) -> Result<models::SubmitClaimAttachmentRawX12ResponseContent, Error<SubmitClaimAttachmentRawX12Error>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_submit_claim_attachment_raw_x12_request_content = submit_claim_attachment_raw_x12_request_content;
+    let p_body_submit_claim_attachment_raw_x12_request_content = submit_claim_attachment_raw_x12_request_content;
 
     let uri_str = format!("{}/claim-attachments/raw-x12-submission", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -105,7 +105,7 @@ pub async fn submit_claim_attachment_raw_x12(configuration: &configuration::Conf
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_submit_claim_attachment_raw_x12_request_content);
+    req_builder = req_builder.json(&p_body_submit_claim_attachment_raw_x12_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

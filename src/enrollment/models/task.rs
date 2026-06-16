@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct Task {
     /// The timestamp when the task was completed.
     #[serde(rename = "completedAt", skip_serializing_if = "Option::is_none")]
-    pub completed_at: Option<String>,
+    pub completed_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// A definition that determines the task's behavior, requirements, and data.
     #[serde(rename = "definition")]
     pub definition: Box<models::TaskDefinition>,

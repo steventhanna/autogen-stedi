@@ -22,7 +22,7 @@ pub struct ClaimAttachmentReference {
     pub patient_control_number: Option<String>,
     /// A timestamp in [RFC 3339 format](https://datatracker.ietf.org/doc/html/rfc3339) for Stedi's response to the submission. For example: `2025-03-07T12:34:56Z`.
     #[serde(rename = "timeOfResponse", skip_serializing_if = "Option::is_none")]
-    pub time_of_response: Option<String>,
+    pub time_of_response: Option<chrono::DateTime<chrono::FixedOffset>>,
 }
 
 impl ClaimAttachmentReference {

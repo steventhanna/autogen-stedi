@@ -19,7 +19,7 @@ pub struct EnrollmentSummary {
     pub aggregation_preference: Option<Box<models::AggregationPreference>>,
     /// The date and time when the enrollment was created within Stedi.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// Documents associated with this enrollment, such as signed enrollment forms. This list doesn't include deleted documents.  Each document object contains metadata such as the document's name, status, and timestamps for creation and last update.
     #[serde(rename = "documents", skip_serializing_if = "Option::is_none")]
     pub documents: Option<Vec<models::EnrollmentDocument>>,
@@ -34,7 +34,7 @@ pub struct EnrollmentSummary {
     pub import_id: Option<String>,
     /// The timestamp of the most recent 835 ERA (Electronic Remittance Advice) Stedi received for this enrollment, based on the enrollment's payer ID, provider NPI, and provider tax ID. Stedi automatically updates this property for each new ERA.   - This property is only returned for ERA enrollments in `LIVE` status with at least one matching ERA from the payer.   - If this timestamp doesn't match your expected timeline for ERA processing, there may be an upstream issue. Contact Stedi support for assistance.
     #[serde(rename = "lastEraReceivedAt", skip_serializing_if = "Option::is_none")]
-    pub last_era_received_at: Option<String>,
+    pub last_era_received_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Information about the payer the provider is enrolling with.
     #[serde(rename = "payer")]
     pub payer: Box<models::EnrolledPayerOutput>,
@@ -55,10 +55,10 @@ pub struct EnrollmentSummary {
     pub status: models::EnrollmentStatus,
     /// The date and time when the enrollment status was last updated. This timestamp is used to track enrollment processing durations and enables filtering to identify recently changed enrollments. It automatically updates whenever an enrollment's status changes but remains unchanged during other updates.
     #[serde(rename = "statusLastUpdatedAt")]
-    pub status_last_updated_at: String,
+    pub status_last_updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// The date and time when the enrollment was submitted. If the enrollment is in draft status, `submittedAt` is not present. When the enrollment transitions from draft to submitted, `submittedAt` will be updated to the submission time. If the enrollment was created and submitted immediately, `submittedAt` will be equal or close to `createdAt`.
     #[serde(rename = "submittedAt", skip_serializing_if = "Option::is_none")]
-    pub submitted_at: Option<String>,
+    pub submitted_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Tasks associated with this enrollment, such as reminders or follow-ups.
     #[serde(rename = "tasks", skip_serializing_if = "Option::is_none")]
     pub tasks: Option<Vec<models::Task>>,
@@ -67,12 +67,12 @@ pub struct EnrollmentSummary {
     pub transactions: Box<models::EnrolledTransactionsList>,
     /// The date and time when the enrollment was updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl EnrollmentSummary {
     /// Summary of an enrollment with essential fields for list operations.
-    pub fn new(created_at: String, id: String, payer: models::EnrolledPayerOutput, provider: models::AllEnrolledProviderFields, source: models::EnrollmentSource, status: models::EnrollmentStatus, status_last_updated_at: String, transactions: models::EnrolledTransactionsList, updated_at: String) -> EnrollmentSummary {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, id: String, payer: models::EnrolledPayerOutput, provider: models::AllEnrolledProviderFields, source: models::EnrollmentSource, status: models::EnrollmentStatus, status_last_updated_at: chrono::DateTime<chrono::FixedOffset>, transactions: models::EnrolledTransactionsList, updated_at: chrono::DateTime<chrono::FixedOffset>) -> EnrollmentSummary {
         EnrollmentSummary {
             aggregation_preference: None,
             created_at,

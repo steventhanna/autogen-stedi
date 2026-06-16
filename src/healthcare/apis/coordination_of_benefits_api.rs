@@ -33,7 +33,7 @@ pub enum CoordinationOfBenefitsError {
 /// Submit a coordination of benefits (COB) check in JSON format
 pub async fn coordination_of_benefits(configuration: &configuration::Configuration, coordination_of_benefits_request_content: models::CoordinationOfBenefitsRequestContent) -> Result<models::CoordinationOfBenefitsResponseContent, Error<CoordinationOfBenefitsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_coordination_of_benefits_request_content = coordination_of_benefits_request_content;
+    let p_body_coordination_of_benefits_request_content = coordination_of_benefits_request_content;
 
     let uri_str = format!("{}/coordination-of-benefits", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -49,7 +49,7 @@ pub async fn coordination_of_benefits(configuration: &configuration::Configurati
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_coordination_of_benefits_request_content);
+    req_builder = req_builder.json(&p_body_coordination_of_benefits_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

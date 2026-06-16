@@ -19,7 +19,7 @@ pub struct EnrollmentDocument {
     pub content_type: Option<String>,
     /// The date and time when the document was created.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// The enrollment ID this document is associated with.
     #[serde(rename = "enrollmentId")]
     pub enrollment_id: String,
@@ -40,12 +40,12 @@ pub struct EnrollmentDocument {
     pub task_id: Option<String>,
     /// The date and time when the document was last updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl EnrollmentDocument {
     /// A collection of metadata about an enrollment document, including its name, status, last updated date, and the associated enrollment Id.
-    pub fn new(created_at: String, enrollment_id: String, id: String, name: String, status: models::DocumentStatus, updated_at: String) -> EnrollmentDocument {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, enrollment_id: String, id: String, name: String, status: models::DocumentStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> EnrollmentDocument {
         EnrollmentDocument {
             content_type: None,
             created_at,

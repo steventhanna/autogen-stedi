@@ -18,7 +18,7 @@ pub struct GetBatchResponseContent {
     pub batch_type: models::BatchType,
     /// The date and time when the batch was created.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// The number of eligibility checks that failed during processing. A failure means that Stedi successfully processed the check but didn't receive a response from the payer, even after retrying. A common reason for failure is payer connectivity issues.
     #[serde(rename = "errorCount", skip_serializing_if = "Option::is_none")]
     pub error_count: Option<i32>,
@@ -51,7 +51,7 @@ pub struct GetBatchResponseContent {
     pub total_count: Option<i32>,
     /// The date and time when the batch was last updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// The number of eligibility checks that Stedi has validated.
     #[serde(rename = "validatedCount", skip_serializing_if = "Option::is_none")]
     pub validated_count: Option<i32>,
@@ -61,7 +61,7 @@ pub struct GetBatchResponseContent {
 }
 
 impl GetBatchResponseContent {
-    pub fn new(batch_type: models::BatchType, created_at: String, id: String, name: String, status: models::BatchStatus, updated_at: String) -> GetBatchResponseContent {
+    pub fn new(batch_type: models::BatchType, created_at: chrono::DateTime<chrono::FixedOffset>, id: String, name: String, status: models::BatchStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> GetBatchResponseContent {
         GetBatchResponseContent {
             batch_type,
             created_at,

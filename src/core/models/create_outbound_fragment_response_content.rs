@@ -18,14 +18,14 @@ pub struct CreateOutboundFragmentResponseContent {
     pub fragment_group_id: String,
     /// The time Stedi created the fragment.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// A unique ID for the fragment Stedi created within the fragment group.
     #[serde(rename = "fragmentId")]
     pub fragment_id: String,
 }
 
 impl CreateOutboundFragmentResponseContent {
-    pub fn new(fragment_group_id: String, created_at: String, fragment_id: String) -> CreateOutboundFragmentResponseContent {
+    pub fn new(fragment_group_id: String, created_at: chrono::DateTime<chrono::FixedOffset>, fragment_id: String) -> CreateOutboundFragmentResponseContent {
         CreateOutboundFragmentResponseContent {
             fragment_group_id,
             created_at,

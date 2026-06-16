@@ -16,21 +16,21 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EventPayloadObjectType {
     #[serde(rename = "v1.event")]
-    V1PeriodEvent,
+    V1Event,
 
 }
 
 impl std::fmt::Display for EventPayloadObjectType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::V1PeriodEvent => write!(f, "v1.event"),
+            Self::V1Event => write!(f, "v1.event"),
         }
     }
 }
 
 impl Default for EventPayloadObjectType {
     fn default() -> EventPayloadObjectType {
-        Self::V1PeriodEvent
+        Self::V1Event
     }
 }
 

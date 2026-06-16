@@ -529,17 +529,17 @@ pub enum RetryExecutionsError {
 /// This endpoint stages a fragment for outbound delivery.
 pub async fn create_outbound_fragment(configuration: &configuration::Configuration, fragment_group_id: &str, create_outbound_fragment_request_content: models::CreateOutboundFragmentRequestContent, idempotency_key: Option<&str>) -> Result<models::CreateOutboundFragmentResponseContent, Error<CreateOutboundFragmentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_fragment_group_id = fragment_group_id;
-    let p_create_outbound_fragment_request_content = create_outbound_fragment_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_path_fragment_group_id = fragment_group_id;
+    let p_body_create_outbound_fragment_request_content = create_outbound_fragment_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
-    let uri_str = format!("{}/fragments/{fragmentGroupId}", configuration.base_path, fragmentGroupId=crate::core::apis::urlencode(p_fragment_group_id));
+    let uri_str = format!("{}/fragments/{fragmentGroupId}", configuration.base_path, fragmentGroupId=crate::core::apis::urlencode(p_path_fragment_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -550,7 +550,7 @@ pub async fn create_outbound_fragment(configuration: &configuration::Configurati
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_create_outbound_fragment_request_content);
+    req_builder = req_builder.json(&p_body_create_outbound_fragment_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -580,18 +580,18 @@ pub async fn create_outbound_fragment(configuration: &configuration::Configurati
 /// This endpoint generates and delivers fully-formed EDI files containing a single transaction. It is the simplest way to generate EDI with Stedi.
 pub async fn create_partnership_outbound_transaction(configuration: &configuration::Configuration, partnership_id: &str, transaction_setting_id: &str, create_partnership_outbound_transaction_request_content: models::CreatePartnershipOutboundTransactionRequestContent, idempotency_key: Option<&str>) -> Result<models::CreatePartnershipOutboundTransactionResponseContent, Error<CreatePartnershipOutboundTransactionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_partnership_id = partnership_id;
-    let p_transaction_setting_id = transaction_setting_id;
-    let p_create_partnership_outbound_transaction_request_content = create_partnership_outbound_transaction_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_path_partnership_id = partnership_id;
+    let p_path_transaction_setting_id = transaction_setting_id;
+    let p_body_create_partnership_outbound_transaction_request_content = create_partnership_outbound_transaction_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
-    let uri_str = format!("{}/partnerships/{partnershipId}/transactions/{transactionSettingId}", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_partnership_id), transactionSettingId=crate::core::apis::urlencode(p_transaction_setting_id));
+    let uri_str = format!("{}/partnerships/{partnershipId}/transactions/{transactionSettingId}", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_path_partnership_id), transactionSettingId=crate::core::apis::urlencode(p_path_transaction_setting_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -602,7 +602,7 @@ pub async fn create_partnership_outbound_transaction(configuration: &configurati
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_create_partnership_outbound_transaction_request_content);
+    req_builder = req_builder.json(&p_body_create_partnership_outbound_transaction_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -632,19 +632,19 @@ pub async fn create_partnership_outbound_transaction(configuration: &configurati
 /// This endpoint stages a transaction for outbound delivery.
 pub async fn create_transaction_group(configuration: &configuration::Configuration, partnership_id: &str, transaction_setting_id: &str, transaction_group_id: &str, idempotency_key: Option<&str>, create_transaction_group_request_content: Option<models::CreateTransactionGroupRequestContent>) -> Result<models::CreateTransactionGroupResponseContent, Error<CreateTransactionGroupError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_partnership_id = partnership_id;
-    let p_transaction_setting_id = transaction_setting_id;
-    let p_transaction_group_id = transaction_group_id;
-    let p_idempotency_key = idempotency_key;
-    let p_create_transaction_group_request_content = create_transaction_group_request_content;
+    let p_path_partnership_id = partnership_id;
+    let p_path_transaction_setting_id = transaction_setting_id;
+    let p_path_transaction_group_id = transaction_group_id;
+    let p_header_idempotency_key = idempotency_key;
+    let p_body_create_transaction_group_request_content = create_transaction_group_request_content;
 
-    let uri_str = format!("{}/partnerships/{partnershipId}/transaction-groups/{transactionGroupId}/transactions/{transactionSettingId}", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_partnership_id), transactionSettingId=crate::core::apis::urlencode(p_transaction_setting_id), transactionGroupId=crate::core::apis::urlencode(p_transaction_group_id));
+    let uri_str = format!("{}/partnerships/{partnershipId}/transaction-groups/{transactionGroupId}/transactions/{transactionSettingId}", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_path_partnership_id), transactionSettingId=crate::core::apis::urlencode(p_path_transaction_setting_id), transactionGroupId=crate::core::apis::urlencode(p_path_transaction_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -655,7 +655,7 @@ pub async fn create_transaction_group(configuration: &configuration::Configurati
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_create_transaction_group_request_content);
+    req_builder = req_builder.json(&p_body_create_transaction_group_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -685,17 +685,17 @@ pub async fn create_transaction_group(configuration: &configuration::Configurati
 /// This endpoint generates and delivers fully-formed EDI files to your trading partners.
 pub async fn generate_edi(configuration: &configuration::Configuration, partnership_id: &str, generate_edi_request_content: models::GenerateEdiRequestContent, idempotency_key: Option<&str>) -> Result<models::GenerateEdiResponseContent, Error<GenerateEdiError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_partnership_id = partnership_id;
-    let p_generate_edi_request_content = generate_edi_request_content;
-    let p_idempotency_key = idempotency_key;
+    let p_path_partnership_id = partnership_id;
+    let p_body_generate_edi_request_content = generate_edi_request_content;
+    let p_header_idempotency_key = idempotency_key;
 
-    let uri_str = format!("{}/x12/partnerships/{partnershipId}/generate-edi", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_partnership_id));
+    let uri_str = format!("{}/x12/partnerships/{partnershipId}/generate-edi", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_path_partnership_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -706,7 +706,7 @@ pub async fn generate_edi(configuration: &configuration::Configuration, partners
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_generate_edi_request_content);
+    req_builder = req_builder.json(&p_body_generate_edi_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -736,18 +736,18 @@ pub async fn generate_edi(configuration: &configuration::Configuration, partners
 /// This endpoint generates and delivers a fully-formed EDI file containing the staged transactions in the specified transaction group.
 pub async fn generate_transaction_group_edi(configuration: &configuration::Configuration, partnership_id: &str, transaction_group_id: &str, idempotency_key: Option<&str>, generate_transaction_group_edi_request_content: Option<models::GenerateTransactionGroupEdiRequestContent>) -> Result<models::GenerateTransactionGroupEdiResponseContent, Error<GenerateTransactionGroupEdiError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_partnership_id = partnership_id;
-    let p_transaction_group_id = transaction_group_id;
-    let p_idempotency_key = idempotency_key;
-    let p_generate_transaction_group_edi_request_content = generate_transaction_group_edi_request_content;
+    let p_path_partnership_id = partnership_id;
+    let p_path_transaction_group_id = transaction_group_id;
+    let p_header_idempotency_key = idempotency_key;
+    let p_body_generate_transaction_group_edi_request_content = generate_transaction_group_edi_request_content;
 
-    let uri_str = format!("{}/partnerships/{partnershipId}/transaction-groups/{transactionGroupId}/generate-edi", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_partnership_id), transactionGroupId=crate::core::apis::urlencode(p_transaction_group_id));
+    let uri_str = format!("{}/partnerships/{partnershipId}/transaction-groups/{transactionGroupId}/generate-edi", configuration.base_path, partnershipId=crate::core::apis::urlencode(p_path_partnership_id), transactionGroupId=crate::core::apis::urlencode(p_path_transaction_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_idempotency_key {
+    if let Some(param_value) = p_header_idempotency_key {
         req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
     }
     if let Some(ref apikey) = configuration.api_key {
@@ -758,7 +758,7 @@ pub async fn generate_transaction_group_edi(configuration: &configuration::Confi
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_generate_transaction_group_edi_request_content);
+    req_builder = req_builder.json(&p_body_generate_transaction_group_edi_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -788,9 +788,9 @@ pub async fn generate_transaction_group_edi(configuration: &configuration::Confi
 /// Retrieve the file execution details for a given `executionId`.
 pub async fn get_execution(configuration: &configuration::Configuration, execution_id: &str) -> Result<models::GetExecutionResponseContent, Error<GetExecutionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
+    let p_path_execution_id = execution_id;
 
-    let uri_str = format!("{}/executions/{executionId}", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -833,9 +833,9 @@ pub async fn get_execution(configuration: &configuration::Configuration, executi
 /// Fetch a file execution's input document before any translation and mappings.
 pub async fn get_execution_input_document(configuration: &configuration::Configuration, execution_id: &str) -> Result<(), Error<GetExecutionInputDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
+    let p_path_execution_id = execution_id;
 
-    let uri_str = format!("{}/executions/{executionId}/input", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/input", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -867,9 +867,9 @@ pub async fn get_execution_input_document(configuration: &configuration::Configu
 /// This endpoint is used to retrieve an execution's input document before it passes through any translation and mappings. Generally, this will be EDI. This endpoint returns the document download URL, it must be then fetched for the actual document content. There are no size restrictions on documents when fetching from this endpoint.
 pub async fn get_execution_input_document_url(configuration: &configuration::Configuration, execution_id: &str) -> Result<models::GetExecutionInputDocumentUrlResponseContent, Error<GetExecutionInputDocumentUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
+    let p_path_execution_id = execution_id;
 
-    let uri_str = format!("{}/executions/{executionId}/input-url", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/input-url", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -912,9 +912,9 @@ pub async fn get_execution_input_document_url(configuration: &configuration::Con
 /// Fetch a file execution's metadata document.
 pub async fn get_execution_metadata_document(configuration: &configuration::Configuration, execution_id: &str) -> Result<(), Error<GetExecutionMetadataDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
+    let p_path_execution_id = execution_id;
 
-    let uri_str = format!("{}/executions/{executionId}/metadata", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/metadata", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -946,9 +946,9 @@ pub async fn get_execution_metadata_document(configuration: &configuration::Conf
 /// This endpoint is used to retrieve a file execution's metadata document, limited to inbound/outbound x12 files. This endpoint returns the metadata document download URL, it must be then fetched for the actual document content. There are no size restrictions on documents when fetching from this endpoint.
 pub async fn get_execution_metadata_document_url(configuration: &configuration::Configuration, execution_id: &str) -> Result<models::GetExecutionMetadataDocumentUrlResponseContent, Error<GetExecutionMetadataDocumentUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
+    let p_path_execution_id = execution_id;
 
-    let uri_str = format!("{}/executions/{executionId}/metadata-url", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/metadata-url", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -991,9 +991,9 @@ pub async fn get_execution_metadata_document_url(configuration: &configuration::
 /// Fetch a file execution's output document. Only available for outbound files.
 pub async fn get_execution_output_document(configuration: &configuration::Configuration, execution_id: &str) -> Result<(), Error<GetExecutionOutputDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
+    let p_path_execution_id = execution_id;
 
-    let uri_str = format!("{}/executions/{executionId}/output", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/output", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1025,9 +1025,9 @@ pub async fn get_execution_output_document(configuration: &configuration::Config
 /// This endpoint is used to retrieve an execution's output document. This endpoint returns the document download URL, it must be then fetched for the actual document content. There are no size restrictions on documents when fetching from this endpoint.
 pub async fn get_execution_output_document_url(configuration: &configuration::Configuration, execution_id: &str) -> Result<models::GetExecutionOutputDocumentUrlResponseContent, Error<GetExecutionOutputDocumentUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
+    let p_path_execution_id = execution_id;
 
-    let uri_str = format!("{}/executions/{executionId}/output-url", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/output-url", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1070,9 +1070,9 @@ pub async fn get_execution_output_document_url(configuration: &configuration::Co
 /// Fetch details for a specific transaction.
 pub async fn get_transaction(configuration: &configuration::Configuration, transaction_id: &str) -> Result<models::GetTransactionResponseContent, Error<GetTransactionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
+    let p_path_transaction_id = transaction_id;
 
-    let uri_str = format!("{}/transactions/{transactionId}", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/transactions/{transactionId}", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1115,10 +1115,10 @@ pub async fn get_transaction(configuration: &configuration::Configuration, trans
 /// Retrieve a transaction's output document.
 pub async fn get_transaction_attachment_document(configuration: &configuration::Configuration, transaction_id: &str, artifact_id: &str) -> Result<(), Error<GetTransactionAttachmentDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
-    let p_artifact_id = artifact_id;
+    let p_path_transaction_id = transaction_id;
+    let p_path_artifact_id = artifact_id;
 
-    let uri_str = format!("{}/transactions/{transactionId}/attachment/{artifactId}", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id), artifactId=crate::core::apis::urlencode(p_artifact_id));
+    let uri_str = format!("{}/transactions/{transactionId}/attachment/{artifactId}", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id), artifactId=crate::core::apis::urlencode(p_path_artifact_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1150,10 +1150,10 @@ pub async fn get_transaction_attachment_document(configuration: &configuration::
 /// This endpoint is used to retrieve a transaction's attachment document url.  This endpoint returns the document download URL, it must be then fetched for the actual document content. There are no size restrictions on documents when fetching from this endpoint. 
 pub async fn get_transaction_attachment_document_url(configuration: &configuration::Configuration, transaction_id: &str, artifact_id: &str) -> Result<models::GetTransactionAttachmentDocumentUrlResponseContent, Error<GetTransactionAttachmentDocumentUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
-    let p_artifact_id = artifact_id;
+    let p_path_transaction_id = transaction_id;
+    let p_path_artifact_id = artifact_id;
 
-    let uri_str = format!("{}/transactions/{transactionId}/attachment/{artifactId}/url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id), artifactId=crate::core::apis::urlencode(p_artifact_id));
+    let uri_str = format!("{}/transactions/{transactionId}/attachment/{artifactId}/url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id), artifactId=crate::core::apis::urlencode(p_path_artifact_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1196,10 +1196,10 @@ pub async fn get_transaction_attachment_document_url(configuration: &configurati
 /// Retrieve metadata for a fragment.
 pub async fn get_transaction_fragment(configuration: &configuration::Configuration, transaction_id: &str, fragment_index: f64) -> Result<models::GetTransactionFragmentResponseContent, Error<GetTransactionFragmentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
-    let p_fragment_index = fragment_index;
+    let p_path_transaction_id = transaction_id;
+    let p_path_fragment_index = fragment_index;
 
-    let uri_str = format!("{}/transactions/{transactionId}/fragments/{fragmentIndex}", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id), fragmentIndex=p_fragment_index);
+    let uri_str = format!("{}/transactions/{transactionId}/fragments/{fragmentIndex}", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id), fragmentIndex=p_path_fragment_index);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1242,10 +1242,10 @@ pub async fn get_transaction_fragment(configuration: &configuration::Configurati
 /// Retrieve a transaction fragment's output document after it has been translated.
 pub async fn get_transaction_fragment_output_document(configuration: &configuration::Configuration, transaction_id: &str, fragment_index: f64) -> Result<(), Error<GetTransactionFragmentOutputDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
-    let p_fragment_index = fragment_index;
+    let p_path_transaction_id = transaction_id;
+    let p_path_fragment_index = fragment_index;
 
-    let uri_str = format!("{}/transactions/{transactionId}/fragments/{fragmentIndex}/output", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id), fragmentIndex=p_fragment_index);
+    let uri_str = format!("{}/transactions/{transactionId}/fragments/{fragmentIndex}/output", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id), fragmentIndex=p_path_fragment_index);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1277,10 +1277,10 @@ pub async fn get_transaction_fragment_output_document(configuration: &configurat
 /// This endpoint is used to retrieve a transaction fragment's output document URL after it has been translated via Core.  This endpoint returns the document download URL, it must be then fetched for the actual document content. There are no size restrictions on documents when fetching from this endpoint, however they are generally smaller and consumable by nature of being a fragment. 
 pub async fn get_transaction_fragment_output_document_url(configuration: &configuration::Configuration, transaction_id: &str, fragment_index: f64) -> Result<models::GetTransactionFragmentOutputDocumentUrlResponseContent, Error<GetTransactionFragmentOutputDocumentUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
-    let p_fragment_index = fragment_index;
+    let p_path_transaction_id = transaction_id;
+    let p_path_fragment_index = fragment_index;
 
-    let uri_str = format!("{}/transactions/{transactionId}/fragments/{fragmentIndex}/output-url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id), fragmentIndex=p_fragment_index);
+    let uri_str = format!("{}/transactions/{transactionId}/fragments/{fragmentIndex}/output-url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id), fragmentIndex=p_path_fragment_index);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1323,9 +1323,9 @@ pub async fn get_transaction_fragment_output_document_url(configuration: &config
 /// Retrieve a transaction's input document.
 pub async fn get_transaction_input_document(configuration: &configuration::Configuration, transaction_id: &str) -> Result<(), Error<GetTransactionInputDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
+    let p_path_transaction_id = transaction_id;
 
-    let uri_str = format!("{}/transactions/{transactionId}/input", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/transactions/{transactionId}/input", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1357,9 +1357,9 @@ pub async fn get_transaction_input_document(configuration: &configuration::Confi
 /// This endpoint is used to retrieve a transaction's input document url before it passes through any translation and mappings, generally this will be EDI.  This endpoint returns the document download URL, it must be then fetched for the actual document content. There are no size restrictions on documents when fetching from this endpoint. 
 pub async fn get_transaction_input_document_url(configuration: &configuration::Configuration, transaction_id: &str) -> Result<models::GetTransactionInputDocumentUrlResponseContent, Error<GetTransactionInputDocumentUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
+    let p_path_transaction_id = transaction_id;
 
-    let uri_str = format!("{}/transactions/{transactionId}/input-url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/transactions/{transactionId}/input-url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1402,9 +1402,9 @@ pub async fn get_transaction_input_document_url(configuration: &configuration::C
 /// Retrieve a transaction's output document.
 pub async fn get_transaction_output_document(configuration: &configuration::Configuration, transaction_id: &str) -> Result<(), Error<GetTransactionOutputDocumentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
+    let p_path_transaction_id = transaction_id;
 
-    let uri_str = format!("{}/transactions/{transactionId}/output", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/transactions/{transactionId}/output", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1436,9 +1436,9 @@ pub async fn get_transaction_output_document(configuration: &configuration::Conf
 /// This endpoint is used to retrieve a transaction's output document url after it has been translated via Core.  This endpoint returns the document download URL, it must be then fetched for the actual document content. There are no size restrictions on documents when fetching from this endpoint. 
 pub async fn get_transaction_output_document_url(configuration: &configuration::Configuration, transaction_id: &str) -> Result<models::GetTransactionOutputDocumentUrlResponseContent, Error<GetTransactionOutputDocumentUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_transaction_id = transaction_id;
+    let p_path_transaction_id = transaction_id;
 
-    let uri_str = format!("{}/transactions/{transactionId}/output-url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_transaction_id));
+    let uri_str = format!("{}/transactions/{transactionId}/output-url", configuration.base_path, transactionId=crate::core::apis::urlencode(p_path_transaction_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1481,17 +1481,17 @@ pub async fn get_transaction_output_document_url(configuration: &configuration::
 /// Fetch a list of faults for a given file execution, sorted by the date they were created from newest to oldest.
 pub async fn list_execution_faults(configuration: &configuration::Configuration, execution_id: &str, page_size: Option<f64>, page_token: Option<&str>) -> Result<models::ListExecutionFaultsResponseContent, Error<ListExecutionFaultsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
-    let p_page_size = page_size;
-    let p_page_token = page_token;
+    let p_path_execution_id = execution_id;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
 
-    let uri_str = format!("{}/executions/{executionId}/faults", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/faults", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1534,17 +1534,17 @@ pub async fn list_execution_faults(configuration: &configuration::Configuration,
 /// Fetch a list of transactions for a file execution, including the full transaction details.
 pub async fn list_execution_transactions(configuration: &configuration::Configuration, execution_id: &str, page_size: Option<f64>, page_token: Option<&str>) -> Result<models::ListExecutionTransactionsResponseContent, Error<ListExecutionTransactionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_execution_id = execution_id;
-    let p_page_size = page_size;
-    let p_page_token = page_token;
+    let p_path_execution_id = execution_id;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
 
-    let uri_str = format!("{}/executions/{executionId}/transactions", configuration.base_path, executionId=crate::core::apis::urlencode(p_execution_id));
+    let uri_str = format!("{}/executions/{executionId}/transactions", configuration.base_path, executionId=crate::core::apis::urlencode(p_path_execution_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1585,46 +1585,46 @@ pub async fn list_execution_transactions(configuration: &configuration::Configur
 }
 
 /// Fetch a list of executions, sorted by the date they were created from newest to oldest.
-pub async fn list_executions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, direction: Option<models::Direction>, fault_code: Option<models::ExecutionFaultCode>, partnership_id: Option<&str>, status: Option<models::ExecutionStatus>, from: Option<String>, to: Option<String>, display_name: Option<&str>) -> Result<models::ListExecutionsResponseContent, Error<ListExecutionsError>> {
+pub async fn list_executions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, direction: Option<models::Direction>, fault_code: Option<models::ExecutionFaultCode>, partnership_id: Option<&str>, status: Option<models::ExecutionStatus>, from: Option<chrono::DateTime<chrono::FixedOffset>>, to: Option<chrono::DateTime<chrono::FixedOffset>>, display_name: Option<&str>) -> Result<models::ListExecutionsResponseContent, Error<ListExecutionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_direction = direction;
-    let p_fault_code = fault_code;
-    let p_partnership_id = partnership_id;
-    let p_status = status;
-    let p_from = from;
-    let p_to = to;
-    let p_display_name = display_name;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_direction = direction;
+    let p_query_fault_code = fault_code;
+    let p_query_partnership_id = partnership_id;
+    let p_query_status = status;
+    let p_query_from = from;
+    let p_query_to = to;
+    let p_query_display_name = display_name;
 
     let uri_str = format!("{}/executions", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_direction {
+    if let Some(ref param_value) = p_query_direction {
         req_builder = req_builder.query(&[("direction", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_fault_code {
+    if let Some(ref param_value) = p_query_fault_code {
         req_builder = req_builder.query(&[("faultCode", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_partnership_id {
+    if let Some(ref param_value) = p_query_partnership_id {
         req_builder = req_builder.query(&[("partnershipId", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_status {
+    if let Some(ref param_value) = p_query_status {
         req_builder = req_builder.query(&[("status", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_from {
+    if let Some(ref param_value) = p_query_from {
         req_builder = req_builder.query(&[("from", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_to {
+    if let Some(ref param_value) = p_query_to {
         req_builder = req_builder.query(&[("to", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_display_name {
+    if let Some(ref param_value) = p_query_display_name {
         req_builder = req_builder.query(&[("displayName", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1665,22 +1665,22 @@ pub async fn list_executions(configuration: &configuration::Configuration, page_
 }
 
 /// Poll for new file executions that Stedi has recently processed.
-pub async fn list_polling_executions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, start_date_time: Option<String>) -> Result<models::ListPollingExecutionsResponseContent, Error<ListPollingExecutionsError>> {
+pub async fn list_polling_executions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, start_date_time: Option<chrono::DateTime<chrono::FixedOffset>>) -> Result<models::ListPollingExecutionsResponseContent, Error<ListPollingExecutionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_start_date_time = start_date_time;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_start_date_time = start_date_time;
 
     let uri_str = format!("{}/polling/executions", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_start_date_time {
+    if let Some(ref param_value) = p_query_start_date_time {
         req_builder = req_builder.query(&[("startDateTime", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1721,22 +1721,22 @@ pub async fn list_polling_executions(configuration: &configuration::Configuratio
 }
 
 /// Poll for new transactions that Stedi has processed.
-pub async fn list_polling_transactions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, start_date_time: Option<String>) -> Result<models::ListPollingTransactionsResponseContent, Error<ListPollingTransactionsError>> {
+pub async fn list_polling_transactions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, start_date_time: Option<chrono::DateTime<chrono::FixedOffset>>) -> Result<models::ListPollingTransactionsResponseContent, Error<ListPollingTransactionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_start_date_time = start_date_time;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_start_date_time = start_date_time;
 
     let uri_str = format!("{}/polling/transactions", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_start_date_time {
+    if let Some(ref param_value) = p_query_start_date_time {
         req_builder = req_builder.query(&[("startDateTime", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1777,62 +1777,62 @@ pub async fn list_polling_transactions(configuration: &configuration::Configurat
 }
 
 /// Fetch a list of transactions, sorted by the date they were created from newest to oldest.
-pub async fn list_transactions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, business_identifier: Option<&str>, transaction_set_id: Option<models::X12TransactionSetIdentifierCode>, sender: Option<&str>, receiver: Option<&str>, direction: Option<models::Direction>, mode: Option<models::Mode>, status: Option<models::TransactionStatus>, from: Option<String>, to: Option<String>, element_id: Option<&str>, partnership_id: Option<&str>) -> Result<models::ListTransactionsResponseContent, Error<ListTransactionsError>> {
+pub async fn list_transactions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, business_identifier: Option<&str>, transaction_set_id: Option<models::X12TransactionSetIdentifierCode>, sender: Option<&str>, receiver: Option<&str>, direction: Option<models::Direction>, mode: Option<models::Mode>, status: Option<models::TransactionStatus>, from: Option<chrono::DateTime<chrono::FixedOffset>>, to: Option<chrono::DateTime<chrono::FixedOffset>>, element_id: Option<&str>, partnership_id: Option<&str>) -> Result<models::ListTransactionsResponseContent, Error<ListTransactionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_page_size = page_size;
-    let p_page_token = page_token;
-    let p_business_identifier = business_identifier;
-    let p_transaction_set_id = transaction_set_id;
-    let p_sender = sender;
-    let p_receiver = receiver;
-    let p_direction = direction;
-    let p_mode = mode;
-    let p_status = status;
-    let p_from = from;
-    let p_to = to;
-    let p_element_id = element_id;
-    let p_partnership_id = partnership_id;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_business_identifier = business_identifier;
+    let p_query_transaction_set_id = transaction_set_id;
+    let p_query_sender = sender;
+    let p_query_receiver = receiver;
+    let p_query_direction = direction;
+    let p_query_mode = mode;
+    let p_query_status = status;
+    let p_query_from = from;
+    let p_query_to = to;
+    let p_query_element_id = element_id;
+    let p_query_partnership_id = partnership_id;
 
     let uri_str = format!("{}/transactions", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_page_size {
+    if let Some(ref param_value) = p_query_page_size {
         req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_page_token {
+    if let Some(ref param_value) = p_query_page_token {
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_business_identifier {
+    if let Some(ref param_value) = p_query_business_identifier {
         req_builder = req_builder.query(&[("businessIdentifier", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_transaction_set_id {
+    if let Some(ref param_value) = p_query_transaction_set_id {
         req_builder = req_builder.query(&[("transactionSetId", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_sender {
+    if let Some(ref param_value) = p_query_sender {
         req_builder = req_builder.query(&[("sender", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_receiver {
+    if let Some(ref param_value) = p_query_receiver {
         req_builder = req_builder.query(&[("receiver", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_direction {
+    if let Some(ref param_value) = p_query_direction {
         req_builder = req_builder.query(&[("direction", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_mode {
+    if let Some(ref param_value) = p_query_mode {
         req_builder = req_builder.query(&[("mode", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_status {
+    if let Some(ref param_value) = p_query_status {
         req_builder = req_builder.query(&[("status", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_from {
+    if let Some(ref param_value) = p_query_from {
         req_builder = req_builder.query(&[("from", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_to {
+    if let Some(ref param_value) = p_query_to {
         req_builder = req_builder.query(&[("to", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_element_id {
+    if let Some(ref param_value) = p_query_element_id {
         req_builder = req_builder.query(&[("elementId", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_partnership_id {
+    if let Some(ref param_value) = p_query_partnership_id {
         req_builder = req_builder.query(&[("partnershipId", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1875,9 +1875,9 @@ pub async fn list_transactions(configuration: &configuration::Configuration, pag
 /// This endpoint retriggers the specified processing event.
 pub async fn retry_event(configuration: &configuration::Configuration, event_id: &str) -> Result<models::RetryEventResponseContent, Error<RetryEventError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_event_id = event_id;
+    let p_path_event_id = event_id;
 
-    let uri_str = format!("{}/events/{eventId}/retry", configuration.base_path, eventId=crate::core::apis::urlencode(p_event_id));
+    let uri_str = format!("{}/events/{eventId}/retry", configuration.base_path, eventId=crate::core::apis::urlencode(p_path_event_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -1920,7 +1920,7 @@ pub async fn retry_event(configuration: &configuration::Configuration, event_id:
 /// Queue file executions to be retried.
 pub async fn retry_executions(configuration: &configuration::Configuration, retry_executions_request_content: models::RetryExecutionsRequestContent) -> Result<(), Error<RetryExecutionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_retry_executions_request_content = retry_executions_request_content;
+    let p_body_retry_executions_request_content = retry_executions_request_content;
 
     let uri_str = format!("{}/executions/retry", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -1936,7 +1936,7 @@ pub async fn retry_executions(configuration: &configuration::Configuration, retr
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_retry_executions_request_content);
+    req_builder = req_builder.json(&p_body_retry_executions_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

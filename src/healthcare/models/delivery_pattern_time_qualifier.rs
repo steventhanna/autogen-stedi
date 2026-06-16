@@ -22,9 +22,9 @@ pub enum DeliveryPatternTimeQualifier {
     #[serde(rename = "3rd Shift")]
     Variant3rdShift,
     #[serde(rename = "A.M.")]
-    APeriodMPeriod,
+    AM,
     #[serde(rename = "P.M.")]
-    PPeriodMPeriod,
+    PM,
     #[serde(rename = "As Directed")]
     AsDirected,
     #[serde(rename = "Any Shift")]
@@ -40,8 +40,8 @@ impl std::fmt::Display for DeliveryPatternTimeQualifier {
             Self::Variant1stShiftLeftParenthesisNormalWorkingHoursRightParenthesis => write!(f, "1st Shift (Normal Working Hours)"),
             Self::Variant2ndShift => write!(f, "2nd Shift"),
             Self::Variant3rdShift => write!(f, "3rd Shift"),
-            Self::APeriodMPeriod => write!(f, "A.M."),
-            Self::PPeriodMPeriod => write!(f, "P.M."),
+            Self::AM => write!(f, "A.M."),
+            Self::PM => write!(f, "P.M."),
             Self::AsDirected => write!(f, "As Directed"),
             Self::AnyShift => write!(f, "Any Shift"),
             Self::NoneLeftParenthesisAlsoUsedToCancelOrOverrideAPreviousPatternRightParenthesis => write!(f, "None (Also Used to Cancel or Override a Previous Pattern)"),
