@@ -54,7 +54,7 @@ pub struct Payer {
     /// The payer's [National Provider Identifier (NPI)](https://www.stedi.com/docs/healthcare/national-provider-identifier).
     #[serde(rename = "npi", skip_serializing_if = "Option::is_none")]
     pub npi: Option<String>,
-    /// The payor identification.
+    /// The payer identification.
     #[serde(rename = "payorIdentification", skip_serializing_if = "Option::is_none")]
     pub payor_identification: Option<String>,
     /// The payer's name suffix, such as Jr. or III. Used when the payer is an individual (not commonly used).
