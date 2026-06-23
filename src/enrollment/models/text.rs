@@ -12,16 +12,16 @@ use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct PdfUpload {
-    /// This `responseData` type will be deprecated on July 20, 2026 and later removed. Use `manualTask` instead.  Add details from a PDF that has been uploaded to complete a `provideFilledPdf` task. Required when completing a task where `task.definition.provideFilledPdf` is present.
-    #[serde(rename = "pdfUpload")]
-    pub pdf_upload: Box<models::PdfUploadResponse>,
+pub struct Text {
+    /// Free-form text when the `fieldType` is `TEXT`.
+    #[serde(rename = "text")]
+    pub text: String,
 }
 
-impl PdfUpload {
-    pub fn new(pdf_upload: models::PdfUploadResponse) -> PdfUpload {
-        PdfUpload {
-            pdf_upload: Box::new(pdf_upload),
+impl Text {
+    pub fn new(text: String) -> Text {
+        Text {
+            text,
         }
     }
 }

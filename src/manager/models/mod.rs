@@ -134,6 +134,8 @@ pub mod encounter_reference_identification_qualifier;
 pub use self::encounter_reference_identification_qualifier::EncounterReferenceIdentificationQualifier;
 pub mod entity_type_qualifier;
 pub use self::entity_type_qualifier::EntityTypeQualifier;
+pub mod gateway_timeout_exception_response_content;
+pub use self::gateway_timeout_exception_response_content::GatewayTimeoutExceptionResponseContent;
 pub mod gender;
 pub use self::gender::Gender;
 pub mod gender_with_unknown;

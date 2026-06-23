@@ -12,16 +12,16 @@ use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct PdfUpload {
-    /// This `responseData` type will be deprecated on July 20, 2026 and later removed. Use `manualTask` instead.  Add details from a PDF that has been uploaded to complete a `provideFilledPdf` task. Required when completing a task where `task.definition.provideFilledPdf` is present.
-    #[serde(rename = "pdfUpload")]
-    pub pdf_upload: Box<models::PdfUploadResponse>,
+pub struct ManualTask1 {
+    /// Values provided to complete a manual task. Visit [Manage enrollment tasks](https://www.stedi.com/docs/healthcare/transaction-enrollment-tasks-documents#api) for details.
+    #[serde(rename = "manualTask")]
+    pub manual_task: Box<models::ManualTaskResponse>,
 }
 
-impl PdfUpload {
-    pub fn new(pdf_upload: models::PdfUploadResponse) -> PdfUpload {
-        PdfUpload {
-            pdf_upload: Box::new(pdf_upload),
+impl ManualTask1 {
+    pub fn new(manual_task: models::ManualTaskResponse) -> ManualTask1 {
+        ManualTask1 {
+            manual_task: Box::new(manual_task),
         }
     }
 }
