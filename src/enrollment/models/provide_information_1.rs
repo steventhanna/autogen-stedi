@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ProvideInformation1 {
-    /// Provide notes or confirmation text to Stedi.
+    /// This `responseData` type will be deprecated on July 20, 2026 and later removed. Use `manualTask` instead.  Provide notes or confirmation text to Stedi.
     #[serde(rename = "provideInformation")]
     pub provide_information: Box<models::ProvideInformationResponse>,
 }
