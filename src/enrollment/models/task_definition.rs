@@ -19,6 +19,7 @@ pub enum TaskDefinition {
     FollowInstructions(Box<models::FollowInstructions>),
     ProvideFilledPdf(Box<models::ProvideFilledPdf>),
     ProvideInformation(Box<models::ProvideInformation>),
+    ManualTask(Box<models::ManualTask>),
 }
 
 impl Default for TaskDefinition {
