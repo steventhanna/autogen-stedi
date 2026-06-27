@@ -17,7 +17,7 @@ pub struct UpdateTaskPostRequestContent {
     /// Indicates whether the task is completed. Set to `true` to mark the task as complete. If omitted, the default is `false`.
     #[serde(rename = "completed", skip_serializing_if = "Option::is_none")]
     pub completed: Option<bool>,
-    /// Additional data you can submit to Stedi when completing a task.   - Required for `provideFilledPdf` tasks. Use the `pdfUpload` object type. [Learn more](https://www.stedi.com/docs/healthcare/create-manage-transaction-enrollments#pdf-workflow)   - Optional for `provideInformation` tasks.   - Stedi ignores this object for `followInstructions` tasks.
+    /// Additional data you can submit to Stedi when completing a task.   - Required for `manualTask` tasks with fields. Use the `manualTask` object type with a `values` array. [Learn more](https://www.stedi.com/docs/healthcare/transaction-enrollment-tasks-documents#api)   - Required for `provideFilledPdf` tasks. Use the `pdfUpload` object type.   - Optional for `provideInformation` tasks.   - Stedi ignores this object for `followInstructions` tasks.
     #[serde(rename = "responseData", skip_serializing_if = "Option::is_none")]
     pub response_data: Option<Box<models::TaskResponseData>>,
 }

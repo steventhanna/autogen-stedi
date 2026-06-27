@@ -17,12 +17,12 @@ pub struct EligibilityBatchItemInfo {
     /// When a payer rejects your eligibility check, the response contains one or more [`AAA` errors](https://www.stedi.com/docs/healthcare/eligibility-troubleshooting#payer-aaa-errors) that specify the reasons for the rejection and any recommended follow-up actions.  Any errors that occur at the `payer`, `provider`, `subscriber`, or `dependents` levels are also included in this array, allowing you to review all errors in a central location. If there are no `AAA` errors, this array will be empty.
     #[serde(rename = "aaaErrors", skip_serializing_if = "Option::is_none")]
     pub aaa_errors: Option<Vec<models::EligibilityCheckError>>,
+    /// The result of the eligibility check for this batch item. Can be:   - `ACTIVE`: The payer's response contains an active eligibility and benefit type. This means that the patient has active coverage for at least some services.   - `INACTIVE`: The payer's response doesn't contain an active eligibility and benefit type. This means that the patient doesn't have active coverage for the requested services.   - `INVESTIGATE`: The payer returned an unexpected eligibility or benefit type code. Review the response and contact the payer if you have questions.   - `FAILED`: The payer returned an error code in the response. Review the error code and retry the eligibility check.
+    #[serde(rename = "eligibilityCheckResult", skip_serializing_if = "Option::is_none")]
+    pub eligibility_check_result: Option<models::EligibilityCheckResult>,
     /// The eligibility search ID for this eligibility check. This is an identifier that allows Stedi to group eligibility checks for the same patient into a unified record in the Stedi portal called an [eligibility search](https://www.stedi.com/docs/healthcare/eligibility-searches-view).  This property is for use by Stedi tools only, such as Stedi's MCP server.
     #[serde(rename = "eligibilitySearchId", skip_serializing_if = "Option::is_none")]
     pub eligibility_search_id: Option<String>,
-    /// The status of the eligibility check. Can be:   - `queued`: Stedi placed the eligibility check in its internal queue and will send it to the payer when resources are available. This status is common when you schedule batch eligibility check refreshes through the API or perform large bulk retries that exceed your account's concurrency budget. You can typically expect the status to change to `Started` within a few seconds.   - `started`: Stedi has sent the eligibility check to the payer and is waiting for a response.   - `failed`: The payer returned an error code in the response. Review the error code and retry the eligibility check.   - `inactive`: The payer's response doesn't contain an active eligibility and benefit type. This means that the patient doesn't have active coverage for the requested services.   - `active`: The payer's response contains an active eligibility and benefit type. This means that the patient has active coverage for at least some services.
-    #[serde(rename = "eligibilitySearchStatus", skip_serializing_if = "Option::is_none")]
-    pub eligibility_search_status: Option<models::EligibilitySearchStatus>,
     /// The unique identifier for this eligibility check. This is the ID of the specific eligibility check request within the batch.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
@@ -57,8 +57,8 @@ impl EligibilityBatchItemInfo {
     pub fn new() -> EligibilityBatchItemInfo {
         EligibilityBatchItemInfo {
             aaa_errors: None,
+            eligibility_check_result: None,
             eligibility_search_id: None,
-            eligibility_search_status: None,
             id: None,
             outbound_trace_id: None,
             payer_id: None,

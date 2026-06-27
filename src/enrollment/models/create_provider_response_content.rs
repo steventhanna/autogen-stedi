@@ -32,7 +32,7 @@ pub struct CreateProviderResponseContent {
     /// The provider's tax ID, as specified by `taxIdType`. This identifier has to be provided without any separators, such as dashes or spaces. For example 111-22-3333 is invalid but `111223333` is valid.  Each provider record must have a unique `npi` and `taxId` combination. For example, you can create two provider records with the same `taxId` as long as they have different values for `npi`.
     #[serde(rename = "taxId", skip_serializing_if = "Option::is_none")]
     pub tax_id: Option<String>,
-    /// The type of tax ID. Can be either an `EIN` - Employer Identification Number, or an `SSN` - Social Security Number.
+    /// The type of tax ID. Can be either an `EIN` (Employer Identification Number) or an `SSN` (Social Security Number).   - Organizations (Type 2 NPIs) must use `EIN`.   - Individual providers (Type 1 NPIs) can use either `EIN` or `SSN`.
     #[serde(rename = "taxIdType", skip_serializing_if = "Option::is_none")]
     pub tax_id_type: Option<models::TaxIdType>,
     /// The date and time Stedi last updated the provider record.
