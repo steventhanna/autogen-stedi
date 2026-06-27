@@ -11,17 +11,23 @@
 use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
+/// TaskLink : A labeled URL surfaced alongside a task's instructions, e.g. a payer portal or reference document.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct PdfUpload {
-    /// This `responseData` type will be deprecated on July 20, 2026 and later removed. Use `manualTask` instead.  Add details from a PDF that has been uploaded to complete a `provideFilledPdf` task. Required when completing a task where `task.definition.provideFilledPdf` is present.
-    #[serde(rename = "pdfUpload")]
-    pub pdf_upload: Box<models::PdfUploadResponse>,
+pub struct TaskLink {
+    /// Descriptive label for the URL, such as `Provider Portal` or `W-9 Template`.
+    #[serde(rename = "label")]
+    pub label: String,
+    /// The URL for the resource.
+    #[serde(rename = "url")]
+    pub url: String,
 }
 
-impl PdfUpload {
-    pub fn new(pdf_upload: models::PdfUploadResponse) -> PdfUpload {
-        PdfUpload {
-            pdf_upload: Box::new(pdf_upload),
+impl TaskLink {
+    /// A labeled URL surfaced alongside a task's instructions, e.g. a payer portal or reference document.
+    pub fn new(label: String, url: String) -> TaskLink {
+        TaskLink {
+            label,
+            url,
         }
     }
 }

@@ -11,29 +11,29 @@
 use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
-/// TaxIdType : The type of tax identification number. Organizations (Type 2 NPIs) must use `EIN`, while individual providers (Type 1 NPIs) can use either `EIN` or `SSN`.
-/// The type of tax identification number. Organizations (Type 2 NPIs) must use `EIN`, while individual providers (Type 1 NPIs) can use either `EIN` or `SSN`.
+/// FieldType : The accepted field types for a manual task.
+/// The accepted field types for a manual task.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum TaxIdType {
-    #[serde(rename = "EIN")]
-    Ein,
-    #[serde(rename = "SSN")]
-    Ssn,
+pub enum FieldType {
+    #[serde(rename = "TEXT")]
+    Text,
+    #[serde(rename = "DOCUMENT")]
+    Document,
 
 }
 
-impl std::fmt::Display for TaxIdType {
+impl std::fmt::Display for FieldType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Ein => write!(f, "EIN"),
-            Self::Ssn => write!(f, "SSN"),
+            Self::Text => write!(f, "TEXT"),
+            Self::Document => write!(f, "DOCUMENT"),
         }
     }
 }
 
-impl Default for TaxIdType {
-    fn default() -> TaxIdType {
-        Self::Ein
+impl Default for FieldType {
+    fn default() -> FieldType {
+        Self::Text
     }
 }
 

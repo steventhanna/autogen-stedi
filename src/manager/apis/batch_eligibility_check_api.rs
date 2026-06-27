@@ -221,13 +221,13 @@ pub async fn get_batch(configuration: &configuration::Configuration, batch_id: &
 }
 
 /// Retrieve status information for all eligibility checks within a batch, regardless of processing status
-pub async fn get_batch_items(configuration: &configuration::Configuration, batch_id: &str, page_size: Option<i32>, page_token: Option<&str>, state: Option<Vec<models::BatchItemState>>, eligibility_search_outcome: Option<Vec<models::EligibilitySearchOutcome>>) -> Result<models::GetBatchItemsResponseContent, Error<GetBatchItemsError>> {
+pub async fn get_batch_items(configuration: &configuration::Configuration, batch_id: &str, page_size: Option<i32>, page_token: Option<&str>, state: Option<Vec<models::BatchItemState>>, eligibility_check_result: Option<Vec<models::EligibilityCheckResult>>) -> Result<models::GetBatchItemsResponseContent, Error<GetBatchItemsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_batch_id = batch_id;
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
     let p_query_state = state;
-    let p_query_eligibility_search_outcome = eligibility_search_outcome;
+    let p_query_eligibility_check_result = eligibility_check_result;
 
     let uri_str = format!("{}/eligibility-manager/batch/{batchId}/items", configuration.base_path, batchId=crate::manager::apis::urlencode(p_path_batch_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -244,10 +244,10 @@ pub async fn get_batch_items(configuration: &configuration::Configuration, batch
             _ => req_builder.query(&[("state", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
-    if let Some(ref param_value) = p_query_eligibility_search_outcome {
+    if let Some(ref param_value) = p_query_eligibility_check_result {
         req_builder = match "multi" {
-            "multi" => req_builder.query(&param_value.into_iter().map(|p| ("eligibilitySearchOutcome".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => req_builder.query(&[("eligibilitySearchOutcome", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => req_builder.query(&param_value.into_iter().map(|p| ("eligibilityCheckResult".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => req_builder.query(&[("eligibilityCheckResult", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
     if let Some(ref user_agent) = configuration.user_agent {
