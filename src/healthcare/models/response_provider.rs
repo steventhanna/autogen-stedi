@@ -35,7 +35,7 @@ pub struct ResponseProvider {
     /// The provider's [National Provider Identifier (NPI)](https://www.stedi.com/docs/healthcare/national-provider-identifier).
     #[serde(rename = "npi", skip_serializing_if = "Option::is_none")]
     pub npi: Option<String>,
-    /// The Payor Identification.
+    /// The payer identification.
     #[serde(rename = "payorIdentification", skip_serializing_if = "Option::is_none")]
     pub payor_identification: Option<String>,
     /// The pharmacy processor number.
