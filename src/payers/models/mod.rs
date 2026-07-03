@@ -36,6 +36,8 @@ pub mod payer_urls;
 pub use self::payer_urls::PayerUrls;
 pub mod professional_claim_enrollment_process;
 pub use self::professional_claim_enrollment_process::ProfessionalClaimEnrollmentProcess;
+pub mod program;
+pub use self::program::Program;
 pub mod requested_effective_date;
 pub use self::requested_effective_date::RequestedEffectiveDate;
 pub mod resource_not_found_exception_response_content;

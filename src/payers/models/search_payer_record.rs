@@ -46,6 +46,9 @@ pub struct SearchPayerRecord {
     /// The most commonly used ID for a payer. This value often corresponds to the name the payer uses internally and provides to patients on member ID cards.
     #[serde(rename = "primaryPayerId")]
     pub primary_payer_id: String,
+    /// A list of insurance programs that this payer participates in. For example: `[\"MEDICAID\", \"MEDICARE\"]`. If Stedi hasn't assigned any programs to this payer, this array is empty.
+    #[serde(rename = "programs")]
+    pub programs: Vec<models::Program>,
     /// A unique ID that Stedi assigned to this payer and uses internally for routing requests. This ID will not change even if the `primaryPayerId` is updated.
     #[serde(rename = "stediId")]
     pub stedi_id: String,
@@ -57,7 +60,7 @@ pub struct SearchPayerRecord {
 }
 
 impl SearchPayerRecord {
-    pub fn new(aliases: Vec<String>, display_name: String, names: Vec<String>, primary_payer_id: String, stedi_id: String, transaction_support: models::SearchPayerTransactionSupport) -> SearchPayerRecord {
+    pub fn new(aliases: Vec<String>, display_name: String, names: Vec<String>, primary_payer_id: String, programs: Vec<models::Program>, stedi_id: String, transaction_support: models::SearchPayerTransactionSupport) -> SearchPayerRecord {
         SearchPayerRecord {
             aliases,
             avatar_url: None,
@@ -70,6 +73,7 @@ impl SearchPayerRecord {
             operating_states: None,
             parent_payer_group_id: None,
             primary_payer_id,
+            programs,
             stedi_id,
             transaction_support: Box::new(transaction_support),
             urls: None,

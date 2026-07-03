@@ -63,7 +63,7 @@ pub struct EligibilityRawX12CheckResponseContent {
     /// The transaction set acknowledgment code provided in in the [X12 EDI 999 response](https://portal.stedi.com/app/guides/view/hipaa/implementation-acknowledgment-x231/01HRF41ES1DVGCA6X1EHSRPFXZ#properties.heading.properties.transaction_set_response_header_AK2_loop.items.properties.transaction_set_response_trailer_IK5).
     #[serde(rename = "transactionSetAcknowledgement", skip_serializing_if = "Option::is_none")]
     pub transaction_set_acknowledgement: Option<String>,
-    /// Warnings indicate non-fatal issues with your eligibility check or a non-standard response from the payer.
+    /// Issues with your eligibility request that could affect the results, or information about the response. For example, warnings can help explain why the request was rejected.
     #[serde(rename = "warnings", skip_serializing_if = "Option::is_none")]
     pub warnings: Option<Vec<models::Warning>>,
     /// Typically this property contains the raw X12 EDI [271 Eligibility Benefit Response](https://portal.stedi.com/app/guides/view/hipaa/health-care-eligibility-benefit-response-x279a1/01GS66YHZPB37ABF34DBPSR213) from the payer.  In some circumstances, this property may contain a [999 Implementation Acknowledgment](https://portal.stedi.com/app/guides/view/hipaa/implementation-acknowledgment-x231a1/01HMRQV0N8SPHG58M4ZG1CRHH0) instead of a 271. A 999 indicates validation errors in the X12 EDI transaction, such as improper formatting or missing or invalid values.  If the 999 is returned in this property, many of the other response properties will be empty, as they are mapped to information in the 271.
