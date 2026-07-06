@@ -11,19 +11,18 @@
 use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
-/// TaskResponseData : A discriminated union of task response data. Contains structured data collected when completing specific task types.
-/// A discriminated union of task response data. Contains structured data collected when completing specific task types.
+/// ManualTaskResponseValue : The value supplied for a `ManualTaskField`. The variant used must match the field's declared `FieldType`. Supply multiple entries with distinct keys to capture multiple documents or values.
+/// The value supplied for a `ManualTaskField`. The variant used must match the field's declared `FieldType`. Supply multiple entries with distinct keys to capture multiple documents or values.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum TaskResponseData {
-    PdfUpload(Box<models::PdfUpload>),
-    ProvideInformation1(Box<models::ProvideInformation1>),
-    ManualTask1(Box<models::ManualTask1>),
+pub enum ManualTaskResponseValue {
+    Text(Box<models::Text>),
+    Document(Box<models::Document>),
 }
 
-impl Default for TaskResponseData {
+impl Default for ManualTaskResponseValue {
     fn default() -> Self {
-        Self::PdfUpload(Default::default())
+        Self::Text(Default::default())
     }
 }
 

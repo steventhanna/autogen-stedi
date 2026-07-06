@@ -127,6 +127,8 @@ pub enum OperatingStateCode {
     As,
     #[serde(rename = "MP")]
     Mp,
+    #[serde(rename = "FM")]
+    Fm,
     #[serde(rename = "NATIONAL")]
     National,
 
@@ -191,6 +193,7 @@ impl std::fmt::Display for OperatingStateCode {
             Self::Gu => write!(f, "GU"),
             Self::As => write!(f, "AS"),
             Self::Mp => write!(f, "MP"),
+            Self::Fm => write!(f, "FM"),
             Self::National => write!(f, "NATIONAL"),
         }
     }

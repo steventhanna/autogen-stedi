@@ -24,6 +24,7 @@ pub enum GetEligibilityCheckPdfError {
     Status403(models::AccessDeniedExceptionResponseContent),
     Status404(models::ResourceNotFoundExceptionResponseContent),
     Status500(models::InternalFailureExceptionResponseContent),
+    Status504(models::GatewayTimeoutExceptionResponseContent),
     UnknownValue(serde_json::Value),
 }
 
