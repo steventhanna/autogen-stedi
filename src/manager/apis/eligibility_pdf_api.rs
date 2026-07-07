@@ -19,7 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetEligibilityCheckPdfError {
-    Status400(models::ValidationExceptionResponseContent),
+    Status400(models::PdfRenderLimitExceededExceptionResponseContent),
     Status401(models::UnauthorizedExceptionResponseContent),
     Status403(models::AccessDeniedExceptionResponseContent),
     Status404(models::ResourceNotFoundExceptionResponseContent),
