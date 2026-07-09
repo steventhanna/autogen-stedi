@@ -37,7 +37,7 @@ pub struct SearchPayerRecord {
     /// Alternative names associated with a payer. These additional names help you search for and identify payers using the name most familiar to your organization.
     #[serde(rename = "names")]
     pub names: Vec<String>,
-    /// A list of US state codes, territories, or `NATIONAL` that indicates the geographic regions where this payer operates. For example: `[\"CA\", \"OR\"]` for a regional payer, or `[\"NATIONAL\"]` for a payer that operates throughout the entire United States.  When this array isn't in the response, it means Stedi hasn't classified the payer's operating states yet.
+    /// A list of US state codes, territories, or `NATIONAL` that indicates the geographic regions where this payer operates. For example: `[\"CA\", \"OR\"]` for a regional payer, or `[\"NATIONAL\"]` for a payer that operates in all 50 U.S. states. Supported territories are listed separately.  When this array isn't in the response, it means Stedi hasn't classified the payer's operating states yet.
     #[serde(rename = "operatingStates", skip_serializing_if = "Option::is_none")]
     pub operating_states: Option<Vec<models::OperatingStateCode>>,
     /// The payer's parent payer group entity. This is metadata Stedi uses internally. It doesn't necessarily relate to the payer's enrollment process or other capabilities.
