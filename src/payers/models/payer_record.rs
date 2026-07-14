@@ -37,10 +37,10 @@ pub struct PayerRecord {
     /// Alternative names associated with a payer. These additional names help you search for and identify payers using the name most familiar to your organization.
     #[serde(rename = "names")]
     pub names: Vec<String>,
-    /// A list of US state codes, territories, or `NATIONAL` that indicates the geographic regions where this payer operates. For example: `[\"CA\", \"OR\"]` for a regional payer, or `[\"NATIONAL\"]` for a payer that operates throughout the entire United States.  When this array isn't in the response, it means Stedi hasn't classified the payer's operating states yet.
+    /// A list of US state codes, territories, or `NATIONAL` that indicates the geographic regions where this payer operates. For example: `[\"CA\", \"OR\"]` for a regional payer, or `[\"NATIONAL\"]` for a payer that operates in all 50 U.S. states. Supported territories are listed separately.  When this array isn't in the response, it means Stedi hasn't classified the payer's operating states yet.
     #[serde(rename = "operatingStates", skip_serializing_if = "Option::is_none")]
     pub operating_states: Option<Vec<models::OperatingStateCode>>,
-    /// The payer's parent payer group entity. This is metadata Stedi uses internally. It doesn't necessarily relate to the payer's enrollment process or other capabilities.
+    /// The identifier for the corporate or brand group to which the payer belongs. The parent payer group is organizational metadata only – it doesn't affect routing, enrollment, or transaction support. Two payers sharing a parent payer group may not behave the same way. This property is only returned when the payer has a parent payer group.
     #[serde(rename = "parentPayerGroupId", skip_serializing_if = "Option::is_none")]
     pub parent_payer_group_id: Option<String>,
     /// The most commonly used ID for a payer. This value often corresponds to the name the payer uses internally and provides to patients on member ID cards.

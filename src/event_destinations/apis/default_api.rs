@@ -15,10 +15,10 @@ use crate::event_destinations::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
-/// struct for typed errors of method [`get_event`]
+/// struct for typed errors of method [`event_destinations_get_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetEventError {
+pub enum EventDestinationsGetEventError {
     Status400(models::ValidationExceptionResponseContent),
     Status401(models::UnauthorizedExceptionResponseContent),
     Status403(models::AccessDeniedExceptionResponseContent),
@@ -27,10 +27,10 @@ pub enum GetEventError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`list_events`]
+/// struct for typed errors of method [`event_destinations_list_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListEventsError {
+pub enum EventDestinationsListEventsError {
     Status400(models::ValidationExceptionResponseContent),
     Status401(models::UnauthorizedExceptionResponseContent),
     Status403(models::AccessDeniedExceptionResponseContent),
@@ -40,7 +40,7 @@ pub enum ListEventsError {
 
 
 /// Retrieves the details of an existing event by its identifier.
-pub async fn get_event(configuration: &configuration::Configuration, event_id: &str) -> Result<models::GetEventResponseContent, Error<GetEventError>> {
+pub async fn event_destinations_get_event(configuration: &configuration::Configuration, event_id: &str) -> Result<models::EventDestinationsGetEventResponseContent, Error<EventDestinationsGetEventError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_event_id = event_id;
 
@@ -74,18 +74,18 @@ pub async fn get_event(configuration: &configuration::Configuration, event_id: &
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetEventResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetEventResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsGetEventResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsGetEventResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<GetEventError> = serde_json::from_str(&content).ok();
+        let entity: Option<EventDestinationsGetEventError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
 /// Lists all events for your account. Results are paginated.
-pub async fn list_events(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, event_id: Option<&str>, status: Option<Vec<models::EventStatus>>, event_type: Option<&str>, created: Option<Vec<String>>) -> Result<models::ListEventsResponseContent, Error<ListEventsError>> {
+pub async fn event_destinations_list_events(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, event_id: Option<&str>, status: Option<Vec<models::EventStatus>>, event_type: Option<&str>, created: Option<Vec<String>>) -> Result<models::EventDestinationsListEventsResponseContent, Error<EventDestinationsListEventsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
@@ -148,12 +148,12 @@ pub async fn list_events(configuration: &configuration::Configuration, page_size
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListEventsResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListEventsResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsListEventsResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsListEventsResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<ListEventsError> = serde_json::from_str(&content).ok();
+        let entity: Option<EventDestinationsListEventsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

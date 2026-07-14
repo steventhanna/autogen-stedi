@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// GetEventResponseContent : Output containing the event details.
+/// EventDestinationsGetEventResponseContent : Output containing the event details.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct GetEventResponseContent {
+pub struct EventDestinationsGetEventResponseContent {
     /// An ISO 8601 timestamp of when the event was created.
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
@@ -31,10 +31,10 @@ pub struct GetEventResponseContent {
     pub status: models::EventStatus,
 }
 
-impl GetEventResponseContent {
+impl EventDestinationsGetEventResponseContent {
     /// Output containing the event details.
-    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_payload: models::EventPayload, event_type: String, id: String, status: models::EventStatus) -> GetEventResponseContent {
-        GetEventResponseContent {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_payload: models::EventPayload, event_type: String, id: String, status: models::EventStatus) -> EventDestinationsGetEventResponseContent {
+        EventDestinationsGetEventResponseContent {
             created_at,
             event_payload: Box::new(event_payload),
             event_type,

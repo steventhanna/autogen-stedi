@@ -31,6 +31,8 @@ pub struct CreatePartnershipOutboundTransactionRequestContent {
     pub mapping_id: Option<String>,
     #[serde(rename = "interchangeOverrides", skip_serializing_if = "Option::is_none")]
     pub interchange_overrides: Option<Box<models::InterchangeOverrides>>,
+    #[serde(rename = "interchangeAuthorization", skip_serializing_if = "Option::is_none")]
+    pub interchange_authorization: Option<Box<models::X12InterchangeAuthorization>>,
 }
 
 impl CreatePartnershipOutboundTransactionRequestContent {
@@ -43,6 +45,7 @@ impl CreatePartnershipOutboundTransactionRequestContent {
             fragment_group_ids: None,
             mapping_id: None,
             interchange_overrides: None,
+            interchange_authorization: None,
         }
     }
 }
