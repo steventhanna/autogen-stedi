@@ -59,6 +59,8 @@ pub struct ExecutionSummary {
     pub connection_id: Option<String>,
     #[serde(rename = "source", skip_serializing_if = "Option::is_none")]
     pub source: Option<Box<models::ExecutionSource>>,
+    #[serde(rename = "mode", skip_serializing_if = "Option::is_none")]
+    pub mode: Option<models::ExecutionMode>,
 }
 
 impl ExecutionSummary {
@@ -82,6 +84,7 @@ impl ExecutionSummary {
             connection_type: None,
             connection_id: None,
             source: None,
+            mode: None,
         }
     }
 }
