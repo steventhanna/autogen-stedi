@@ -91,6 +91,11 @@ echo "==> Applying post-generation fixes..."
 # idempotent pass renames the earlier (deprecated) collision to <name>_legacy<n>.
 python3 scripts/fix-duplicate-fields.py src
 
+# The generator serializes chrono DateTime query params via Display ("2026-07-17 00:00:00 +00:00"),
+# which is not RFC 3339 and is rejected by the Stedi API. Rewrite those sites to to_rfc3339_opts.
+# Guarded by tests/datetime_query_params.rs.
+python3 scripts/fix-datetime-query-params.py src
+
 echo "==> Verifying compilation..."
 cargo check --all-features
 cargo check --no-default-features --features "claims,native-tls"

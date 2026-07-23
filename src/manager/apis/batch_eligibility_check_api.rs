@@ -136,7 +136,7 @@ pub async fn batch_eligibility_polling(configuration: &configuration::Configurat
         req_builder = req_builder.query(&[("batchId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_start_date_time {
-        req_builder = req_builder.query(&[("startDateTime", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("startDateTime", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

@@ -1619,10 +1619,10 @@ pub async fn list_executions(configuration: &configuration::Configuration, page_
         req_builder = req_builder.query(&[("status", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from {
-        req_builder = req_builder.query(&[("from", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("from", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_to {
-        req_builder = req_builder.query(&[("to", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("to", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_display_name {
         req_builder = req_builder.query(&[("displayName", &param_value.to_string())]);
@@ -1681,7 +1681,7 @@ pub async fn list_polling_executions(configuration: &configuration::Configuratio
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_start_date_time {
-        req_builder = req_builder.query(&[("startDateTime", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("startDateTime", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -1737,7 +1737,7 @@ pub async fn list_polling_transactions(configuration: &configuration::Configurat
         req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_start_date_time {
-        req_builder = req_builder.query(&[("startDateTime", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("startDateTime", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -1824,10 +1824,10 @@ pub async fn list_transactions(configuration: &configuration::Configuration, pag
         req_builder = req_builder.query(&[("status", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from {
-        req_builder = req_builder.query(&[("from", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("from", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_to {
-        req_builder = req_builder.query(&[("to", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("to", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_element_id {
         req_builder = req_builder.query(&[("elementId", &param_value.to_string())]);
