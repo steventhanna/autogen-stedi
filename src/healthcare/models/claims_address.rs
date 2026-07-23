@@ -28,10 +28,10 @@ pub struct ClaimsAddress {
     /// Use the country subdivision codes from Part 2 of ISO 3166.
     #[serde(rename = "countrySubDivisionCode", skip_serializing_if = "Option::is_none")]
     pub country_sub_division_code: Option<String>,
-    /// The postal zone or zip code. Exclude punctuation and spaces.
+    /// The postal zone or zip code. For United States addresses, you must include the full nine-digit zip code with no separators, such as `100031502`. If you don't know the full zip code, you can find it using the [USPS ZIP Code Lookup](https://tools.usps.com/zip-code-lookup.htm) tool. Exclude punctuation and spaces.
     #[serde(rename = "postalCode", skip_serializing_if = "Option::is_none")]
     pub postal_code: Option<String>,
-    /// The state or province code. Only required when the city is in the Unites States and Canada.
+    /// The state or province code. Only required when the city is in the United States and Canada.
     #[serde(rename = "state", skip_serializing_if = "Option::is_none")]
     pub state: Option<String>,
 }

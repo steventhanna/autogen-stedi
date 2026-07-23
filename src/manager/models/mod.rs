@@ -182,6 +182,8 @@ pub mod payer;
 pub use self::payer::Payer;
 pub mod payer_entity_identifier;
 pub use self::payer_entity_identifier::PayerEntityIdentifier;
+pub mod pdf_render_limit_exceeded_exception_response_content;
+pub use self::pdf_render_limit_exceeded_exception_response_content::PdfRenderLimitExceededExceptionResponseContent;
 pub mod plan_date_information;
 pub use self::plan_date_information::PlanDateInformation;
 pub mod plan_information;

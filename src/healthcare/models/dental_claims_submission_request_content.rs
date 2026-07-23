@@ -33,7 +33,7 @@ pub struct DentalClaimsSubmissionRequestContent {
     #[serde(rename = "payerAddress", skip_serializing_if = "Option::is_none")]
     pub payer_address: Option<Box<models::ClaimsAddress>>,
     #[serde(rename = "receiver")]
-    pub receiver: Box<models::Receiver>,
+    pub receiver: Box<models::DentalReceiver>,
     #[serde(rename = "referring", skip_serializing_if = "Option::is_none")]
     pub referring: Option<Box<models::Referring>>,
     #[serde(rename = "rendering", skip_serializing_if = "Option::is_none")]
@@ -60,7 +60,7 @@ pub struct DentalClaimsSubmissionRequestContent {
 }
 
 impl DentalClaimsSubmissionRequestContent {
-    pub fn new(billing: models::Billing, claim_information: models::DentalClaimInformation, receiver: models::Receiver, submitter: models::Submitter, subscriber: models::DentalSubscriber, trading_partner_service_id: String) -> DentalClaimsSubmissionRequestContent {
+    pub fn new(billing: models::Billing, claim_information: models::DentalClaimInformation, receiver: models::DentalReceiver, submitter: models::Submitter, subscriber: models::DentalSubscriber, trading_partner_service_id: String) -> DentalClaimsSubmissionRequestContent {
         DentalClaimsSubmissionRequestContent {
             assistant_surgeon: None,
             billing: Box::new(billing),

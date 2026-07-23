@@ -16,7 +16,7 @@ pub struct PdfData {
     /// A base64 encoded string of the CMS-1500 Claim Form PDF. To render the PDF, you must decode the base64 string and save it to a file with a `.pdf` extension.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<String>,
-    /// A unique identifier for the processed claim associated with the specified `businessId`.   This ID is included in the transaction processed event for each claim, which you can receive automatically through Stedi [webhooks](https://www.stedi.com/docs/healthcare/configure-webhooks). You can also retrieve this ID through the [Poll Transactions endpoint](https://www.stedi.com/docs/healthcare/api-reference/get-poll-transactions) or from the transaction's details page within Stedi.
+    /// A unique identifier for the processed claim associated with the specified `businessId`.   This ID is included in the transaction processed event for each claim, which you can receive automatically through Stedi [webhooks](https://www.stedi.com/docs/healthcare/configure-webhooks). You can also retrieve this ID through the [Poll Transactions endpoint](https://www.stedi.com/docs/healthcare/api-reference/get-poll-transactions).
     #[serde(rename = "transactionId", skip_serializing_if = "Option::is_none")]
     pub transaction_id: Option<String>,
 }

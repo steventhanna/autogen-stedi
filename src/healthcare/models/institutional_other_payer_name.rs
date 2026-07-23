@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 pub struct InstitutionalOtherPayerName {
     #[serde(rename = "otherInsuredAdditionalIdentifier", skip_serializing_if = "Option::is_none")]
     pub other_insured_additional_identifier: Option<String>,
-    /// The address of the other payer. You must include at least the `address1` and `city` properties in this object.
+    /// The other payer's address.
     #[serde(rename = "otherPayerAddress", skip_serializing_if = "Option::is_none")]
     pub other_payer_address: Option<Box<models::InstitutionalAddress>>,
     #[serde(rename = "otherPayerAdjudicationOrPaymentDate", skip_serializing_if = "Option::is_none")]

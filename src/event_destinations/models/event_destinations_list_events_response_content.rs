@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// ListEventsResponseContent : Output containing the list of events.
+/// EventDestinationsListEventsResponseContent : Output containing the list of events.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct ListEventsResponseContent {
+pub struct EventDestinationsListEventsResponseContent {
     /// The list of event summaries.
     #[serde(rename = "items")]
     pub items: Vec<models::EventSummary>,
@@ -22,10 +22,10 @@ pub struct ListEventsResponseContent {
     pub next_page_token: Option<String>,
 }
 
-impl ListEventsResponseContent {
+impl EventDestinationsListEventsResponseContent {
     /// Output containing the list of events.
-    pub fn new(items: Vec<models::EventSummary>) -> ListEventsResponseContent {
-        ListEventsResponseContent {
+    pub fn new(items: Vec<models::EventSummary>) -> EventDestinationsListEventsResponseContent {
+        EventDestinationsListEventsResponseContent {
             items,
             next_page_token: None,
         }

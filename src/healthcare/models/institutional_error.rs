@@ -19,9 +19,6 @@ pub struct InstitutionalError {
     /// The description of the error code.
     #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
-    /// The field related to the error.
-    #[serde(rename = "field", skip_serializing_if = "Option::is_none")]
-    pub field: Option<String>,
     /// Recommended followup actions to correct the error.
     #[serde(rename = "followupAction", skip_serializing_if = "Option::is_none")]
     pub followup_action: Option<String>,
@@ -38,7 +35,6 @@ impl InstitutionalError {
         InstitutionalError {
             code: None,
             description: None,
-            field: None,
             followup_action: None,
             location: None,
             value: None,

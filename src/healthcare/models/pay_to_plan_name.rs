@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// PayToPlanName : Use for subrogation payment requests. If you include this information, you must also set the `claimInformation.otherSubscriberInformation.payerPaidAmount` to the amount the payer (for example, Medicaid) actually paid.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PayToPlanName {
-    /// Specify the location of the named party.
+    /// The address of the pay-to-plan organization.
     #[serde(rename = "address", skip_serializing_if = "Option::is_none")]
     pub address: Option<Box<models::InstitutionalAddress>>,
     /// The Claim Office Number.

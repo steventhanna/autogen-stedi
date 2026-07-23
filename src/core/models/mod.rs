@@ -42,6 +42,8 @@ pub mod execution_fault;
 pub use self::execution_fault::ExecutionFault;
 pub mod execution_fault_code;
 pub use self::execution_fault_code::ExecutionFaultCode;
+pub mod execution_mode;
+pub use self::execution_mode::ExecutionMode;
 pub mod execution_partnership_profile;
 pub use self::execution_partnership_profile::ExecutionPartnershipProfile;
 pub mod execution_source;

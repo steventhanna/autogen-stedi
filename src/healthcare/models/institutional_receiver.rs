@@ -17,7 +17,7 @@ pub struct InstitutionalReceiver {
     /// The business name of the payer receiving the claim, such as Aetna or Cigna.
     #[serde(rename = "organizationName")]
     pub organization_name: String,
-    /// The ID of the receiver. The only accepted value is `BPUMR` for drop-to-paper claims; omit otherwise.
+    /// Set to `PAPER` when you want Stedi to print this claim and mail it to the payer. Omit otherwise. Visit [Submit paper claims](https://www.stedi.com/docs/healthcare/submit-paper-claims) for details.
     #[serde(rename = "receiverId", skip_serializing_if = "Option::is_none")]
     pub receiver_id: Option<String>,
     /// The receiver's Electronic Transmitter Identification Number (ETIN), as assigned by the payer. This may be the same as the payer's TIN, but it can also be another unique identifier. We **strongly recommend** including this property in your request.

@@ -11,8 +11,8 @@
 use crate::payers::models;
 use serde::{Deserialize, Serialize};
 
-/// OperatingStateCode : US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates throughout the entire United States.
-/// US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates throughout the entire United States.
+/// OperatingStateCode : US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates in all 50 U.S. states. Supported territories are listed separately.
+/// US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates in all 50 U.S. states. Supported territories are listed separately.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OperatingStateCode {
     #[serde(rename = "AL")]
