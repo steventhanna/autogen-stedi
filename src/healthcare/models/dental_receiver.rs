@@ -11,23 +11,19 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// Receiver : The entity responsible for the payment of the claim, such as an insurance company or government agency.
+/// DentalReceiver : The entity responsible for the payment of the claim, such as an insurance company or government agency.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Receiver {
+pub struct DentalReceiver {
     /// The business name of the payer receiving the claim, such as Aetna or Cigna.
     #[serde(rename = "organizationName")]
     pub organization_name: String,
-    /// Set to `PAPER` when you want Stedi to print this claim and mail it to the payer. Omit otherwise. Visit [Submit paper claims](https://www.stedi.com/docs/healthcare/submit-paper-claims) for details.
-    #[serde(rename = "receiverId", skip_serializing_if = "Option::is_none")]
-    pub receiver_id: Option<String>,
 }
 
-impl Receiver {
+impl DentalReceiver {
     /// The entity responsible for the payment of the claim, such as an insurance company or government agency.
-    pub fn new(organization_name: String) -> Receiver {
-        Receiver {
+    pub fn new(organization_name: String) -> DentalReceiver {
+        DentalReceiver {
             organization_name,
-            receiver_id: None,
         }
     }
 }

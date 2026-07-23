@@ -58,6 +58,8 @@ pub struct GetExecutionResponseContent {
     pub connection_id: Option<String>,
     #[serde(rename = "source", skip_serializing_if = "Option::is_none")]
     pub source: Option<Box<models::ExecutionSource>>,
+    #[serde(rename = "mode", skip_serializing_if = "Option::is_none")]
+    pub mode: Option<models::ExecutionMode>,
     /// A list of artifacts related to the transaction. Input artifacts represent the original transaction data Stedi received before processing. Output artifacts represent the processed data.  For example, for an inbound 835 ERA from a payer, the input artifact would be the original X12 EDI, and the output artifact would be the JSON representation of the ERA.
     #[serde(rename = "artifacts", skip_serializing_if = "Option::is_none")]
     pub artifacts: Option<Vec<models::Artifact>>,
@@ -86,6 +88,7 @@ impl GetExecutionResponseContent {
             connection_type: None,
             connection_id: None,
             source: None,
+            mode: None,
             artifacts: None,
             delivery_reports: None,
         }

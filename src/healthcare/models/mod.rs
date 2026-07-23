@@ -410,6 +410,8 @@ pub mod dental_other_subscriber_name;
 pub use self::dental_other_subscriber_name::DentalOtherSubscriberName;
 pub mod dental_plan_participation_code;
 pub use self::dental_plan_participation_code::DentalPlanParticipationCode;
+pub mod dental_receiver;
+pub use self::dental_receiver::DentalReceiver;
 pub mod dental_report_information;
 pub use self::dental_report_information::DentalReportInformation;
 pub mod dental_service;

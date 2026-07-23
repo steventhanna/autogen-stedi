@@ -37,7 +37,7 @@ pub struct InstitutionalClaimsSubmissionRequestContent {
     /// Information about any other operating physician involved in the surgical procedures listed in the claim. Required when another operating physician is involved in the surgical procedures listed in the claim. Use this object for physicians that apply to the entire claim.  This should be an individual, not an organization, and you should supply at least the physician's `lastName` and an identifier, which is typically the `npi`.
     #[serde(rename = "otherOperatingPhysician", skip_serializing_if = "Option::is_none")]
     pub other_operating_physician: Option<Box<models::OperatingPhysician>>,
-    /// Address information for the entity responsible for payment of the claim, listed in the `receiver` object.
+    /// The payer's address. Some payers use this for internal routing. Only provide this address if the payer explicitly requires it.
     #[serde(rename = "payerAddress", skip_serializing_if = "Option::is_none")]
     pub payer_address: Option<Box<models::InstitutionalAddress>>,
     /// Another way to send information for each provider relevant to the claim. This object overwrites the information you send in the `billing`, `referring`, `rendering`, and `attending` objects. Note that your request **must** include information about the billing provider either here or within the `billing` object.

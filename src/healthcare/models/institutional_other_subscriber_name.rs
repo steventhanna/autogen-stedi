@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct InstitutionalOtherSubscriberName {
-    /// The subscriber's address. You must include at least the `address1` and `city` properties in this object.
+    /// The other subscriber's address.
     #[serde(rename = "address", skip_serializing_if = "Option::is_none")]
     pub address: Option<Box<models::InstitutionalAddress>>,
     #[serde(rename = "firstName", skip_serializing_if = "Option::is_none")]
