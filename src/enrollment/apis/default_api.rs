@@ -747,16 +747,16 @@ pub async fn list_enrollments(configuration: &configuration::Configuration, page
         };
     }
     if let Some(ref param_value) = p_query_created_from {
-        req_builder = req_builder.query(&[("createdFrom", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("createdFrom", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_created_to {
-        req_builder = req_builder.query(&[("createdTo", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("createdTo", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_status_updated_from {
-        req_builder = req_builder.query(&[("statusUpdatedFrom", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("statusUpdatedFrom", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_status_updated_to {
-        req_builder = req_builder.query(&[("statusUpdatedTo", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("statusUpdatedTo", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_import_id {
         req_builder = req_builder.query(&[("importId", &param_value.to_string())]);
@@ -768,10 +768,10 @@ pub async fn list_enrollments(configuration: &configuration::Configuration, page
         req_builder = req_builder.query(&[("requestedEffectiveDateTo", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_last_era_received_from {
-        req_builder = req_builder.query(&[("lastEraReceivedFrom", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("lastEraReceivedFrom", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_last_era_received_to {
-        req_builder = req_builder.query(&[("lastEraReceivedTo", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("lastEraReceivedTo", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
     }
     if let Some(ref param_value) = p_query_user_emails {
         req_builder = match "multi" {
