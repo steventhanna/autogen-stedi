@@ -38,9 +38,12 @@ pub struct BenefitsAdditionalInformation {
     /// The insurance policy number.
     #[serde(rename = "insurancePolicyNumber", skip_serializing_if = "Option::is_none")]
     pub insurance_policy_number: Option<String>,
-    /// The Medicaid Recipient Identification number.
+    /// Deprecated (misspelled): use medicaidRecipientIdNumber. The Medicaid Recipient Identification number. This shape is deprecated: Misspelled. Use medicaidRecipientIdNumber instead. Still populated for backward compatibility.
     #[serde(rename = "medicaidRecepientIdNumber", skip_serializing_if = "Option::is_none")]
     pub medicaid_recepient_id_number: Option<String>,
+    /// The Medicaid Recipient Identification number.
+    #[serde(rename = "medicaidRecipientIdNumber", skip_serializing_if = "Option::is_none")]
+    pub medicaid_recipient_id_number: Option<String>,
     /// The medical assistance category.
     #[serde(rename = "medicalAssistanceCategory", skip_serializing_if = "Option::is_none")]
     pub medical_assistance_category: Option<String>,
@@ -83,6 +86,7 @@ impl BenefitsAdditionalInformation {
             hic_number: None,
             insurance_policy_number: None,
             medicaid_recepient_id_number: None,
+            medicaid_recipient_id_number: None,
             medical_assistance_category: None,
             member_id: None,
             plan_description: None,
