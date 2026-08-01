@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FollowInstructions {
-    /// This task type will be deprecated on July 20, 2026 and later removed. Use `manualTask` instead.  A task that requires the responsible party to follow specific instructions.
+    /// A task that requires the responsible party to follow specific instructions. This shape is deprecated since 2026-07-20: This task type is deprecated and will be later removed. Use `manualTask` instead.
     #[serde(rename = "followInstructions")]
     pub follow_instructions: Box<models::FollowInstructionsTask>,
 }

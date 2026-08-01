@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ProvideFilledPdf {
-    /// This task type will be deprecated on July 20, 2026 and later removed. Use `manualTask` instead.  A task that requires uploading a completed PDF document. Stedi may either provide a template to download and complete, or provide instructions for uploading supporting documentation, such as a W-9 form.
+    /// A task that requires uploading a completed PDF document. Stedi may either provide a template to download and complete, or provide instructions for uploading supporting documentation, such as a W-9 form. This shape is deprecated since 2026-07-20: This task type is deprecated and will be later removed. Use `manualTask` instead.
     #[serde(rename = "provideFilledPdf")]
     pub provide_filled_pdf: Box<models::ProvideFilledPdfTask>,
 }
