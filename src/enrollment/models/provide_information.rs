@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ProvideInformation {
-    /// This task type will be deprecated on July 20, 2026 and later removed. Use `manualTask` instead.  A task that requires the provider to supply specific information.
+    /// A task that requires the provider to supply specific information. This shape is deprecated since 2026-07-20: This task type is deprecated and will be later removed. Use `manualTask` instead.
     #[serde(rename = "provideInformation")]
     pub provide_information: Box<models::ProvideInformationTask>,
 }
