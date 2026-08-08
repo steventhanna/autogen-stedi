@@ -11,12 +11,15 @@
 use crate::payers::models;
 use serde::{Deserialize, Serialize};
 
-/// SearchPayerTransactionSupport : Whether the following transaction types are supported: 270 eligibility checks, 276/277 claim status requests, 837 claims (professional, dental, institutional), 835 ERAs (claim payments), 275 unsolicited claim attachments, and coordination of benefits checks.  If the value is `ENROLLMENT_REQUIRED`, Stedi supports the transaction type, but you must [enroll with the payer](https://www.stedi.com/docs/healthcare/supported-payers#enrollment) first.
+/// SearchPayerTransactionSupport : Whether the following transaction types are supported: 270 eligibility checks, 276/277 claim status requests, 837 claims (professional, dental, institutional), 835 ERAs (claim payments), 275 unsolicited claim attachments, coordination of benefits checks, Electronic Funds Transfer (EFT), and 835 ERA with Electronic Funds Transfer (EFT).   If the value is `ENROLLMENT_REQUIRED`, Stedi supports the transaction type, but you must [enroll with the payer](https://www.stedi.com/docs/healthcare/supported-payers#enrollment) first.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchPayerTransactionSupport {
     /// Whether you can receive 835 Electronic Remittance Advice (ERA) transactions from this payer.
     #[serde(rename = "claimPayment")]
     pub claim_payment: models::TransactionSupportValue,
+    /// Whether you can receive 835 Electronic Remittance Advice (ERA) transactions with Electronic Funds Transfer (EFT) from this payer.
+    #[serde(rename = "claimPaymentAdviceWithElectronicFundsTransfer")]
+    pub claim_payment_advice_with_electronic_funds_transfer: models::TransactionSupportValue,
     /// Whether you can send 276 claim status requests to this payer.
     #[serde(rename = "claimStatus")]
     pub claim_status: models::TransactionSupportValue,
@@ -26,6 +29,9 @@ pub struct SearchPayerTransactionSupport {
     /// Whether you can send 837D dental claims to this payer.
     #[serde(rename = "dentalClaimSubmission")]
     pub dental_claim_submission: models::TransactionSupportValue,
+    /// Whether you can receive Electronic Funds Transfer (EFT) transactions from this payer.
+    #[serde(rename = "electronicFundsTransfer")]
+    pub electronic_funds_transfer: models::TransactionSupportValue,
     /// Whether you can send 270 eligibility checks to this payer.
     #[serde(rename = "eligibilityCheck")]
     pub eligibility_check: models::TransactionSupportValue,
@@ -41,13 +47,15 @@ pub struct SearchPayerTransactionSupport {
 }
 
 impl SearchPayerTransactionSupport {
-    /// Whether the following transaction types are supported: 270 eligibility checks, 276/277 claim status requests, 837 claims (professional, dental, institutional), 835 ERAs (claim payments), 275 unsolicited claim attachments, and coordination of benefits checks.  If the value is `ENROLLMENT_REQUIRED`, Stedi supports the transaction type, but you must [enroll with the payer](https://www.stedi.com/docs/healthcare/supported-payers#enrollment) first.
-    pub fn new(claim_payment: models::TransactionSupportValue, claim_status: models::TransactionSupportValue, coordination_of_benefits: models::TransactionSupportValue, dental_claim_submission: models::TransactionSupportValue, eligibility_check: models::TransactionSupportValue, institutional_claim_submission: models::TransactionSupportValue, professional_claim_submission: models::TransactionSupportValue, unsolicited_claim_attachment: models::TransactionSupportValue) -> SearchPayerTransactionSupport {
+    /// Whether the following transaction types are supported: 270 eligibility checks, 276/277 claim status requests, 837 claims (professional, dental, institutional), 835 ERAs (claim payments), 275 unsolicited claim attachments, coordination of benefits checks, Electronic Funds Transfer (EFT), and 835 ERA with Electronic Funds Transfer (EFT).   If the value is `ENROLLMENT_REQUIRED`, Stedi supports the transaction type, but you must [enroll with the payer](https://www.stedi.com/docs/healthcare/supported-payers#enrollment) first.
+    pub fn new(claim_payment: models::TransactionSupportValue, claim_payment_advice_with_electronic_funds_transfer: models::TransactionSupportValue, claim_status: models::TransactionSupportValue, coordination_of_benefits: models::TransactionSupportValue, dental_claim_submission: models::TransactionSupportValue, electronic_funds_transfer: models::TransactionSupportValue, eligibility_check: models::TransactionSupportValue, institutional_claim_submission: models::TransactionSupportValue, professional_claim_submission: models::TransactionSupportValue, unsolicited_claim_attachment: models::TransactionSupportValue) -> SearchPayerTransactionSupport {
         SearchPayerTransactionSupport {
             claim_payment,
+            claim_payment_advice_with_electronic_funds_transfer,
             claim_status,
             coordination_of_benefits,
             dental_claim_submission,
+            electronic_funds_transfer,
             eligibility_check,
             institutional_claim_submission,
             professional_claim_submission,

@@ -17,6 +17,9 @@ pub struct TransactionEnrollmentProcesses {
     /// Details about the enrollment process for Electronic Remittance Advice (ERAs) with this payer.
     #[serde(rename = "claimPayment", skip_serializing_if = "Option::is_none")]
     pub claim_payment: Option<Box<models::ClaimPaymentEnrollmentProcess>>,
+    /// Details about the enrollment process for Electronic Remittance Advice (ERA) with Electronic Funds Transfer (EFT) with this payer.
+    #[serde(rename = "claimPaymentAdviceWithElectronicFundsTransfer", skip_serializing_if = "Option::is_none")]
+    pub claim_payment_advice_with_electronic_funds_transfer: Option<Box<models::ClaimPaymentAdviceWithElectronicFundsTransferEnrollmentProcess>>,
     /// Details about the enrollment process for real-time claim status requests with this payer.
     #[serde(rename = "claimStatusInquiry", skip_serializing_if = "Option::is_none")]
     pub claim_status_inquiry: Option<Box<models::ClaimStatusInquiryEnrollmentProcess>>,
@@ -26,6 +29,9 @@ pub struct TransactionEnrollmentProcesses {
     /// Details about the enrollment process for dental claim submission with this payer.
     #[serde(rename = "dentalClaim", skip_serializing_if = "Option::is_none")]
     pub dental_claim: Option<Box<models::DentalClaimEnrollmentProcess>>,
+    /// Details about the enrollment process for Electronic Funds Transfer (EFT) with this payer.
+    #[serde(rename = "electronicFundsTransfer", skip_serializing_if = "Option::is_none")]
+    pub electronic_funds_transfer: Option<Box<models::ElectronicFundsTransferEnrollmentProcess>>,
     /// Details about the enrollment process for eligibility checks with this payer.
     #[serde(rename = "eligibilityInquiry", skip_serializing_if = "Option::is_none")]
     pub eligibility_inquiry: Option<Box<models::EligibilityInquiryEnrollmentProcess>>,
@@ -45,9 +51,11 @@ impl TransactionEnrollmentProcesses {
     pub fn new() -> TransactionEnrollmentProcesses {
         TransactionEnrollmentProcesses {
             claim_payment: None,
+            claim_payment_advice_with_electronic_funds_transfer: None,
             claim_status_inquiry: None,
             coordination_of_benefits: None,
             dental_claim: None,
+            electronic_funds_transfer: None,
             eligibility_inquiry: None,
             institutional_claim: None,
             professional_claim: None,
