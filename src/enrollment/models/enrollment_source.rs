@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EnrollmentSource : The source of the enrollment.
 /// The source of the enrollment.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EnrollmentSource {
     #[serde(rename = "API")]
     Api,
@@ -25,6 +25,9 @@ pub enum EnrollmentSource {
     AutoEnrollment,
     #[serde(rename = "AUTOMATED_TASK")]
     AutomatedTask,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for EnrollmentSource {
             Self::Import => write!(f, "IMPORT"),
             Self::AutoEnrollment => write!(f, "AUTO_ENROLLMENT"),
             Self::AutomatedTask => write!(f, "AUTOMATED_TASK"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

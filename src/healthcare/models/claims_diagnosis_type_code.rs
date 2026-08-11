@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimsDiagnosisTypeCode : Code indicating the specific industry code list. Can be set to `ABK` - International Classification of Diseases Clinical Modification (ICD-10-CM) Principal Diagnosis or `ABF` - International Classification of Diseases Clinical Modification (ICD-10-CM) Diagnosis.
 /// Code indicating the specific industry code list. Can be set to `ABK` - International Classification of Diseases Clinical Modification (ICD-10-CM) Principal Diagnosis or `ABF` - International Classification of Diseases Clinical Modification (ICD-10-CM) Diagnosis.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimsDiagnosisTypeCode {
     #[serde(rename = "BK")]
     Bk,
@@ -23,6 +23,9 @@ pub enum ClaimsDiagnosisTypeCode {
     Bf,
     #[serde(rename = "ABF")]
     Abf,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for ClaimsDiagnosisTypeCode {
             Self::Abk => write!(f, "ABK"),
             Self::Bf => write!(f, "BF"),
             Self::Abf => write!(f, "ABF"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

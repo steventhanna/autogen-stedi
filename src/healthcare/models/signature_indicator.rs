@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// SignatureIndicator : Indicates whether the provider's signature is on file. Can be set to `N` - No or `Y` - Yes.
 /// Indicates whether the provider's signature is on file. Can be set to `N` - No or `Y` - Yes.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum SignatureIndicator {
     #[serde(rename = "N")]
     N,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for SignatureIndicator {
         match self {
             Self::N => write!(f, "N"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

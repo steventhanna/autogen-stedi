@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// TraceTypeCode : Identifies the type of trace number used to uniquely identify and track payment transactions. This helps reassociate payments with their corresponding remittance advice.
 /// Identifies the type of trace number used to uniquely identify and track payment transactions. This helps reassociate payments with their corresponding remittance advice.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TraceTypeCode {
     #[serde(rename = "1")]
     Variant1,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for TraceTypeCode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Variant1 => write!(f, "1"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PatientConditionInformationVisionConditionCodesItem : Code indicating the reason for the vision services. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#vision-condition-codes) for a complete list.
 /// Code indicating the reason for the vision services. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#vision-condition-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PatientConditionInformationVisionConditionCodesItem {
     #[serde(rename = "L1")]
     L1,
@@ -25,6 +25,9 @@ pub enum PatientConditionInformationVisionConditionCodesItem {
     L4,
     #[serde(rename = "L5")]
     L5,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for PatientConditionInformationVisionConditionCodesItem {
             Self::L3 => write!(f, "L3"),
             Self::L4 => write!(f, "L4"),
             Self::L5 => write!(f, "L5"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

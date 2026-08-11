@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ArtifactUsage : The type of data the artifact contains. For example, an input artifact represents the original data Stedi received before processing, while an output artifact represents the processed data.  For example, for an inbound 835 ERA from a payer, the input artifact would be the original X12 EDI, and the output artifact would be the JSON representation of the ERA.
 /// The type of data the artifact contains. For example, an input artifact represents the original data Stedi received before processing, while an output artifact represents the processed data.  For example, for an inbound 835 ERA from a payer, the input artifact would be the original X12 EDI, and the output artifact would be the JSON representation of the ERA.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ArtifactUsage {
     #[serde(rename = "attachment")]
     Attachment,
@@ -23,6 +23,9 @@ pub enum ArtifactUsage {
     Metadata,
     #[serde(rename = "output")]
     Output,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for ArtifactUsage {
             Self::Input => write!(f, "input"),
             Self::Metadata => write!(f, "metadata"),
             Self::Output => write!(f, "output"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

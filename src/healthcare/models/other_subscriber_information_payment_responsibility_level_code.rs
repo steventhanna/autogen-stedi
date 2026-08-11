@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// OtherSubscriberInformationPaymentResponsibilityLevelCode : Code identifying the payer's level of responsibility for paying this claim. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#payment-responsibility-sequence-number-codes) for a complete list. - Either this property or `subscriber.paymentResponsibilityLevelCode` must be set to `P` to indicate the primary insurance payer. Stedi rejects claims - including secondary and tertiary claims - that don't include information for the primary payer. - You may need to use other codes if the patient has multiple insurance policies. For example, if a patient is covered by both Medicare and an employer-sponsored commercial plan, you could bill the commercial payer first as `P` and then bill the Medicare payer second as `S`.
 /// Code identifying the payer's level of responsibility for paying this claim. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#payment-responsibility-sequence-number-codes) for a complete list. - Either this property or `subscriber.paymentResponsibilityLevelCode` must be set to `P` to indicate the primary insurance payer. Stedi rejects claims - including secondary and tertiary claims - that don't include information for the primary payer. - You may need to use other codes if the patient has multiple insurance policies. For example, if a patient is covered by both Medicare and an employer-sponsored commercial plan, you could bill the commercial payer first as `P` and then bill the Medicare payer second as `S`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OtherSubscriberInformationPaymentResponsibilityLevelCode {
     #[serde(rename = "A")]
     A,
@@ -39,6 +39,9 @@ pub enum OtherSubscriberInformationPaymentResponsibilityLevelCode {
     T,
     #[serde(rename = "U")]
     U,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -57,6 +60,7 @@ impl std::fmt::Display for OtherSubscriberInformationPaymentResponsibilityLevelC
             Self::S => write!(f, "S"),
             Self::T => write!(f, "T"),
             Self::U => write!(f, "U"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

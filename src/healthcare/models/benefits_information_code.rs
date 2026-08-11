@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitsInformationCode : The code indicating the type of benefits information. Visit [Eligibility and benefit codes](https://www.stedi.com/docs/healthcare/eligibility-active-coverage-benefits#benefit-type-codes) for more information.  Payers may sometimes return other non-compliant values.
 /// The code indicating the type of benefits information. Visit [Eligibility and benefit codes](https://www.stedi.com/docs/healthcare/eligibility-active-coverage-benefits#benefit-type-codes) for more information.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitsInformationCode {
     #[serde(rename = "1")]
     Variant1,
@@ -85,6 +85,9 @@ pub enum BenefitsInformationCode {
     X,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -126,6 +129,7 @@ impl std::fmt::Display for BenefitsInformationCode {
             Self::W => write!(f, "W"),
             Self::X => write!(f, "X"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

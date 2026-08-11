@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimStatusProviderType : Identifies the type of provider related to the referenced healthcare claim.
 /// Identifies the type of provider related to the referenced healthcare claim.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimStatusProviderType {
     #[serde(rename = "BillingProvider")]
     BillingProvider,
     #[serde(rename = "ServiceProvider")]
     ServiceProvider,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ClaimStatusProviderType {
         match self {
             Self::BillingProvider => write!(f, "BillingProvider"),
             Self::ServiceProvider => write!(f, "ServiceProvider"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// BatchType : The type of batch.
 /// The type of batch.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BatchType {
     #[serde(rename = "ELIGIBILITY")]
     Eligibility,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for BatchType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Eligibility => write!(f, "ELIGIBILITY"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

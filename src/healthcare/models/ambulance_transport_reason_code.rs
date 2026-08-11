@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// AmbulanceTransportReasonCode : Code indicating the reason for ambulance transport. For example, `A` - Patient was transported to nearest facility for care of symptoms, complaints, or both. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#ambulance-transport-reason-codes) for a complete list.
 /// Code indicating the reason for ambulance transport. For example, `A` - Patient was transported to nearest facility for care of symptoms, complaints, or both. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#ambulance-transport-reason-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AmbulanceTransportReasonCode {
     #[serde(rename = "A")]
     A,
@@ -25,6 +25,9 @@ pub enum AmbulanceTransportReasonCode {
     D,
     #[serde(rename = "E")]
     E,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for AmbulanceTransportReasonCode {
             Self::C => write!(f, "C"),
             Self::D => write!(f, "D"),
             Self::E => write!(f, "E"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

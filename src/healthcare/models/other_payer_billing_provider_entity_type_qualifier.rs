@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// OtherPayerBillingProviderEntityTypeQualifier : Code identifying the type of entity. Can be set to `1` - Person or `2` - Non-Person Entity.
 /// Code identifying the type of entity. Can be set to `1` - Person or `2` - Non-Person Entity.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OtherPayerBillingProviderEntityTypeQualifier {
     #[serde(rename = "1")]
     Variant1,
     #[serde(rename = "2")]
     Variant2,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for OtherPayerBillingProviderEntityTypeQualifier {
         match self {
             Self::Variant1 => write!(f, "1"),
             Self::Variant2 => write!(f, "2"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

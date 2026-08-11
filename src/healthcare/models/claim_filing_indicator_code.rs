@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimFilingIndicatorCode : A code identifying the type of claim. For example `DS` - Disability. Use `OF` when submitting Medicare Part D claims. Use `ZZ` when you don't know the type of insurance. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#claim-filing-indicator-codes) for a complete list.
 /// A code identifying the type of claim. For example `DS` - Disability. Use `OF` when submitting Medicare Part D claims. Use `ZZ` when you don't know the type of insurance. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#claim-filing-indicator-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimFilingIndicatorCode {
     #[serde(rename = "11")]
     Variant11,
@@ -61,6 +61,9 @@ pub enum ClaimFilingIndicatorCode {
     Wc,
     #[serde(rename = "ZZ")]
     Zz,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -90,6 +93,7 @@ impl std::fmt::Display for ClaimFilingIndicatorCode {
             Self::Va => write!(f, "VA"),
             Self::Wc => write!(f, "WC"),
             Self::Zz => write!(f, "ZZ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

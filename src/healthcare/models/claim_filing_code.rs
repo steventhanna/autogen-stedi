@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimFilingCode : A code identifying the type of claim. For example `DS` - Disability. - Use `OF` when submitting Medicare Part D claims. - Use `ZZ` when you don't know the type of insurance. - Some payers reject claims with invalid codes. If you're not sure which code to use, we recommend running a [real-time eligibility check](https://www.stedi.com/docs/healthcare/api-reference/post-healthcare-eligibility) and using the value returned in the most relevant `benefitsInformation.insuranceTypeCode` property. Note that the eligibility response uses a different code list than claims, so you may need to map that code value to the appropriate claim filing code.   Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#claim-filing-indicator-codes) for a complete list.
 /// A code identifying the type of claim. For example `DS` - Disability. - Use `OF` when submitting Medicare Part D claims. - Use `ZZ` when you don't know the type of insurance. - Some payers reject claims with invalid codes. If you're not sure which code to use, we recommend running a [real-time eligibility check](https://www.stedi.com/docs/healthcare/api-reference/post-healthcare-eligibility) and using the value returned in the most relevant `benefitsInformation.insuranceTypeCode` property. Note that the eligibility response uses a different code list than claims, so you may need to map that code value to the appropriate claim filing code.   Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#claim-filing-indicator-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimFilingCode {
     #[serde(rename = "11")]
     Variant11,
@@ -61,6 +61,9 @@ pub enum ClaimFilingCode {
     Wc,
     #[serde(rename = "ZZ")]
     Zz,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -90,6 +93,7 @@ impl std::fmt::Display for ClaimFilingCode {
             Self::Va => write!(f, "VA"),
             Self::Wc => write!(f, "WC"),
             Self::Zz => write!(f, "ZZ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

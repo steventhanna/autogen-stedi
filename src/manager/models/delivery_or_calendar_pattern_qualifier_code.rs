@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DeliveryOrCalendarPatternQualifierCode : Code that specifies the routine shipments, deliveries, or calendar pattern. For example `9` - Last Working Day of Period. Visit [Eligibility code lists](https://www.stedi.com/docs/healthcare/eligibility-code-lists#delivery-frequency-codes) for a complete list.  Payers may sometimes return other non-compliant values.
 /// Code that specifies the routine shipments, deliveries, or calendar pattern. For example `9` - Last Working Day of Period. Visit [Eligibility code lists](https://www.stedi.com/docs/healthcare/eligibility-code-lists#delivery-frequency-codes) for a complete list.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DeliveryOrCalendarPatternQualifierCode {
     #[serde(rename = "1")]
     Variant1,
@@ -93,6 +93,9 @@ pub enum DeliveryOrCalendarPatternQualifierCode {
     X,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -138,6 +141,7 @@ impl std::fmt::Display for DeliveryOrCalendarPatternQualifierCode {
             Self::W => write!(f, "W"),
             Self::X => write!(f, "X"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

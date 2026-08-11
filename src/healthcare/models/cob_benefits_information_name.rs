@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CobBenefitsInformationName : The full name of the benefits information code.
 /// The full name of the benefits information code.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CobBenefitsInformationName {
     #[serde(rename = "Active Coverage")]
     ActiveCoverage,
@@ -23,6 +23,9 @@ pub enum CobBenefitsInformationName {
     OtherOrAdditionalPayor,
     #[serde(rename = "Cannot Process")]
     CannotProcess,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for CobBenefitsInformationName {
             Self::Inactive => write!(f, "Inactive"),
             Self::OtherOrAdditionalPayor => write!(f, "Other or Additional Payor"),
             Self::CannotProcess => write!(f, "Cannot Process"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

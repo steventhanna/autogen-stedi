@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CertificationTypeCode : Code indicating the type of certification. Can be set to `I` - Initial, `R` - Renewal, or `S` - Revised.
 /// Code indicating the type of certification. Can be set to `I` - Initial, `R` - Renewal, or `S` - Revised.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CertificationTypeCode {
     #[serde(rename = "I")]
     I,
@@ -21,6 +21,9 @@ pub enum CertificationTypeCode {
     R,
     #[serde(rename = "S")]
     S,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for CertificationTypeCode {
             Self::I => write!(f, "I"),
             Self::R => write!(f, "R"),
             Self::S => write!(f, "S"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

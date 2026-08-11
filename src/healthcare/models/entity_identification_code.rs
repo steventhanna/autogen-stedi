@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// EntityIdentificationCode : Code identifying the type of `entityIdentificationValue`.
 /// Code identifying the type of `entityIdentificationValue`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EntityIdentificationCode {
     #[serde(rename = "MI")]
     Mi,
     #[serde(rename = "PI")]
     Pi,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for EntityIdentificationCode {
         match self {
             Self::Mi => write!(f, "MI"),
             Self::Pi => write!(f, "PI"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

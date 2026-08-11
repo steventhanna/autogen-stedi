@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimAcknowledgmentServiceIdQualifierCodeValue : Human-readable descriptions for service ID qualifier codes.
 /// Human-readable descriptions for service ID qualifier codes.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimAcknowledgmentServiceIdQualifierCodeValue {
     #[serde(rename = "American Dental Association Codes")]
     AmericanDentalAssociationCodes,
@@ -29,6 +29,9 @@ pub enum ClaimAcknowledgmentServiceIdQualifierCodeValue {
     NationalUniformBillingCommitteeLeftParenthesisNubcRightParenthesisUb92Codes,
     #[serde(rename = "Advanced Billing Concepts (ABC) Codes")]
     AdvancedBillingConceptsLeftParenthesisAbcRightParenthesisCodes,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for ClaimAcknowledgmentServiceIdQualifierCodeValue {
             Self::HomeInfusionEdiCoalitionLeftParenthesisHiecRightParenthesisProductSlashServiceCode => write!(f, "Home Infusion EDI Coalition (HIEC) Product/Service Code"),
             Self::NationalUniformBillingCommitteeLeftParenthesisNubcRightParenthesisUb92Codes => write!(f, "National Uniform Billing Committee (NUBC) UB92 Codes"),
             Self::AdvancedBillingConceptsLeftParenthesisAbcRightParenthesisCodes => write!(f, "Advanced Billing Concepts (ABC) Codes"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

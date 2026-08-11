@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PlanParticipationCode : Code indicating whether the provider accepts assignment. This refers to whether the provider accepts assignment and/or has a participation agreement with the destination payer. It does not indicate whether the patient has assigned benefits to the provider. Can be set to `A` - Assigned, `B` - Assignment Accepted on Clinical Lab Services Only, or `C` - Not Assigned. Choose `A` when the provider accepts assignment and/or has a participation agreement with the destination payer, OR the provider does not accept assignment and/or have a participation agreement, but is advising the payer to adjudicate this specific claim under the participating provider benefits allowed under certain plans.
 /// Code indicating whether the provider accepts assignment. This refers to whether the provider accepts assignment and/or has a participation agreement with the destination payer. It does not indicate whether the patient has assigned benefits to the provider. Can be set to `A` - Assigned, `B` - Assignment Accepted on Clinical Lab Services Only, or `C` - Not Assigned. Choose `A` when the provider accepts assignment and/or has a participation agreement with the destination payer, OR the provider does not accept assignment and/or have a participation agreement, but is advising the payer to adjudicate this specific claim under the participating provider benefits allowed under certain plans.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PlanParticipationCode {
     #[serde(rename = "A")]
     A,
@@ -21,6 +21,9 @@ pub enum PlanParticipationCode {
     B,
     #[serde(rename = "C")]
     C,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for PlanParticipationCode {
             Self::A => write!(f, "A"),
             Self::B => write!(f, "B"),
             Self::C => write!(f, "C"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

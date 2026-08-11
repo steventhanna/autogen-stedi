@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// OtherDiagnosisInformationQualifierCode : Code identifying the type of diagnosis code used. Can be set to `ABF` - International Classification of Diseases Clinical Modification (ICD-10-CM) or `BF` - International Classification of Diseases Clinical Modification (ICD-9-CM). Note that ICD-9 is deprecated and cannot be used in new claims.
 /// Code identifying the type of diagnosis code used. Can be set to `ABF` - International Classification of Diseases Clinical Modification (ICD-10-CM) or `BF` - International Classification of Diseases Clinical Modification (ICD-9-CM). Note that ICD-9 is deprecated and cannot be used in new claims.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OtherDiagnosisInformationQualifierCode {
     #[serde(rename = "ABF")]
     Abf,
     #[serde(rename = "BF")]
     Bf,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for OtherDiagnosisInformationQualifierCode {
         match self {
             Self::Abf => write!(f, "ABF"),
             Self::Bf => write!(f, "BF"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

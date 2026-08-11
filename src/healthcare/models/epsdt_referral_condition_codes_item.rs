@@ -12,7 +12,7 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EpsdtReferralConditionCodesItem {
     #[serde(rename = "AV")]
     Av,
@@ -22,6 +22,9 @@ pub enum EpsdtReferralConditionCodesItem {
     S2,
     #[serde(rename = "ST")]
     St,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -32,6 +35,7 @@ impl std::fmt::Display for EpsdtReferralConditionCodesItem {
             Self::Nu => write!(f, "NU"),
             Self::S2 => write!(f, "S2"),
             Self::St => write!(f, "ST"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

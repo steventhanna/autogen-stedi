@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// HealthCareClaimStatusCategoryCode : Code indicating the status category of the `statusCode` property. Visit [277CA code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#claim-status-category-code) for a complete list.
 /// Code indicating the status category of the `statusCode` property. Visit [277CA code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#claim-status-category-code) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum HealthCareClaimStatusCategoryCode {
     #[serde(rename = "A0")]
     A0,
@@ -121,6 +121,9 @@ pub enum HealthCareClaimStatusCategoryCode {
     E4,
     #[serde(rename = "D0")]
     D0,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -180,6 +183,7 @@ impl std::fmt::Display for HealthCareClaimStatusCategoryCode {
             Self::E3 => write!(f, "E3"),
             Self::E4 => write!(f, "E4"),
             Self::D0 => write!(f, "D0"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

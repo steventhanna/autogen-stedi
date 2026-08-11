@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ReleaseInformationCode : Indicates whether the provider has on file a signed statement by the patient authorizing the release of medical data to other organizations. Can be set to `Y` - Yes, or `I` - Informed Consent to Release Medical Information for Conditions or Diagnoses Regulated by Federal Statues. Use `I` when the provider has not collected a signature AND state or federal laws do not require a signature be collected.
 /// Indicates whether the provider has on file a signed statement by the patient authorizing the release of medical data to other organizations. Can be set to `Y` - Yes, or `I` - Informed Consent to Release Medical Information for Conditions or Diagnoses Regulated by Federal Statues. Use `I` when the provider has not collected a signature AND state or federal laws do not require a signature be collected.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ReleaseInformationCode {
     #[serde(rename = "I")]
     I,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ReleaseInformationCode {
         match self {
             Self::I => write!(f, "I"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

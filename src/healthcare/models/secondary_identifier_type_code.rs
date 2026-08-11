@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// SecondaryIdentifierTypeCode : Code identifying the type of secondary identifier. Can be set to `2U` - Payer Identification Number, `FY` - Claim Office Number, or `NF` - National Association of Insurance Commissioners. You should only set this to `2U` when you set the `primaryIdentifierTypeCode` to `XV`.
 /// Code identifying the type of secondary identifier. Can be set to `2U` - Payer Identification Number, `FY` - Claim Office Number, or `NF` - National Association of Insurance Commissioners. You should only set this to `2U` when you set the `primaryIdentifierTypeCode` to `XV`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum SecondaryIdentifierTypeCode {
     #[serde(rename = "2U")]
     Variant2U,
@@ -21,6 +21,9 @@ pub enum SecondaryIdentifierTypeCode {
     Fy,
     #[serde(rename = "NF")]
     Nf,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for SecondaryIdentifierTypeCode {
             Self::Variant2U => write!(f, "2U"),
             Self::Fy => write!(f, "FY"),
             Self::Nf => write!(f, "NF"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

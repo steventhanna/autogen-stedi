@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// LineAdjudicationInformationServiceIdQualifier : Code identifying the type of `procedureCode`. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#composite-medical-procedure-product-or-service-id-qualifier-codes) for a complete list.
 /// Code identifying the type of `procedureCode`. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#composite-medical-procedure-product-or-service-id-qualifier-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum LineAdjudicationInformationServiceIdQualifier {
     #[serde(rename = "ER")]
     Er,
@@ -25,6 +25,9 @@ pub enum LineAdjudicationInformationServiceIdQualifier {
     Iv,
     #[serde(rename = "WK")]
     Wk,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for LineAdjudicationInformationServiceIdQualifier {
             Self::Hp => write!(f, "HP"),
             Self::Iv => write!(f, "IV"),
             Self::Wk => write!(f, "WK"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

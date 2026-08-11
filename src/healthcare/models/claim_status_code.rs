@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimStatusCode : Indicates the status of the claim after adjudication by the payer. These codes determine whether the claim was processed as primary, secondary, tertiary, denied, forwarded to other payers, or represents special processing situations like reversals or predeterminations.
 /// Indicates the status of the claim after adjudication by the payer. These codes determine whether the claim was processed as primary, secondary, tertiary, denied, forwarded to other payers, or represents special processing situations like reversals or predeterminations.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimStatusCode {
     #[serde(rename = "1")]
     Variant1,
@@ -35,6 +35,9 @@ pub enum ClaimStatusCode {
     Variant23,
     #[serde(rename = "25")]
     Variant25,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -51,6 +54,7 @@ impl std::fmt::Display for ClaimStatusCode {
             Self::Variant22 => write!(f, "22"),
             Self::Variant23 => write!(f, "23"),
             Self::Variant25 => write!(f, "25"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

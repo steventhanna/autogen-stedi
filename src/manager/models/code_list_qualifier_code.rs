@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CodeListQualifierCode : Payers may sometimes return other non-compliant values.
 /// Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CodeListQualifierCode {
     #[serde(rename = "GR")]
     Gr,
@@ -21,6 +21,9 @@ pub enum CodeListQualifierCode {
     Ni,
     #[serde(rename = "ZZ")]
     Zz,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for CodeListQualifierCode {
             Self::Gr => write!(f, "GR"),
             Self::Ni => write!(f, "NI"),
             Self::Zz => write!(f, "ZZ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

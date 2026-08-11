@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ProviderEntityIdentifierCode : Entity identifier code for providers in claim status reports
 /// Entity identifier code for providers in claim status reports
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ProviderEntityIdentifierCode {
     #[serde(rename = "36")]
     Variant36,
@@ -25,6 +25,9 @@ pub enum ProviderEntityIdentifierCode {
     Ay,
     #[serde(rename = "PR")]
     Pr,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for ProviderEntityIdentifierCode {
             Self::Variant41 => write!(f, "41"),
             Self::Ay => write!(f, "AY"),
             Self::Pr => write!(f, "PR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

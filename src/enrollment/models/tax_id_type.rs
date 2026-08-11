@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// TaxIdType : The type of tax identification number. Organizations (Type 2 NPIs) must use `EIN`, while individual providers (Type 1 NPIs) can use either `EIN` or `SSN`.
 /// The type of tax identification number. Organizations (Type 2 NPIs) must use `EIN`, while individual providers (Type 1 NPIs) can use either `EIN` or `SSN`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TaxIdType {
     #[serde(rename = "EIN")]
     Ein,
     #[serde(rename = "SSN")]
     Ssn,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for TaxIdType {
         match self {
             Self::Ein => write!(f, "EIN"),
             Self::Ssn => write!(f, "SSN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

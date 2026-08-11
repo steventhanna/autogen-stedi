@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CoverageType : The types of insurance coverage that a payer can provide. Used to indicate whether a payer supports transactions for medical coverage, dental coverage, vision coverage, or a combination of these.
 /// The types of insurance coverage that a payer can provide. Used to indicate whether a payer supports transactions for medical coverage, dental coverage, vision coverage, or a combination of these.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CoverageType {
     #[serde(rename = "medical")]
     Medical,
@@ -21,6 +21,9 @@ pub enum CoverageType {
     Dental,
     #[serde(rename = "vision")]
     Vision,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for CoverageType {
             Self::Medical => write!(f, "medical"),
             Self::Dental => write!(f, "dental"),
             Self::Vision => write!(f, "vision"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

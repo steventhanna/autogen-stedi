@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// SubscriberRelationship : The name of the `relationToSubscriberCode`. For the subscriber, this is always `Self`.
 /// The name of the `relationToSubscriberCode`. For the subscriber, this is always `Self`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum SubscriberRelationship {
     #[serde(rename = "Self")]
     VariantSelf,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for SubscriberRelationship {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::VariantSelf => write!(f, "Self"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

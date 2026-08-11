@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// SupportedAggregationType : Aggregation types a payer supports for 835 Electronic Remittance Advice (ERA) transactions. Payers can aggregate by the provider's NPI, tax ID (TIN), or both.  You can use this information to specify an `aggregationPreference` when submitting ERA enrollment requests.
 /// Aggregation types a payer supports for 835 Electronic Remittance Advice (ERA) transactions. Payers can aggregate by the provider's NPI, tax ID (TIN), or both.  You can use this information to specify an `aggregationPreference` when submitting ERA enrollment requests.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum SupportedAggregationType {
     #[serde(rename = "NPI")]
     Npi,
     #[serde(rename = "TIN")]
     Tin,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for SupportedAggregationType {
         match self {
             Self::Npi => write!(f, "NPI"),
             Self::Tin => write!(f, "TIN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

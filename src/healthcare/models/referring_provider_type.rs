@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// ReferringProviderType : Defines the referring provider type.
 /// Defines the referring provider type.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ReferringProviderType {
     #[serde(rename = "ReferringProvider")]
     ReferringProvider,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for ReferringProviderType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::ReferringProvider => write!(f, "ReferringProvider"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

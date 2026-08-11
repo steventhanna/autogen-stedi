@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// PayerEntityIdentifierCode : Entity identifier code for payers in claim status reports
 /// Entity identifier code for payers in claim status reports
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PayerEntityIdentifierCode {
     #[serde(rename = "AY")]
     Ay,
     #[serde(rename = "PR")]
     Pr,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for PayerEntityIdentifierCode {
         match self {
             Self::Ay => write!(f, "AY"),
             Self::Pr => write!(f, "PR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// MeasurementUnitCode : Code identifying the unit of measurement. Can be set to `F2` - International Unit, `GR` - Gram, `ME` - Milligram, `ML` - Milliliter, or `UN` - Unit.
 /// Code identifying the unit of measurement. Can be set to `F2` - International Unit, `GR` - Gram, `ME` - Milligram, `ML` - Milliliter, or `UN` - Unit.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MeasurementUnitCode {
     #[serde(rename = "F2")]
     F2,
@@ -25,6 +25,9 @@ pub enum MeasurementUnitCode {
     Ml,
     #[serde(rename = "UN")]
     Un,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for MeasurementUnitCode {
             Self::Me => write!(f, "ME"),
             Self::Ml => write!(f, "ML"),
             Self::Un => write!(f, "UN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

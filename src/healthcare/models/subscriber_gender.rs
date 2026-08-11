@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// SubscriberGender : Identifies the subscriber's gender. Can be set to `F` - Female, `M` - Male, or `U` - Unknown.   This property is **required** if the subscriber is an individual.   You should set this property to `U` when the patient declines to answer or does not identify as male or female. Note that some payers may reject the claim if the patient's gender doesn't match the gender they have recorded in their member records.
 /// Identifies the subscriber's gender. Can be set to `F` - Female, `M` - Male, or `U` - Unknown.   This property is **required** if the subscriber is an individual.   You should set this property to `U` when the patient declines to answer or does not identify as male or female. Note that some payers may reject the claim if the patient's gender doesn't match the gender they have recorded in their member records.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum SubscriberGender {
     #[serde(rename = "M")]
     M,
@@ -21,6 +21,9 @@ pub enum SubscriberGender {
     F,
     #[serde(rename = "U")]
     U,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for SubscriberGender {
             Self::M => write!(f, "M"),
             Self::F => write!(f, "F"),
             Self::U => write!(f, "U"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

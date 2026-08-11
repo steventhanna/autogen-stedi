@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// RelationToSubscriberCode : The code indicating the dependent's relationship to the subscriber.
 /// The code indicating the dependent's relationship to the subscriber.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RelationToSubscriberCode {
     #[serde(rename = "01")]
     Variant01,
@@ -31,6 +31,9 @@ pub enum RelationToSubscriberCode {
     Variant53,
     #[serde(rename = "G8")]
     G8,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for RelationToSubscriberCode {
             Self::Variant40 => write!(f, "40"),
             Self::Variant53 => write!(f, "53"),
             Self::G8 => write!(f, "G8"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

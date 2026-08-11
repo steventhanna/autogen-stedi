@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ProductOrServiceIdQualifier : A code identifying the type/source of the descriptive number used in Product/Service ID. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#product-or-service-id-qualifier) for a complete list.
 /// A code identifying the type/source of the descriptive number used in Product/Service ID. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#product-or-service-id-qualifier) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ProductOrServiceIdQualifier {
     #[serde(rename = "AD")]
     Ad,
@@ -31,6 +31,9 @@ pub enum ProductOrServiceIdQualifier {
     Nu,
     #[serde(rename = "WK")]
     Wk,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for ProductOrServiceIdQualifier {
             Self::N4 => write!(f, "N4"),
             Self::Nu => write!(f, "NU"),
             Self::Wk => write!(f, "WK"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

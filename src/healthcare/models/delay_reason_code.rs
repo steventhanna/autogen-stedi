@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DelayReasonCode : Code indicating the reason for the delay in claim submission. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#delay-reason-codes) for a complete list.
 /// Code indicating the reason for the delay in claim submission. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#delay-reason-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DelayReasonCode {
     #[serde(rename = "1")]
     Variant1,
@@ -39,6 +39,9 @@ pub enum DelayReasonCode {
     Variant11,
     #[serde(rename = "15")]
     Variant15,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -57,6 +60,7 @@ impl std::fmt::Display for DelayReasonCode {
             Self::Variant10 => write!(f, "10"),
             Self::Variant11 => write!(f, "11"),
             Self::Variant15 => write!(f, "15"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

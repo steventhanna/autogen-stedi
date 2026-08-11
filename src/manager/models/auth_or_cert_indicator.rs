@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// AuthOrCertIndicator : Code indicating whether the benefit is subject to prior authorization or certification.  Payers may sometimes return other non-compliant values.
 /// Code indicating whether the benefit is subject to prior authorization or certification.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AuthOrCertIndicator {
     #[serde(rename = "N")]
     N,
@@ -21,6 +21,9 @@ pub enum AuthOrCertIndicator {
     U,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for AuthOrCertIndicator {
             Self::N => write!(f, "N"),
             Self::U => write!(f, "U"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ServiceAuthorizationExceptionCode : Code indicating the reason for the service authorization exception. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#service-authorization-exception-codes) for a complete list.
 /// Code indicating the reason for the service authorization exception. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#service-authorization-exception-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ServiceAuthorizationExceptionCode {
     #[serde(rename = "1")]
     Variant1,
@@ -29,6 +29,9 @@ pub enum ServiceAuthorizationExceptionCode {
     Variant6,
     #[serde(rename = "7")]
     Variant7,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for ServiceAuthorizationExceptionCode {
             Self::Variant5 => write!(f, "5"),
             Self::Variant6 => write!(f, "6"),
             Self::Variant7 => write!(f, "7"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// Direction : The direction of the transaction. Inbound transactions are those you receive from a payer, provider, or other trading partner. Outbound transactions are those you send to a payer, provider, or other trading partner.
 /// The direction of the transaction. Inbound transactions are those you receive from a payer, provider, or other trading partner. Outbound transactions are those you send to a payer, provider, or other trading partner.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Direction {
     #[serde(rename = "INBOUND")]
     Inbound,
@@ -21,6 +21,9 @@ pub enum Direction {
     Outbound,
     #[serde(rename = "UNKNOWN")]
     Unknown,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for Direction {
             Self::Inbound => write!(f, "INBOUND"),
             Self::Outbound => write!(f, "OUTBOUND"),
             Self::Unknown => write!(f, "UNKNOWN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

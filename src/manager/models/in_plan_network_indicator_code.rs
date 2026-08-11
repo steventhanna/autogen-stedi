@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InPlanNetworkIndicatorCode : Code indicating whether the benefit is in-network or out-of-network. Can be `Y` - Yes, `N` - No, `U` - Unknown, or `W` - Not Applicable   Code `U` indicates that it is unknown whether the benefits are in or out-of-network. Code `W` indicates that the benefit applies to both in and out-of-network providers.     Note that this property **doesn't indicate** whether the provider is in or out-of-network for the patient. To determine that, you must check with the payer directly.  Payers may sometimes return other non-compliant values.
 /// Code indicating whether the benefit is in-network or out-of-network. Can be `Y` - Yes, `N` - No, `U` - Unknown, or `W` - Not Applicable   Code `U` indicates that it is unknown whether the benefits are in or out-of-network. Code `W` indicates that the benefit applies to both in and out-of-network providers.     Note that this property **doesn't indicate** whether the provider is in or out-of-network for the patient. To determine that, you must check with the payer directly.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InPlanNetworkIndicatorCode {
     #[serde(rename = "Y")]
     Y,
@@ -23,6 +23,9 @@ pub enum InPlanNetworkIndicatorCode {
     U,
     #[serde(rename = "W")]
     W,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for InPlanNetworkIndicatorCode {
             Self::N => write!(f, "N"),
             Self::U => write!(f, "U"),
             Self::W => write!(f, "W"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

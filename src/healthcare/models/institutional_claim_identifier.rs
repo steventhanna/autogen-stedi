@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InstitutionalClaimIdentifier : A code specifying the type of transaction. Defaults to `CH` if not provided.   - `31`: Only for use by state Medicaid agencies performing post payment recovery.   - `CH`: Use when the transaction contains only fee for service claims or claims with at least one chargeable line item. Also use when it's not clear whether a transaction contains claims or capitated encounters, or if the transaction contains a mix of claims and capitated encounters.   - `RP`: Use for capitated encounters. Also use when the transaction is being sent to an entity for purposes other than adjudication of a claim. For example, when you're sending the claim to a state health agency that is using the claim for health data reporting purposes.
 /// A code specifying the type of transaction. Defaults to `CH` if not provided.   - `31`: Only for use by state Medicaid agencies performing post payment recovery.   - `CH`: Use when the transaction contains only fee for service claims or claims with at least one chargeable line item. Also use when it's not clear whether a transaction contains claims or capitated encounters, or if the transaction contains a mix of claims and capitated encounters.   - `RP`: Use for capitated encounters. Also use when the transaction is being sent to an entity for purposes other than adjudication of a claim. For example, when you're sending the claim to a state health agency that is using the claim for health data reporting purposes.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalClaimIdentifier {
     #[serde(rename = "31")]
     Variant31,
@@ -21,6 +21,9 @@ pub enum InstitutionalClaimIdentifier {
     Ch,
     #[serde(rename = "RP")]
     Rp,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for InstitutionalClaimIdentifier {
             Self::Variant31 => write!(f, "31"),
             Self::Ch => write!(f, "CH"),
             Self::Rp => write!(f, "RP"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

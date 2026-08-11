@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// TransactionFilterValue : Transaction support filter values. When multiple transaction filters are specified, they are combined with AND logic (payers must satisfy **all** criteria).
 /// Transaction support filter values. When multiple transaction filters are specified, they are combined with AND logic (payers must satisfy **all** criteria).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TransactionFilterValue {
     #[serde(rename = "SUPPORTED")]
     Supported,
@@ -23,6 +23,9 @@ pub enum TransactionFilterValue {
     EnrollmentRequired,
     #[serde(rename = "EITHER")]
     Either,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for TransactionFilterValue {
             Self::NotSupported => write!(f, "NOT_SUPPORTED"),
             Self::EnrollmentRequired => write!(f, "ENROLLMENT_REQUIRED"),
             Self::Either => write!(f, "EITHER"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

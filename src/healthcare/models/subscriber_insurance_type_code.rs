@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// SubscriberInsuranceTypeCode : Identifies the type of insurance policy within a specific insurance program. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#insurance-type-codes) for a complete list.
 /// Identifies the type of insurance policy within a specific insurance program. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#insurance-type-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum SubscriberInsuranceTypeCode {
     #[serde(rename = "12")]
     Variant12,
@@ -33,6 +33,9 @@ pub enum SubscriberInsuranceTypeCode {
     Variant43,
     #[serde(rename = "47")]
     Variant47,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -48,6 +51,7 @@ impl std::fmt::Display for SubscriberInsuranceTypeCode {
             Self::Variant42 => write!(f, "42"),
             Self::Variant43 => write!(f, "43"),
             Self::Variant47 => write!(f, "47"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

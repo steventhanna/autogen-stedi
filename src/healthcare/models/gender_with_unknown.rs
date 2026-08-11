@@ -12,7 +12,7 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum GenderWithUnknown {
     #[serde(rename = "M")]
     M,
@@ -20,6 +20,9 @@ pub enum GenderWithUnknown {
     F,
     #[serde(rename = "U")]
     U,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -29,6 +32,7 @@ impl std::fmt::Display for GenderWithUnknown {
             Self::M => write!(f, "M"),
             Self::F => write!(f, "F"),
             Self::U => write!(f, "U"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// CreditDebitFlagCode : Indicates whether a financial transaction represents a credit or debit to the provider's account. Used to specify the direction of money flow in payment transactions.
 /// Indicates whether a financial transaction represents a credit or debit to the provider's account. Used to specify the direction of money flow in payment transactions.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CreditDebitFlagCode {
     #[serde(rename = "C")]
     C,
     #[serde(rename = "D")]
     D,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for CreditDebitFlagCode {
         match self {
             Self::C => write!(f, "C"),
             Self::D => write!(f, "D"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

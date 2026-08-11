@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// TimeQualifierCode : Code indicating the time period for the benefit information.  Payers may sometimes return other non-compliant values.
 /// Code indicating the time period for the benefit information.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TimeQualifierCode {
     #[serde(rename = "6")]
     Variant6,
@@ -53,6 +53,9 @@ pub enum TimeQualifierCode {
     Variant35,
     #[serde(rename = "36")]
     Variant36,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -78,6 +81,7 @@ impl std::fmt::Display for TimeQualifierCode {
             Self::Variant34 => write!(f, "34"),
             Self::Variant35 => write!(f, "35"),
             Self::Variant36 => write!(f, "36"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

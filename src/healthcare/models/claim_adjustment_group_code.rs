@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimAdjustmentGroupCode : Defines the category of adjustment reason codes that explain why a claim payment was adjusted. These codes categorize adjustments into contractual obligations, payer-initiated reductions, patient responsibilities, and other adjustments.
 /// Defines the category of adjustment reason codes that explain why a claim payment was adjusted. These codes categorize adjustments into contractual obligations, payer-initiated reductions, patient responsibilities, and other adjustments.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimAdjustmentGroupCode {
     #[serde(rename = "CO")]
     Co,
@@ -23,6 +23,9 @@ pub enum ClaimAdjustmentGroupCode {
     Pi,
     #[serde(rename = "PR")]
     Pr,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for ClaimAdjustmentGroupCode {
             Self::Oa => write!(f, "OA"),
             Self::Pi => write!(f, "PI"),
             Self::Pr => write!(f, "PR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

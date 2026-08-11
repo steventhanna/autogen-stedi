@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InstitutionalRelationshipToSubscriberCode : Identifies the relationship of the patient to the subscriber. Can be set to `01` - Spouse, `19` - Child, `20` - Employee, `21` - Unknown, `39` - Organ Donor, `40` - Cadaver Donor, `53` - Life Partner, or `G8` - Other Relationship.
 /// Identifies the relationship of the patient to the subscriber. Can be set to `01` - Spouse, `19` - Child, `20` - Employee, `21` - Unknown, `39` - Organ Donor, `40` - Cadaver Donor, `53` - Life Partner, or `G8` - Other Relationship.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalRelationshipToSubscriberCode {
     #[serde(rename = "01")]
     Variant01,
@@ -31,6 +31,9 @@ pub enum InstitutionalRelationshipToSubscriberCode {
     Variant53,
     #[serde(rename = "G8")]
     G8,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for InstitutionalRelationshipToSubscriberCode {
             Self::Variant40 => write!(f, "40"),
             Self::Variant53 => write!(f, "53"),
             Self::G8 => write!(f, "G8"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

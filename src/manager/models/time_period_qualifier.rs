@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// TimePeriodQualifier : The name of the `timePeriodQualifierCode`. For example, `Calendar Year`.  Payers may sometimes return other non-compliant values.
 /// The name of the `timePeriodQualifierCode`. For example, `Calendar Year`.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TimePeriodQualifier {
     #[serde(rename = "Hour")]
     Hour,
@@ -49,6 +49,9 @@ pub enum TimePeriodQualifier {
     Month,
     #[serde(rename = "Week")]
     Week,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -72,6 +75,7 @@ impl std::fmt::Display for TimePeriodQualifier {
             Self::LifetimeRemaining => write!(f, "Lifetime Remaining"),
             Self::Month => write!(f, "Month"),
             Self::Week => write!(f, "Week"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

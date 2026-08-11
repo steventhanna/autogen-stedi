@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EnrollmentStatus : The status of the enrollment. You can submit enrollments with either `DRAFT` or `STEDI_ACTION_REQUIRED` status - the default is `DRAFT` if not included. Set this to `STEDI_ACTION_REQUIRED` when you're ready for Stedi to begin processing the enrollment. Once an enrollment is `STEDI_ACTION_REQUIRED`, only Stedi can set or update its status.
 /// The status of the enrollment. You can submit enrollments with either `DRAFT` or `STEDI_ACTION_REQUIRED` status - the default is `DRAFT` if not included. Set this to `STEDI_ACTION_REQUIRED` when you're ready for Stedi to begin processing the enrollment. Once an enrollment is `STEDI_ACTION_REQUIRED`, only Stedi can set or update its status.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EnrollmentStatus {
     #[serde(rename = "DRAFT")]
     Draft,
@@ -31,6 +31,9 @@ pub enum EnrollmentStatus {
     StediActionRequired,
     #[serde(rename = "PROVIDER_ACTION_REQUIRED")]
     ProviderActionRequired,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for EnrollmentStatus {
             Self::Canceled => write!(f, "CANCELED"),
             Self::StediActionRequired => write!(f, "STEDI_ACTION_REQUIRED"),
             Self::ProviderActionRequired => write!(f, "PROVIDER_ACTION_REQUIRED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

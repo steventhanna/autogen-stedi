@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EntityCode : Entity Identifier codes used to identify organizational entities, physical locations, properties, or individuals.
 /// Entity Identifier codes used to identify organizational entities, physical locations, properties, or individuals.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EntityCode {
     #[serde(rename = "1E")]
     Variant1E,
@@ -465,6 +465,9 @@ pub enum EntityCode {
     X5,
     #[serde(rename = "ZZ")]
     Zz,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -696,6 +699,7 @@ impl std::fmt::Display for EntityCode {
             Self::X4 => write!(f, "X4"),
             Self::X5 => write!(f, "X5"),
             Self::Zz => write!(f, "ZZ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

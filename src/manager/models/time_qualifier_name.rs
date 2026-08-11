@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// TimeQualifierName : The name of the time period qualifier code.     Note that for the patient's deductible, `Calendar Year` indicates the patient's total deductible amount for the year, while `Remaining` indicates the amount left to meet the deductible. Visit [Payer benefit response](https://www.stedi.com/docs/healthcare/eligibility-patient-responsibility-benefits#deductible) to learn more about deductibles.  Payers may sometimes return other non-compliant values.
 /// The name of the time period qualifier code.     Note that for the patient's deductible, `Calendar Year` indicates the patient's total deductible amount for the year, while `Remaining` indicates the amount left to meet the deductible. Visit [Payer benefit response](https://www.stedi.com/docs/healthcare/eligibility-patient-responsibility-benefits#deductible) to learn more about deductibles.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TimeQualifierName {
     #[serde(rename = "Hour")]
     Hour,
@@ -53,6 +53,9 @@ pub enum TimeQualifierName {
     Week,
     #[serde(rename = "Admission")]
     Admission,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -78,6 +81,7 @@ impl std::fmt::Display for TimeQualifierName {
             Self::Month => write!(f, "Month"),
             Self::Week => write!(f, "Week"),
             Self::Admission => write!(f, "Admission"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

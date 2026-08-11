@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PlaceOfServiceCode : Code identifying the type of facility where the services were or may be performed.
 /// Code identifying the type of facility where the services were or may be performed.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PlaceOfServiceCode {
     #[serde(rename = "01")]
     Variant01,
@@ -119,6 +119,9 @@ pub enum PlaceOfServiceCode {
     Variant81,
     #[serde(rename = "99")]
     Variant99,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -177,6 +180,7 @@ impl std::fmt::Display for PlaceOfServiceCode {
             Self::Variant72 => write!(f, "72"),
             Self::Variant81 => write!(f, "81"),
             Self::Variant99 => write!(f, "99"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

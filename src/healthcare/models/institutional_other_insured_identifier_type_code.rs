@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// InstitutionalOtherInsuredIdentifierTypeCode : Code identifying the type of identifier used for the other insured. Can be set to `II` - Standard Unique Health Identifier for each Individual in the United States or `MI` - Member Identification Number. Note that `II` is deprecated and should not be used in new claims.
 /// Code identifying the type of identifier used for the other insured. Can be set to `II` - Standard Unique Health Identifier for each Individual in the United States or `MI` - Member Identification Number. Note that `II` is deprecated and should not be used in new claims.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalOtherInsuredIdentifierTypeCode {
     #[serde(rename = "II")]
     Ii,
     #[serde(rename = "MI")]
     Mi,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for InstitutionalOtherInsuredIdentifierTypeCode {
         match self {
             Self::Ii => write!(f, "II"),
             Self::Mi => write!(f, "MI"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

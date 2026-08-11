@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// RenderingSecondaryIdentificationQualifierCode : The type of identifier used in `secondaryIdentifier`. Can be set to `0B` - State License Number, `1G` - Provider UPIN Number, `G2` - Provider Commercial Number, or `LU` - Location Number. Note that UPIN is deprecated and should not be used.
 /// The type of identifier used in `secondaryIdentifier`. Can be set to `0B` - State License Number, `1G` - Provider UPIN Number, `G2` - Provider Commercial Number, or `LU` - Location Number. Note that UPIN is deprecated and should not be used.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RenderingSecondaryIdentificationQualifierCode {
     #[serde(rename = "0B")]
     Variant0B,
@@ -23,6 +23,9 @@ pub enum RenderingSecondaryIdentificationQualifierCode {
     G2,
     #[serde(rename = "LU")]
     Lu,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for RenderingSecondaryIdentificationQualifierCode {
             Self::Variant1G => write!(f, "1G"),
             Self::G2 => write!(f, "G2"),
             Self::Lu => write!(f, "LU"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

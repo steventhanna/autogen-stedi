@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EnrollmentProcessTimeframe : Stedi's expected timeframe for completing the transaction enrollment process. `INSTANT` indicates that the enrollment will be in `LIVE` status within minutes of submitting the request.
 /// Stedi's expected timeframe for completing the transaction enrollment process. `INSTANT` indicates that the enrollment will be in `LIVE` status within minutes of submitting the request.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EnrollmentProcessTimeframe {
     #[serde(rename = "INSTANT")]
     Instant,
@@ -23,6 +23,9 @@ pub enum EnrollmentProcessTimeframe {
     Days,
     #[serde(rename = "WEEKS")]
     Weeks,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for EnrollmentProcessTimeframe {
             Self::Hours => write!(f, "HOURS"),
             Self::Days => write!(f, "DAYS"),
             Self::Weeks => write!(f, "WEEKS"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

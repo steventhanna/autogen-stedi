@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// MemberGender : A code indicating the dependent's gender. If the claim set the dependent's gender to `U` for unknown, you should omit this property from the claim status request.
 /// A code indicating the dependent's gender. If the claim set the dependent's gender to `U` for unknown, you should omit this property from the claim status request.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MemberGender {
     #[serde(rename = "M")]
     M,
     #[serde(rename = "F")]
     F,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for MemberGender {
         match self {
             Self::M => write!(f, "M"),
             Self::F => write!(f, "F"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

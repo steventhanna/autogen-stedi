@@ -12,7 +12,7 @@ use crate::payers::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TransactionSupportValue {
     #[serde(rename = "SUPPORTED")]
     Supported,
@@ -20,6 +20,9 @@ pub enum TransactionSupportValue {
     NotSupported,
     #[serde(rename = "ENROLLMENT_REQUIRED")]
     EnrollmentRequired,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -29,6 +32,7 @@ impl std::fmt::Display for TransactionSupportValue {
             Self::Supported => write!(f, "SUPPORTED"),
             Self::NotSupported => write!(f, "NOT_SUPPORTED"),
             Self::EnrollmentRequired => write!(f, "ENROLLMENT_REQUIRED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimAcknowledgmentServiceIdQualifierCode : Code identifying the source of the procedure code in claim status reports.
 /// Code identifying the source of the procedure code in claim status reports.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimAcknowledgmentServiceIdQualifierCode {
     #[serde(rename = "AD")]
     Ad,
@@ -29,6 +29,9 @@ pub enum ClaimAcknowledgmentServiceIdQualifierCode {
     Nu,
     #[serde(rename = "WK")]
     Wk,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for ClaimAcknowledgmentServiceIdQualifierCode {
             Self::Iv => write!(f, "IV"),
             Self::Nu => write!(f, "NU"),
             Self::Wk => write!(f, "WK"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ProviderType : Identify the type of provider.
 /// Identify the type of provider.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ProviderType {
     #[serde(rename = "payer")]
     Payer,
@@ -31,6 +31,9 @@ pub enum ProviderType {
     PlanSponsor,
     #[serde(rename = "provider")]
     Provider,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for ProviderType {
             Self::GatewayProvider => write!(f, "gateway provider"),
             Self::PlanSponsor => write!(f, "plan sponsor"),
             Self::Provider => write!(f, "provider"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

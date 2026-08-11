@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// FormTypeCode : Code indicating the type of form. Can be set to `AS` - Form Type Code or `UT` - Centers for Medicare and Medicaid Services (CMS) Durable Medical Equipment Regional Carrier (DMERC) Certificate of Medical Necessity (CMN) Forms. Set this to `AS` when you plan to include a home health form in the `formIdentifier` property.
 /// Code indicating the type of form. Can be set to `AS` - Form Type Code or `UT` - Centers for Medicare and Medicaid Services (CMS) Durable Medical Equipment Regional Carrier (DMERC) Certificate of Medical Necessity (CMN) Forms. Set this to `AS` when you plan to include a home health form in the `formIdentifier` property.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum FormTypeCode {
     #[serde(rename = "AS")]
     As,
     #[serde(rename = "UT")]
     Ut,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for FormTypeCode {
         match self {
             Self::As => write!(f, "AS"),
             Self::Ut => write!(f, "UT"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

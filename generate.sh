@@ -96,6 +96,13 @@ python3 scripts/fix-duplicate-fields.py src
 # Guarded by tests/datetime_query_params.rs.
 python3 scripts/fix-datetime-query-params.py src
 
+# The specs declare closed enums for fields where payers return non-compliant values
+# (their own descriptions say so), and the rust generator emits closed Rust enums —
+# one unexpected string fails deserialization of the whole response. Add an
+# `#[serde(untagged)] UnknownValue(String)` fallback to every generated string enum.
+# Guarded by tests/open_enums.rs.
+python3 scripts/fix-open-enums.py src
+
 echo "==> Verifying compilation..."
 cargo check --all-features
 cargo check --no-default-features --features "claims,native-tls"

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimPricingInformationProductOrServiceIdQualifier : Code identifying the type of product or service ID used. Can be set to `ER` - Jurisdiction Specific Procedure and Supply Codes, `HC` - Health Care Financing Administration Common Procedural Coding System (HCPCS) Codes, `HP` - Health Insurance Prospective Payment System (HIPPS) Skilled Nursing Facility Rate Code, `IV` - Home Infusion EDI Coalition (HIEC) Product/Service Code, or `WK` - Advanced Billing Concepts (ABC) Codes. Note that ABC codes are deprecated and should not be used in new claims. If you provide this property, you must also provide `repricedApprovedHCPCSCode` Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#product-or-service-id-qualifier-codes) for a complete list and additional usage notes.
 /// Code identifying the type of product or service ID used. Can be set to `ER` - Jurisdiction Specific Procedure and Supply Codes, `HC` - Health Care Financing Administration Common Procedural Coding System (HCPCS) Codes, `HP` - Health Insurance Prospective Payment System (HIPPS) Skilled Nursing Facility Rate Code, `IV` - Home Infusion EDI Coalition (HIEC) Product/Service Code, or `WK` - Advanced Billing Concepts (ABC) Codes. Note that ABC codes are deprecated and should not be used in new claims. If you provide this property, you must also provide `repricedApprovedHCPCSCode` Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#product-or-service-id-qualifier-codes) for a complete list and additional usage notes.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimPricingInformationProductOrServiceIdQualifier {
     #[serde(rename = "ER")]
     Er,
@@ -25,6 +25,9 @@ pub enum ClaimPricingInformationProductOrServiceIdQualifier {
     Iv,
     #[serde(rename = "WK")]
     Wk,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for ClaimPricingInformationProductOrServiceIdQualifier {
             Self::Hp => write!(f, "HP"),
             Self::Iv => write!(f, "IV"),
             Self::Wk => write!(f, "WK"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

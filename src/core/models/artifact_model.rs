@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ArtifactModel : The model of the artifact, which indicates the type of process or operation it represents. For example, an execution artifact represents a file that was processed, a fragment artifact represents a part of a larger transaction, and a fault artifact represents an error that occurred during processing.
 /// The model of the artifact, which indicates the type of process or operation it represents. For example, an execution artifact represents a file that was processed, a fragment artifact represents a part of a larger transaction, and a fault artifact represents an error that occurred during processing.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ArtifactModel {
     #[serde(rename = "execution")]
     Execution,
@@ -23,6 +23,9 @@ pub enum ArtifactModel {
     Transaction,
     #[serde(rename = "fault")]
     Fault,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for ArtifactModel {
             Self::Fragment => write!(f, "fragment"),
             Self::Transaction => write!(f, "transaction"),
             Self::Fault => write!(f, "fault"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

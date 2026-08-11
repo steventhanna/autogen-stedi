@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// OperatingStateCode : US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates throughout the entire United States.
 /// US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates throughout the entire United States.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OperatingStateCode {
     #[serde(rename = "AL")]
     Al,
@@ -129,6 +129,9 @@ pub enum OperatingStateCode {
     Mp,
     #[serde(rename = "NATIONAL")]
     National,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -192,6 +195,7 @@ impl std::fmt::Display for OperatingStateCode {
             Self::As => write!(f, "AS"),
             Self::Mp => write!(f, "MP"),
             Self::National => write!(f, "NATIONAL"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

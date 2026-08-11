@@ -12,7 +12,7 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RejectReasonCode {
     #[serde(rename = "T1")]
     T1,
@@ -26,6 +26,9 @@ pub enum RejectReasonCode {
     T5,
     #[serde(rename = "T6")]
     T6,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -38,6 +41,7 @@ impl std::fmt::Display for RejectReasonCode {
             Self::T4 => write!(f, "T4"),
             Self::T5 => write!(f, "T5"),
             Self::T6 => write!(f, "T6"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

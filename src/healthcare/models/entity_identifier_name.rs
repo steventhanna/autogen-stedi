@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EntityIdentifierName : Identifies the type of `benefitsInformation[].benefitsRelatedEntities`.
 /// Identifies the type of `benefitsInformation[].benefitsRelatedEntities`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EntityIdentifierName {
     #[serde(rename = "Insured or Subscriber")]
     InsuredOrSubscriber,
@@ -25,6 +25,9 @@ pub enum EntityIdentifierName {
     SecondaryPayer,
     #[serde(rename = "Tertiary Payer")]
     TertiaryPayer,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for EntityIdentifierName {
             Self::PrimaryPayer => write!(f, "Primary Payer"),
             Self::SecondaryPayer => write!(f, "Secondary Payer"),
             Self::TertiaryPayer => write!(f, "Tertiary Payer"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

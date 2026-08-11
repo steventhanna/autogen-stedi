@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// RequestDependentReferenceIdentificationQualifier : The type of `providerIdentifier` you are using. Use for providers that are not requesting the eligibility check, such as the referring provider. - Set to `HPI` when the National Provider ID is mandated for use. - Set to `PXC` if you're identifying a type of specialty associated with services provided to the dependent.     Otherwise, you can set to the following: `9K` - Servicer, `D3` - National Council for Prescription Drug Programs Pharmacy Number, `EI` - Employer's Identification Number, `HPI` - Centers for Medicare and Medicaid Services National Provider Identifier, `PXC` - Health Care Provider Taxonomy Code, `SY` - Social Security Number, `TJ` - Federal Taxpayer's Identification Number
 /// The type of `providerIdentifier` you are using. Use for providers that are not requesting the eligibility check, such as the referring provider. - Set to `HPI` when the National Provider ID is mandated for use. - Set to `PXC` if you're identifying a type of specialty associated with services provided to the dependent.     Otherwise, you can set to the following: `9K` - Servicer, `D3` - National Council for Prescription Drug Programs Pharmacy Number, `EI` - Employer's Identification Number, `HPI` - Centers for Medicare and Medicaid Services National Provider Identifier, `PXC` - Health Care Provider Taxonomy Code, `SY` - Social Security Number, `TJ` - Federal Taxpayer's Identification Number
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RequestDependentReferenceIdentificationQualifier {
     #[serde(rename = "9K")]
     Variant9K,
@@ -29,6 +29,9 @@ pub enum RequestDependentReferenceIdentificationQualifier {
     Sy,
     #[serde(rename = "TJ")]
     Tj,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for RequestDependentReferenceIdentificationQualifier {
             Self::Pxc => write!(f, "PXC"),
             Self::Sy => write!(f, "SY"),
             Self::Tj => write!(f, "TJ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

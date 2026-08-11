@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BatchStatus : The status of the batch.
 /// The status of the batch.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BatchStatus {
     #[serde(rename = "PENDING")]
     Pending,
@@ -27,6 +27,9 @@ pub enum BatchStatus {
     Completed,
     #[serde(rename = "COMPLETED_WITH_ERRORS")]
     CompletedWithErrors,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -39,6 +42,7 @@ impl std::fmt::Display for BatchStatus {
             Self::InProgress => write!(f, "IN_PROGRESS"),
             Self::Completed => write!(f, "COMPLETED"),
             Self::CompletedWithErrors => write!(f, "COMPLETED_WITH_ERRORS"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

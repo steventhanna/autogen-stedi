@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// TransactionStatus : A status indicating whether Stedi was able to successfully process the transaction.
 /// A status indicating whether Stedi was able to successfully process the transaction.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TransactionStatus {
     #[serde(rename = "failed")]
     Failed,
     #[serde(rename = "succeeded")]
     Succeeded,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for TransactionStatus {
         match self {
             Self::Failed => write!(f, "failed"),
             Self::Succeeded => write!(f, "succeeded"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

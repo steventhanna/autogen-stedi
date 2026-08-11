@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// DateTimePeriodFormatQualifier : Payers may sometimes return other non-compliant values.
 /// Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DateTimePeriodFormatQualifier {
     #[serde(rename = "D8")]
     D8,
     #[serde(rename = "RD8")]
     Rd8,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for DateTimePeriodFormatQualifier {
         match self {
             Self::D8 => write!(f, "D8"),
             Self::Rd8 => write!(f, "RD8"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

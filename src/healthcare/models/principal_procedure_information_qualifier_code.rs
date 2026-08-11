@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PrincipalProcedureInformationQualifierCode : Code identifying the type of procedure code used. Can be set to `BBR` - International Classification of Diseases Clinical Modification (ICD-10-PCS) Principal Procedure Codes, `BR` - International Classification of Diseases Clinical Modification (ICD-9-CM) Principal Procedure Codes, or `CAH` - Advanced Billing Concepts (ABC) Codes. Note that ICD-9 and ABC codes are deprecated and cannot be used in new claims.
 /// Code identifying the type of procedure code used. Can be set to `BBR` - International Classification of Diseases Clinical Modification (ICD-10-PCS) Principal Procedure Codes, `BR` - International Classification of Diseases Clinical Modification (ICD-9-CM) Principal Procedure Codes, or `CAH` - Advanced Billing Concepts (ABC) Codes. Note that ICD-9 and ABC codes are deprecated and cannot be used in new claims.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PrincipalProcedureInformationQualifierCode {
     #[serde(rename = "BBR")]
     Bbr,
@@ -21,6 +21,9 @@ pub enum PrincipalProcedureInformationQualifierCode {
     Br,
     #[serde(rename = "CAH")]
     Cah,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for PrincipalProcedureInformationQualifierCode {
             Self::Bbr => write!(f, "BBR"),
             Self::Br => write!(f, "BR"),
             Self::Cah => write!(f, "CAH"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

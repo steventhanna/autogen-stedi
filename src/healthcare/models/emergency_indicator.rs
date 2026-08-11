@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// EmergencyIndicator : Code indicating whether the service was related to an emergency. Can be set to `Y` - Yes. An emergency is when the patient requires immediate medical intervention as a result of severe, life threatening, or potentially disabling conditions.
 /// Code indicating whether the service was related to an emergency. Can be set to `Y` - Yes. An emergency is when the patient requires immediate medical intervention as a result of severe, life threatening, or potentially disabling conditions.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EmergencyIndicator {
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for EmergencyIndicator {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

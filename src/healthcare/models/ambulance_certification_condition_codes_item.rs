@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// AmbulanceCertificationConditionCodesItem : Code indicating the condition of the patient at the time of transport. You can provide up to five codes. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#ambulance-certification-condition-codes) for a complete list.
 /// Code indicating the condition of the patient at the time of transport. You can provide up to five codes. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#ambulance-certification-condition-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AmbulanceCertificationConditionCodesItem {
     #[serde(rename = "01")]
     Variant01,
@@ -31,6 +31,9 @@ pub enum AmbulanceCertificationConditionCodesItem {
     Variant09,
     #[serde(rename = "12")]
     Variant12,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for AmbulanceCertificationConditionCodesItem {
             Self::Variant08 => write!(f, "08"),
             Self::Variant09 => write!(f, "09"),
             Self::Variant12 => write!(f, "12"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

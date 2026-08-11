@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DependentRelationshipCode : For the dependent, this can be `01` - Spouse, `19` - Child, `20` Employee, `21` - Unknown, `39` - Organ Donor, `40` - Cadaver Donor, `53` - Life Partner, or `G8` - Other Relationship.
 /// For the dependent, this can be `01` - Spouse, `19` - Child, `20` Employee, `21` - Unknown, `39` - Organ Donor, `40` - Cadaver Donor, `53` - Life Partner, or `G8` - Other Relationship.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DependentRelationshipCode {
     #[serde(rename = "01")]
     Variant01,
@@ -33,6 +33,9 @@ pub enum DependentRelationshipCode {
     G8,
     #[serde(rename = "Unknown")]
     Unknown,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -48,6 +51,7 @@ impl std::fmt::Display for DependentRelationshipCode {
             Self::Variant53 => write!(f, "53"),
             Self::G8 => write!(f, "G8"),
             Self::Unknown => write!(f, "Unknown"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

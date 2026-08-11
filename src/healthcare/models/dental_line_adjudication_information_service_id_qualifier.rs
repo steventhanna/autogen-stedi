@@ -12,12 +12,15 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DentalLineAdjudicationInformationServiceIdQualifier {
     #[serde(rename = "AD")]
     Ad,
     #[serde(rename = "ER")]
     Er,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -26,6 +29,7 @@ impl std::fmt::Display for DentalLineAdjudicationInformationServiceIdQualifier {
         match self {
             Self::Ad => write!(f, "AD"),
             Self::Er => write!(f, "ER"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

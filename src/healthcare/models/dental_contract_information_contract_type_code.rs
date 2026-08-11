@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DentalContractInformationContractTypeCode : Code indicating the type of contract. Can be set to `02` - Per Diem, `03` - Variable Per Diem, `04` - Flat, `05` - Capitated, `06` - Percent, or `09` - Other.
 /// Code indicating the type of contract. Can be set to `02` - Per Diem, `03` - Variable Per Diem, `04` - Flat, `05` - Capitated, `06` - Percent, or `09` - Other.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DentalContractInformationContractTypeCode {
     #[serde(rename = "02")]
     Variant02,
@@ -27,6 +27,9 @@ pub enum DentalContractInformationContractTypeCode {
     Variant06,
     #[serde(rename = "09")]
     Variant09,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -39,6 +42,7 @@ impl std::fmt::Display for DentalContractInformationContractTypeCode {
             Self::Variant05 => write!(f, "05"),
             Self::Variant06 => write!(f, "06"),
             Self::Variant09 => write!(f, "09"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

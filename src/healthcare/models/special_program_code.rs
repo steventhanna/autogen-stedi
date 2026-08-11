@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// SpecialProgramCode : Code indicating the Special Program under which the services rendered to the patient were performed. Used for Medicaid claims only. Can be set to `02` - Physically Handicapped Children's Program, `03` - Special Federal Funding, `05` - Disability, or `09` - Second Opinion or Surgery.
 /// Code indicating the Special Program under which the services rendered to the patient were performed. Used for Medicaid claims only. Can be set to `02` - Physically Handicapped Children's Program, `03` - Special Federal Funding, `05` - Disability, or `09` - Second Opinion or Surgery.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum SpecialProgramCode {
     #[serde(rename = "02")]
     Variant02,
@@ -23,6 +23,9 @@ pub enum SpecialProgramCode {
     Variant05,
     #[serde(rename = "09")]
     Variant09,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for SpecialProgramCode {
             Self::Variant03 => write!(f, "03"),
             Self::Variant05 => write!(f, "05"),
             Self::Variant09 => write!(f, "09"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

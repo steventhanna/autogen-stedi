@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// Mode : Indicates whether the transaction contains test or production data. Stedi determines this from the value in [`ISA15` Usage Indicator Code](https://www.stedi.com/edi/x12/segment/ISA#ISA-15).
 /// Indicates whether the transaction contains test or production data. Stedi determines this from the value in [`ISA15` Usage Indicator Code](https://www.stedi.com/edi/x12/segment/ISA#ISA-15).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Mode {
     #[serde(rename = "test")]
     Test,
@@ -21,6 +21,9 @@ pub enum Mode {
     Production,
     #[serde(rename = "other")]
     Other,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for Mode {
             Self::Test => write!(f, "test"),
             Self::Production => write!(f, "production"),
             Self::Other => write!(f, "other"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

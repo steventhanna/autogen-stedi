@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DurableMedicalEquipmentCertificateOfMedicalNecessityAttachmentTransmissionCode : Code indicating the timing, transmission method, or format by which attachments will be sent. Required when the actual attachment is maintained by an attachment warehouse or similar vendor. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#attachment-transmission-codes) for a complete list. Use code `NS` when the paperwork is available on request at the provider's site, but is not being sent with the claim at this time.
 /// Code indicating the timing, transmission method, or format by which attachments will be sent. Required when the actual attachment is maintained by an attachment warehouse or similar vendor. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#attachment-transmission-codes) for a complete list. Use code `NS` when the paperwork is available on request at the provider's site, but is not being sent with the claim at this time.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DurableMedicalEquipmentCertificateOfMedicalNecessityAttachmentTransmissionCode {
     #[serde(rename = "AB")]
     Ab,
@@ -25,6 +25,9 @@ pub enum DurableMedicalEquipmentCertificateOfMedicalNecessityAttachmentTransmiss
     Ag,
     #[serde(rename = "NS")]
     Ns,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for DurableMedicalEquipmentCertificateOfMedicalNecessityA
             Self::Af => write!(f, "AF"),
             Self::Ag => write!(f, "AG"),
             Self::Ns => write!(f, "NS"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

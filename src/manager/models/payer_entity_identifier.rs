@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PayerEntityIdentifier : The entity identifier code for the payer.  Payers may sometimes return other non-compliant values.
 /// The entity identifier code for the payer.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PayerEntityIdentifier {
     #[serde(rename = "Third-Party Administrator")]
     ThirdPartyAdministrator,
@@ -25,6 +25,9 @@ pub enum PayerEntityIdentifier {
     PlanSponsor,
     #[serde(rename = "Payer")]
     Payer,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for PayerEntityIdentifier {
             Self::GatewayProvider => write!(f, "Gateway Provider"),
             Self::PlanSponsor => write!(f, "Plan Sponsor"),
             Self::Payer => write!(f, "Payer"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

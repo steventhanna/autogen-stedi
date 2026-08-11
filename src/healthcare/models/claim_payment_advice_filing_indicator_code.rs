@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimPaymentAdviceFilingIndicatorCode : Identifies the type of health plan or insurance coverage under which the claim was filed. These codes indicate the specific type of insurance arrangement, government program, or coverage type that applies to the claim.
 /// Identifies the type of health plan or insurance coverage under which the claim was filed. These codes indicate the specific type of insurance arrangement, government program, or coverage type that applies to the claim.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimPaymentAdviceFilingIndicatorCode {
     #[serde(rename = "12")]
     Variant12,
@@ -55,6 +55,9 @@ pub enum ClaimPaymentAdviceFilingIndicatorCode {
     Wc,
     #[serde(rename = "ZZ")]
     Zz,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -81,6 +84,7 @@ impl std::fmt::Display for ClaimPaymentAdviceFilingIndicatorCode {
             Self::Va => write!(f, "VA"),
             Self::Wc => write!(f, "WC"),
             Self::Zz => write!(f, "ZZ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

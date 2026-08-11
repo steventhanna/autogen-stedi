@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EligibilityCheckProviderAndMemberFollowupAction : Payers may sometimes return other non-compliant values.
 /// Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EligibilityCheckProviderAndMemberFollowupAction {
     #[serde(rename = "Please Correct and Resubmit")]
     PleaseCorrectAndResubmit,
@@ -29,6 +29,9 @@ pub enum EligibilityCheckProviderAndMemberFollowupAction {
     PleaseWait10DaysAndResubmit,
     #[serde(rename = "Do Not Resubmit; We Will Hold Your Request and Respond Again Shortly")]
     DoNotResubmitSemicolonWeWillHoldYourRequestAndRespondAgainShortly,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for EligibilityCheckProviderAndMemberFollowupAction {
             Self::PleaseWait30DaysAndResubmit => write!(f, "Please Wait 30 Days and Resubmit"),
             Self::PleaseWait10DaysAndResubmit => write!(f, "Please Wait 10 Days and Resubmit"),
             Self::DoNotResubmitSemicolonWeWillHoldYourRequestAndRespondAgainShortly => write!(f, "Do Not Resubmit; We Will Hold Your Request and Respond Again Shortly"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

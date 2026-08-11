@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DentalDiagnosisTypeCode : Code indicating the specific industry code list. Can be set to `ABK` - International Classification of Diseases Clinical Modification (ICD-10-CM) Principal Diagnosis or `ABF` - International Classification of Diseases Clinical Modification (ICD-10-CM) Diagnosis, `TQ` Systemized Nomenclature of Dentistry (SNODENT).
 /// Code indicating the specific industry code list. Can be set to `ABK` - International Classification of Diseases Clinical Modification (ICD-10-CM) Principal Diagnosis or `ABF` - International Classification of Diseases Clinical Modification (ICD-10-CM) Diagnosis, `TQ` Systemized Nomenclature of Dentistry (SNODENT).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DentalDiagnosisTypeCode {
     #[serde(rename = "ABK")]
     Abk,
@@ -21,6 +21,9 @@ pub enum DentalDiagnosisTypeCode {
     Abf,
     #[serde(rename = "TQ")]
     Tq,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for DentalDiagnosisTypeCode {
             Self::Abk => write!(f, "ABK"),
             Self::Abf => write!(f, "ABF"),
             Self::Tq => write!(f, "TQ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

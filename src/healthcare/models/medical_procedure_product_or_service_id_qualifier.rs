@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// MedicalProcedureProductOrServiceIdQualifier : Code identifying the type/source of the `procedureCode`. You can set this to `AD` - American Dental Association Codes, `CJ` - Current Procedural Terminology (CPT) Codes, `HC` - Health Care Financing Administration Common Procedural Coding System (HCPCS) Codes, `ID` - International Classification of Diseases, 9th Revision, Clinical Modification (ICD-9-CM) - Procedure, `IV` - Home Infusion EDI Coalition (HIEC) Product/Service Code, `N4` - National Drug Code in 5-4-2 Format, or `ZZ` - Mutually Defined.
 /// Code identifying the type/source of the `procedureCode`. You can set this to `AD` - American Dental Association Codes, `CJ` - Current Procedural Terminology (CPT) Codes, `HC` - Health Care Financing Administration Common Procedural Coding System (HCPCS) Codes, `ID` - International Classification of Diseases, 9th Revision, Clinical Modification (ICD-9-CM) - Procedure, `IV` - Home Infusion EDI Coalition (HIEC) Product/Service Code, `N4` - National Drug Code in 5-4-2 Format, or `ZZ` - Mutually Defined.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MedicalProcedureProductOrServiceIdQualifier {
     #[serde(rename = "AD")]
     Ad,
@@ -29,6 +29,9 @@ pub enum MedicalProcedureProductOrServiceIdQualifier {
     N4,
     #[serde(rename = "ZZ")]
     Zz,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for MedicalProcedureProductOrServiceIdQualifier {
             Self::Iv => write!(f, "IV"),
             Self::N4 => write!(f, "N4"),
             Self::Zz => write!(f, "ZZ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

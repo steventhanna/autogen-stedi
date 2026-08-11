@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// OtherPayerIdentifierTypeCode : Code designating the type of identifier. Can be set to `PI` - Payor Identification or `XV` - Centers for Medicare/Medicaid Services PlanID. Use code value `XV` when reporting Health Plan ID (HPID) or Other Entity Identifier (OEID).
 /// Code designating the type of identifier. Can be set to `PI` - Payor Identification or `XV` - Centers for Medicare/Medicaid Services PlanID. Use code value `XV` when reporting Health Plan ID (HPID) or Other Entity Identifier (OEID).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OtherPayerIdentifierTypeCode {
     #[serde(rename = "PI")]
     Pi,
     #[serde(rename = "XV")]
     Xv,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for OtherPayerIdentifierTypeCode {
         match self {
             Self::Pi => write!(f, "PI"),
             Self::Xv => write!(f, "XV"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

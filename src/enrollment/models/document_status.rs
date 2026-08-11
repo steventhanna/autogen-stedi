@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DocumentStatus : Indicates whether the document file has been successfully uploaded to Stedi.
 /// Indicates whether the document file has been successfully uploaded to Stedi.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DocumentStatus {
     #[serde(rename = "PENDING")]
     Pending,
@@ -23,6 +23,9 @@ pub enum DocumentStatus {
     Failed,
     #[serde(rename = "DELETED")]
     Deleted,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for DocumentStatus {
             Self::Uploaded => write!(f, "UPLOADED"),
             Self::Failed => write!(f, "FAILED"),
             Self::Deleted => write!(f, "DELETED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

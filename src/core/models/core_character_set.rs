@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CoreCharacterSet : When generating EDI, the character set determines the set of characters allowed in the EDI message. Characters outside of the specified set (after applying any repairs specified in RepairOptions) will result in an error.
 /// When generating EDI, the character set determines the set of characters allowed in the EDI message. Characters outside of the specified set (after applying any repairs specified in RepairOptions) will result in an error.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CoreCharacterSet {
     #[serde(rename = "Basic")]
     Basic,
@@ -21,6 +21,9 @@ pub enum CoreCharacterSet {
     Extended,
     #[serde(rename = "ExtendedHipaa")]
     ExtendedHipaa,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for CoreCharacterSet {
             Self::Basic => write!(f, "Basic"),
             Self::Extended => write!(f, "Extended"),
             Self::ExtendedHipaa => write!(f, "ExtendedHipaa"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

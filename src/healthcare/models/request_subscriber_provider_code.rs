@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// RequestSubscriberProviderCode : Use this for providers that are not requesting the eligibility check - the requestor is specified in the `provider` object. For example, if you are a hospital making an eligibility request, this is where you would specify information about a referring provider's role.    This property is **required** when the `providerIdentifier` and `referenceIdentificationQualifier` properties are populated.    You can use one of the following: `AD` - Admitting, `AT` - Attending, `BI` - Billing, `CO` - Consulting, `CV` - Covering, `H` - Hospital, `HH` - Home Health Care, `LA` - Laboratory, `OT` - Other Physician, `P1` - Pharmacist, `P2` - Pharmacy, `PC` - Primary Care Physician, `PE` - Performing, `R` - Rural Health Clinic, `RF` - Referring, `SB` - Submitting, `SK` - Skilled Nursing Facility, `SU` - Supervising
 /// Use this for providers that are not requesting the eligibility check - the requestor is specified in the `provider` object. For example, if you are a hospital making an eligibility request, this is where you would specify information about a referring provider's role.    This property is **required** when the `providerIdentifier` and `referenceIdentificationQualifier` properties are populated.    You can use one of the following: `AD` - Admitting, `AT` - Attending, `BI` - Billing, `CO` - Consulting, `CV` - Covering, `H` - Hospital, `HH` - Home Health Care, `LA` - Laboratory, `OT` - Other Physician, `P1` - Pharmacist, `P2` - Pharmacy, `PC` - Primary Care Physician, `PE` - Performing, `R` - Rural Health Clinic, `RF` - Referring, `SB` - Submitting, `SK` - Skilled Nursing Facility, `SU` - Supervising
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RequestSubscriberProviderCode {
     #[serde(rename = "AD")]
     Ad,
@@ -49,6 +49,9 @@ pub enum RequestSubscriberProviderCode {
     Sk,
     #[serde(rename = "SU")]
     Su,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -72,6 +75,7 @@ impl std::fmt::Display for RequestSubscriberProviderCode {
             Self::Rf => write!(f, "RF"),
             Self::Sk => write!(f, "SK"),
             Self::Su => write!(f, "SU"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

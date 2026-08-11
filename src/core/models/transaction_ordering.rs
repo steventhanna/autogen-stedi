@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// TransactionOrdering : Specify the order of the transactions in the generated X12 EDI file. By default, Stedi doesn't guarantee any particular order.  Set to `CONTROL_NUMBER` to order transactions within a functional group by their control number, from lowest to highest. In X12 EDI, this is `ST02` (Transaction Set Control Number).
 /// Specify the order of the transactions in the generated X12 EDI file. By default, Stedi doesn't guarantee any particular order.  Set to `CONTROL_NUMBER` to order transactions within a functional group by their control number, from lowest to highest. In X12 EDI, this is `ST02` (Transaction Set Control Number).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TransactionOrdering {
     #[serde(rename = "CONTROL_NUMBER")]
     ControlNumber,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for TransactionOrdering {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::ControlNumber => write!(f, "CONTROL_NUMBER"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

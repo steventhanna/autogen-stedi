@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// GovernmentServiceAffiliationCode : Payers may sometimes return other non-compliant values.
 /// Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum GovernmentServiceAffiliationCode {
     #[serde(rename = "A")]
     A,
@@ -55,6 +55,9 @@ pub enum GovernmentServiceAffiliationCode {
     U,
     #[serde(rename = "W")]
     W,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -81,6 +84,7 @@ impl std::fmt::Display for GovernmentServiceAffiliationCode {
             Self::S => write!(f, "S"),
             Self::U => write!(f, "U"),
             Self::W => write!(f, "W"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

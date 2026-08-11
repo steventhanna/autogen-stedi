@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InsuranceTypeName : The full name of the insurance type code.  Payers may sometimes return other non-compliant values.
 /// The full name of the insurance type code.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InsuranceTypeName {
     #[serde(rename = "Medicare Secondary Working Aged Beneficiary or Spouse with Employer Group Health Plan")]
     MedicareSecondaryWorkingAgedBeneficiaryOrSpouseWithEmployerGroupHealthPlan,
@@ -105,6 +105,9 @@ pub enum InsuranceTypeName {
     WorkersCompensation,
     #[serde(rename = "Wrap Up Policy")]
     WrapUpPolicy,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -156,6 +159,7 @@ impl std::fmt::Display for InsuranceTypeName {
             Self::TaxEquityFiscalResponsibilityActLeftParenthesisTefraRightParenthesis => write!(f, "Tax Equity Fiscal Responsibility Act (TEFRA)"),
             Self::WorkersCompensation => write!(f, "Workers Compensation"),
             Self::WrapUpPolicy => write!(f, "Wrap Up Policy"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

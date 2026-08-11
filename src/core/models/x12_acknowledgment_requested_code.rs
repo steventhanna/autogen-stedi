@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// X12AcknowledgmentRequestedCode : Set [ISA-14](https://www.stedi.com/edi/x12/segment/ISA#ISA-14) to a different value. If not set, the default value is `0 (No Interchange Acknowledgment Requested)`.
 /// Set [ISA-14](https://www.stedi.com/edi/x12/segment/ISA#ISA-14) to a different value. If not set, the default value is `0 (No Interchange Acknowledgment Requested)`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum X12AcknowledgmentRequestedCode {
     #[serde(rename = "0")]
     Variant0,
@@ -23,6 +23,9 @@ pub enum X12AcknowledgmentRequestedCode {
     Variant2,
     #[serde(rename = "3")]
     Variant3,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for X12AcknowledgmentRequestedCode {
             Self::Variant1 => write!(f, "1"),
             Self::Variant2 => write!(f, "2"),
             Self::Variant3 => write!(f, "3"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

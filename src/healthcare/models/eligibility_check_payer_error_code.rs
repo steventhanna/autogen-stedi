@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EligibilityCheckPayerErrorCode : Payers may sometimes return other non-compliant values.
 /// Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EligibilityCheckPayerErrorCode {
     #[serde(rename = "04")]
     Variant04,
@@ -27,6 +27,9 @@ pub enum EligibilityCheckPayerErrorCode {
     Variant80,
     #[serde(rename = "T4")]
     T4,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -39,6 +42,7 @@ impl std::fmt::Display for EligibilityCheckPayerErrorCode {
             Self::Variant79 => write!(f, "79"),
             Self::Variant80 => write!(f, "80"),
             Self::T4 => write!(f, "T4"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

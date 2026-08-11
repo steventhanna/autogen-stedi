@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DeliveryPatternTimeQualifierCode : A code specifying the time for routine shipments or deliveries.  Payers may sometimes return other non-compliant values.
 /// A code specifying the time for routine shipments or deliveries.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DeliveryPatternTimeQualifierCode {
     #[serde(rename = "A")]
     A,
@@ -31,6 +31,9 @@ pub enum DeliveryPatternTimeQualifierCode {
     G,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for DeliveryPatternTimeQualifierCode {
             Self::F => write!(f, "F"),
             Self::G => write!(f, "G"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

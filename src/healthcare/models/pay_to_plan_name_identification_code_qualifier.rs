@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// PayToPlanNameIdentificationCodeQualifier : The type of identification code used to identify the organization. Can be set to `PI` - Payer Identification or `XV` - Centers for Medicare and Medicaid Services PlanID. Use `XV` when reporting the Health Plan ID (HPID) or Other Entity Identifier (OEID).
 /// The type of identification code used to identify the organization. Can be set to `PI` - Payer Identification or `XV` - Centers for Medicare and Medicaid Services PlanID. Use `XV` when reporting the Health Plan ID (HPID) or Other Entity Identifier (OEID).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PayToPlanNameIdentificationCodeQualifier {
     #[serde(rename = "PI")]
     Pi,
     #[serde(rename = "XV")]
     Xv,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for PayToPlanNameIdentificationCodeQualifier {
         match self {
             Self::Pi => write!(f, "PI"),
             Self::Xv => write!(f, "XV"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

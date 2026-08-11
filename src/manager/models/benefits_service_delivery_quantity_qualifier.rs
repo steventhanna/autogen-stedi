@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitsServiceDeliveryQuantityQualifier : The name of the `quantityQualifierCode`. For example, `Days`.  Payers may sometimes return other non-compliant values.
 /// The name of the `quantityQualifierCode`. For example, `Days`.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitsServiceDeliveryQuantityQualifier {
     #[serde(rename = "Days")]
     Days,
@@ -25,6 +25,9 @@ pub enum BenefitsServiceDeliveryQuantityQualifier {
     Month,
     #[serde(rename = "Visits")]
     Visits,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for BenefitsServiceDeliveryQuantityQualifier {
             Self::Hours => write!(f, "Hours"),
             Self::Month => write!(f, "Month"),
             Self::Visits => write!(f, "Visits"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

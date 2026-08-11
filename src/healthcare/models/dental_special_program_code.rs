@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DentalSpecialProgramCode : Code indicating the Special Program under which the services rendered to the patient were performed. Used for Medicaid claims only. Can be set to `01` - Early & Periodic Screening, Diagnosis and Treatment (EPSDT) or Child Assessment Program (CHAP), `02` - Physically Handicapped Children's Program, `03` - Special Federal Funding, or `05` - Disability. Codes `02`, `03`, and `05` are used for Medicaid claims only.
 /// Code indicating the Special Program under which the services rendered to the patient were performed. Used for Medicaid claims only. Can be set to `01` - Early & Periodic Screening, Diagnosis and Treatment (EPSDT) or Child Assessment Program (CHAP), `02` - Physically Handicapped Children's Program, `03` - Special Federal Funding, or `05` - Disability. Codes `02`, `03`, and `05` are used for Medicaid claims only.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DentalSpecialProgramCode {
     #[serde(rename = "01")]
     Variant01,
@@ -23,6 +23,9 @@ pub enum DentalSpecialProgramCode {
     Variant03,
     #[serde(rename = "05")]
     Variant05,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for DentalSpecialProgramCode {
             Self::Variant02 => write!(f, "02"),
             Self::Variant03 => write!(f, "03"),
             Self::Variant05 => write!(f, "05"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

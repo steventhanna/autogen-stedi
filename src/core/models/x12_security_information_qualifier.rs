@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// X12SecurityInformationQualifier : Identifies the type of information in the Security Information (ISA-03). Default is `00 - No Security Information Present`.
 /// Identifies the type of information in the Security Information (ISA-03). Default is `00 - No Security Information Present`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum X12SecurityInformationQualifier {
     #[serde(rename = "00")]
     Variant00,
     #[serde(rename = "01")]
     Variant01,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for X12SecurityInformationQualifier {
         match self {
             Self::Variant00 => write!(f, "00"),
             Self::Variant01 => write!(f, "01"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

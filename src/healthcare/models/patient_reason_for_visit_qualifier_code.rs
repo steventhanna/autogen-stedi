@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// PatientReasonForVisitQualifierCode : Code identifying the type of reason for visit code used. Can be set to `APR` - International Classification of Diseases Clinical Modification Patient's Reason for Visit or `PR` - International Classification of Diseases Clinical Modification Patient's Reason for Visit. Note that ICD-9 is deprecated and cannot be used in new claims.
 /// Code identifying the type of reason for visit code used. Can be set to `APR` - International Classification of Diseases Clinical Modification Patient's Reason for Visit or `PR` - International Classification of Diseases Clinical Modification Patient's Reason for Visit. Note that ICD-9 is deprecated and cannot be used in new claims.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PatientReasonForVisitQualifierCode {
     #[serde(rename = "APR")]
     Apr,
     #[serde(rename = "PR")]
     Pr,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for PatientReasonForVisitQualifierCode {
         match self {
             Self::Apr => write!(f, "APR"),
             Self::Pr => write!(f, "PR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

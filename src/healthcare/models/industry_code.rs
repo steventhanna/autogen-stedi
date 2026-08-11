@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// IndustryCode : The type of facility where the service was provided. You can set this to one of the [place of service codes](https://www.cms.gov/medicare/coding-billing/place-of-service-codes/code-sets).
 /// The type of facility where the service was provided. You can set this to one of the [place of service codes](https://www.cms.gov/medicare/coding-billing/place-of-service-codes/code-sets).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum IndustryCode {
     #[serde(rename = "01")]
     Variant01,
@@ -115,6 +115,9 @@ pub enum IndustryCode {
     Variant81,
     #[serde(rename = "99")]
     Variant99,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -171,6 +174,7 @@ impl std::fmt::Display for IndustryCode {
             Self::Variant72 => write!(f, "72"),
             Self::Variant81 => write!(f, "81"),
             Self::Variant99 => write!(f, "99"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

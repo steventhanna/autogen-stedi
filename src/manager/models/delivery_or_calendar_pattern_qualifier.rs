@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DeliveryOrCalendarPatternQualifier : The name of the `deliveryOrCalendarPatternCode`. For example, `Last Working Day of Period`.  Payers may sometimes return other non-compliant values.
 /// The name of the `deliveryOrCalendarPatternCode`. For example, `Last Working Day of Period`.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DeliveryOrCalendarPatternQualifier {
     #[serde(rename = "1st Week of the Month")]
     Variant1stWeekOfTheMonth,
@@ -93,6 +93,9 @@ pub enum DeliveryOrCalendarPatternQualifier {
     Variant1Slash2ByWedBalByFri,
     #[serde(rename = "None (Also Used to Cancel or Override a Previous Pattern)")]
     NoneLeftParenthesisAlsoUsedToCancelOrOverrideAPreviousPatternRightParenthesis,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -138,6 +141,7 @@ impl std::fmt::Display for DeliveryOrCalendarPatternQualifier {
             Self::WheneverNecessary => write!(f, "Whenever Necessary"),
             Self::Variant1Slash2ByWedBalByFri => write!(f, "1/2 By Wed. Bal. By Fri."),
             Self::NoneLeftParenthesisAlsoUsedToCancelOrOverrideAPreviousPatternRightParenthesis => write!(f, "None (Also Used to Cancel or Override a Previous Pattern)"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

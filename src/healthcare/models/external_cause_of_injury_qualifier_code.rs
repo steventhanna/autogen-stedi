@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ExternalCauseOfInjuryQualifierCode : Code identifying the type of external cause of injury code used. Can be set to `ABN` - International Classification of Diseases Clinical Modification External Cause of Injury Code or `BN` - International Classification of Diseases Clinical Modification External Cause of Injury Code. Note that ICD-9 is deprecated and cannot be used in new claims.
 /// Code identifying the type of external cause of injury code used. Can be set to `ABN` - International Classification of Diseases Clinical Modification External Cause of Injury Code or `BN` - International Classification of Diseases Clinical Modification External Cause of Injury Code. Note that ICD-9 is deprecated and cannot be used in new claims.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ExternalCauseOfInjuryQualifierCode {
     #[serde(rename = "ABN")]
     Abn,
     #[serde(rename = "BN")]
     Bn,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ExternalCauseOfInjuryQualifierCode {
         match self {
             Self::Abn => write!(f, "ABN"),
             Self::Bn => write!(f, "BN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

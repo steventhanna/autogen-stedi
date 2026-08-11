@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// MeasurementUnit : Code identifying the unit of measurement. Can be set to `MJ` - Minutes or `UN` - Unit. Minutes is required for anesthesia services. Note that anesthesia time is counted from the moment that the practitioner, having completed the preoperative evaluation, starts an intravenous line, places monitors, administers pre-anesthesia sedation, or otherwise physically begins to prepare the patient for anesthesia. Time continues throughout the case and while the practitioner accompanies the patient to the post-anesthesia recovery unit (PACU). Time stops when the practitioner releases the patient to the care of PACU personnel.
 /// Code identifying the unit of measurement. Can be set to `MJ` - Minutes or `UN` - Unit. Minutes is required for anesthesia services. Note that anesthesia time is counted from the moment that the practitioner, having completed the preoperative evaluation, starts an intravenous line, places monitors, administers pre-anesthesia sedation, or otherwise physically begins to prepare the patient for anesthesia. Time continues throughout the case and while the practitioner accompanies the patient to the post-anesthesia recovery unit (PACU). Time stops when the practitioner releases the patient to the care of PACU personnel.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MeasurementUnit {
     #[serde(rename = "MJ")]
     Mj,
     #[serde(rename = "UN")]
     Un,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for MeasurementUnit {
         match self {
             Self::Mj => write!(f, "MJ"),
             Self::Un => write!(f, "UN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }
