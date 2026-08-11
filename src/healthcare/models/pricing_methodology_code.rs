@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PricingMethodologyCode : Code indicating the pricing or repricing methodology. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#pricing-methodology-codes-2) for a complete list.
 /// Code indicating the pricing or repricing methodology. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#pricing-methodology-codes-2) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PricingMethodologyCode {
     #[serde(rename = "00")]
     Variant00,
@@ -45,6 +45,9 @@ pub enum PricingMethodologyCode {
     Variant13,
     #[serde(rename = "14")]
     Variant14,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -66,6 +69,7 @@ impl std::fmt::Display for PricingMethodologyCode {
             Self::Variant12 => write!(f, "12"),
             Self::Variant13 => write!(f, "13"),
             Self::Variant14 => write!(f, "14"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

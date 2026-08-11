@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimLevelEntityIdentifierCode : Entity identifier code for claim level in claim status reports
 /// Entity identifier code for claim level in claim status reports
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimLevelEntityIdentifierCode {
     #[serde(rename = "03")]
     Variant03,
@@ -77,6 +77,9 @@ pub enum ClaimLevelEntityIdentifierCode {
     Ttp,
     #[serde(rename = "TU")]
     Tu,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -114,6 +117,7 @@ impl std::fmt::Display for ClaimLevelEntityIdentifierCode {
             Self::Tl => write!(f, "TL"),
             Self::Ttp => write!(f, "TTP"),
             Self::Tu => write!(f, "TU"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

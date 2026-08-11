@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// EventEnvironment : The environment in which an event was produced.
 /// The environment in which an event was produced.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EventEnvironment {
     #[serde(rename = "TEST")]
     Test,
     #[serde(rename = "PRODUCTION")]
     Production,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for EventEnvironment {
         match self {
             Self::Test => write!(f, "TEST"),
             Self::Production => write!(f, "PRODUCTION"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

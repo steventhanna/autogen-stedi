@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ResponseProviderCode : A code indicating the type of provider. Visit [Eligibility code lists](https://www.stedi.com/docs/healthcare/eligibility-code-lists#provider-codes) for a complete list.  Payers may sometimes return other non-compliant values.
 /// A code indicating the type of provider. Visit [Eligibility code lists](https://www.stedi.com/docs/healthcare/eligibility-code-lists#provider-codes) for a complete list.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ResponseProviderCode {
     #[serde(rename = "AD")]
     Ad,
@@ -51,6 +51,9 @@ pub enum ResponseProviderCode {
     Sk,
     #[serde(rename = "SU")]
     Su,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -75,6 +78,7 @@ impl std::fmt::Display for ResponseProviderCode {
             Self::Sb => write!(f, "SB"),
             Self::Sk => write!(f, "SK"),
             Self::Su => write!(f, "SU"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

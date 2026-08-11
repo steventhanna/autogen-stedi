@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ContentType : Allowed content types for claim attachments.
 /// Allowed content types for claim attachments.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ContentType {
     #[serde(rename = "application/pdf")]
     ApplicationSlashPdf,
@@ -25,6 +25,9 @@ pub enum ContentType {
     ImageSlashJpg,
     #[serde(rename = "image/png")]
     ImageSlashPng,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for ContentType {
             Self::ImageSlashJpeg => write!(f, "image/jpeg"),
             Self::ImageSlashJpg => write!(f, "image/jpg"),
             Self::ImageSlashPng => write!(f, "image/png"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

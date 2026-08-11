@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ResponsibleParty : The party responsible for completing a task.
 /// The party responsible for completing a task.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ResponsibleParty {
     #[serde(rename = "PROVIDER")]
     Provider,
     #[serde(rename = "STEDI")]
     Stedi,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ResponsibleParty {
         match self {
             Self::Provider => write!(f, "PROVIDER"),
             Self::Stedi => write!(f, "STEDI"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

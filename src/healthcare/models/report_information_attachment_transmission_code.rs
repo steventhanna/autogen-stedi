@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ReportInformationAttachmentTransmissionCode : Code identifying the method by which the provider's report is attached. Can be set to `AA` - Available on Request at Provider Site, `BM` - By Mail, `EL` - Electronically Only, `EM` - E-Mail, `FT` - File Transfer, or `FX` - By Fax.  Set this to `EL` when you plan to submit attachments electronically through Stedi APIs.
 /// Code identifying the method by which the provider's report is attached. Can be set to `AA` - Available on Request at Provider Site, `BM` - By Mail, `EL` - Electronically Only, `EM` - E-Mail, `FT` - File Transfer, or `FX` - By Fax.  Set this to `EL` when you plan to submit attachments electronically through Stedi APIs.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ReportInformationAttachmentTransmissionCode {
     #[serde(rename = "AA")]
     Aa,
@@ -27,6 +27,9 @@ pub enum ReportInformationAttachmentTransmissionCode {
     Ft,
     #[serde(rename = "FX")]
     Fx,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -39,6 +42,7 @@ impl std::fmt::Display for ReportInformationAttachmentTransmissionCode {
             Self::Em => write!(f, "EM"),
             Self::Ft => write!(f, "FT"),
             Self::Fx => write!(f, "FX"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

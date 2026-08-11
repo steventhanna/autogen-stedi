@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DeliveryPatternTimeQualifier : The name of the `deliveryPatternTimeCode`.  Payers may sometimes return other non-compliant values.
 /// The name of the `deliveryPatternTimeCode`.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DeliveryPatternTimeQualifier {
     #[serde(rename = "1st Shift (Normal Working Hours)")]
     Variant1stShiftLeftParenthesisNormalWorkingHoursRightParenthesis,
@@ -31,6 +31,9 @@ pub enum DeliveryPatternTimeQualifier {
     AnyShift,
     #[serde(rename = "None (Also Used to Cancel or Override a Previous Pattern)")]
     NoneLeftParenthesisAlsoUsedToCancelOrOverrideAPreviousPatternRightParenthesis,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for DeliveryPatternTimeQualifier {
             Self::AsDirected => write!(f, "As Directed"),
             Self::AnyShift => write!(f, "Any Shift"),
             Self::NoneLeftParenthesisAlsoUsedToCancelOrOverrideAPreviousPatternRightParenthesis => write!(f, "None (Also Used to Cancel or Override a Previous Pattern)"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

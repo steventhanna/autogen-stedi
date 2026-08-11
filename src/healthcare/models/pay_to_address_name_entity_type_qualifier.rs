@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// PayToAddressNameEntityTypeQualifier : Code identifying the type of entity. Can be set to `2` - Non-Person Entity.
 /// Code identifying the type of entity. Can be set to `2` - Non-Person Entity.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PayToAddressNameEntityTypeQualifier {
     #[serde(rename = "2")]
     Variant2,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for PayToAddressNameEntityTypeQualifier {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Variant2 => write!(f, "2"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

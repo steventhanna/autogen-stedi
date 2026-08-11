@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// EnrollmentProcessType : Whether transaction enrollment is single or multi-step.   - `ONE_CLICK` indicates that once you submit the transaction enrollment request, Stedi can complete the rest of the enrollment process without any further action from you.   - `MULTI_STEP` indicates that you must complete additional steps to finish the enrollment process. Customer support will reach out with clear instructions explaining how to complete any remaining steps.
 /// Whether transaction enrollment is single or multi-step.   - `ONE_CLICK` indicates that once you submit the transaction enrollment request, Stedi can complete the rest of the enrollment process without any further action from you.   - `MULTI_STEP` indicates that you must complete additional steps to finish the enrollment process. Customer support will reach out with clear instructions explaining how to complete any remaining steps.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EnrollmentProcessType {
     #[serde(rename = "ONE_CLICK")]
     OneClick,
     #[serde(rename = "MULTI_STEP")]
     MultiStep,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for EnrollmentProcessType {
         match self {
             Self::OneClick => write!(f, "ONE_CLICK"),
             Self::MultiStep => write!(f, "MULTI_STEP"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

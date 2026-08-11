@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// MilitaryServiceRankCode : Payers may sometimes return other non-compliant values.
 /// Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MilitaryServiceRankCode {
     #[serde(rename = "A1")]
     A1,
@@ -125,6 +125,9 @@ pub enum MilitaryServiceRankCode {
     V1,
     #[serde(rename = "W1")]
     W1,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -186,6 +189,7 @@ impl std::fmt::Display for MilitaryServiceRankCode {
             Self::T1 => write!(f, "T1"),
             Self::V1 => write!(f, "V1"),
             Self::W1 => write!(f, "W1"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

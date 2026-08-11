@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ConditionIndicatorDurableMedicalEquipmentCertificationConditionIndicator : Code indicating whether there is a certification. Can be set to `N` - No or `Y` - Yes.
 /// Code indicating whether there is a certification. Can be set to `N` - No or `Y` - Yes.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ConditionIndicatorDurableMedicalEquipmentCertificationConditionIndicator {
     #[serde(rename = "Y")]
     Y,
     #[serde(rename = "N")]
     N,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ConditionIndicatorDurableMedicalEquipmentCertificatio
         match self {
             Self::Y => write!(f, "Y"),
             Self::N => write!(f, "N"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

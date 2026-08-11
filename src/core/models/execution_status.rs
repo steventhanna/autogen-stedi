@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ExecutionStatus : The status of the execution.   - You can only retry executions with a `FAILED` or `IGNORED` status.   - An execution is `COMPLETED` when Stedi has finished processing the file with no errors. If the file is an outbound file, a `COMPLETED` status also means that Stedi successfully delivered it to the configured connection.
 /// The status of the execution.   - You can only retry executions with a `FAILED` or `IGNORED` status.   - An execution is `COMPLETED` when Stedi has finished processing the file with no errors. If the file is an outbound file, a `COMPLETED` status also means that Stedi successfully delivered it to the configured connection.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ExecutionStatus {
     #[serde(rename = "COMPLETED")]
     Completed,
@@ -31,6 +31,9 @@ pub enum ExecutionStatus {
     Retried,
     #[serde(rename = "STARTED")]
     Started,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for ExecutionStatus {
             Self::Retrying => write!(f, "RETRYING"),
             Self::Retried => write!(f, "RETRIED"),
             Self::Started => write!(f, "STARTED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

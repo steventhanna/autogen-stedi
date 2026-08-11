@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// RelatedEntityIdentifierName : Code identifying an organizational entity, a physical location, property or an individual.    - `PPO` is used to identify a PPO by name or identification number, and also may also be used if identifying the Network that benefits are restricted to for In-Network benefits.  Payers may sometimes return other non-compliant values.
 /// Code identifying an organizational entity, a physical location, property or an individual.    - `PPO` is used to identify a PPO by name or identification number, and also may also be used if identifying the Network that benefits are restricted to for In-Network benefits.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RelatedEntityIdentifierName {
     #[serde(rename = "Contracted Service Provider")]
     ContractedServiceProvider,
@@ -65,6 +65,9 @@ pub enum RelatedEntityIdentifierName {
     UtilizationManagementOrganization,
     #[serde(rename = "Managed Care Organization")]
     ManagedCareOrganization,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -96,6 +99,7 @@ impl std::fmt::Display for RelatedEntityIdentifierName {
             Self::OrganizationCompletingConfigurationChange => write!(f, "Organization Completing Configuration Change"),
             Self::UtilizationManagementOrganization => write!(f, "Utilization Management Organization"),
             Self::ManagedCareOrganization => write!(f, "Managed Care Organization"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

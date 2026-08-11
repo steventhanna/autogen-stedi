@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ServiceEntityIdentifierCodeValue : Human-readable descriptions for service entity identifier codes
 /// Human-readable descriptions for service entity identifier codes
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ServiceEntityIdentifierCodeValue {
     #[serde(rename = "Dependent")]
     Dependent,
@@ -77,6 +77,9 @@ pub enum ServiceEntityIdentifierCodeValue {
     TertiaryPayer,
     #[serde(rename = "Third Party Repricing Organization (TPO)")]
     ThirdPartyRepricingOrganizationLeftParenthesisTpoRightParenthesis,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -114,6 +117,7 @@ impl std::fmt::Display for ServiceEntityIdentifierCodeValue {
             Self::TestingLaboratory => write!(f, "Testing Laboratory"),
             Self::TertiaryPayer => write!(f, "Tertiary Payer"),
             Self::ThirdPartyRepricingOrganizationLeftParenthesisTpoRightParenthesis => write!(f, "Third Party Repricing Organization (TPO)"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

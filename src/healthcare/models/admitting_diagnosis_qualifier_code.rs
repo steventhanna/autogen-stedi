@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// AdmittingDiagnosisQualifierCode : Code identifying the type of admitting diagnosis code used. Can be set to `ABJ` - International Classification of Diseases Clinical Modification (ICD-10-CM) Admitting Diagnosis or `BJ` - International Classification of Diseases Clinical Modification (ICD-9-CM) Admitting Diagnosis. Note that ICD-9 is deprecated and cannot be used in new claims.
 /// Code identifying the type of admitting diagnosis code used. Can be set to `ABJ` - International Classification of Diseases Clinical Modification (ICD-10-CM) Admitting Diagnosis or `BJ` - International Classification of Diseases Clinical Modification (ICD-9-CM) Admitting Diagnosis. Note that ICD-9 is deprecated and cannot be used in new claims.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AdmittingDiagnosisQualifierCode {
     #[serde(rename = "ABJ")]
     Abj,
     #[serde(rename = "BJ")]
     Bj,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for AdmittingDiagnosisQualifierCode {
         match self {
             Self::Abj => write!(f, "ABJ"),
             Self::Bj => write!(f, "BJ"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PaymentMethodCode : Specifies the method used to deliver payment to the provider. This determines how the payment will be transmitted, such as electronically through ACH, by physical check, or wire transfer.
 /// Specifies the method used to deliver payment to the provider. This determines how the payment will be transmitted, such as electronically through ACH, by physical check, or wire transfer.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PaymentMethodCode {
     #[serde(rename = "ACH")]
     Ach,
@@ -25,6 +25,9 @@ pub enum PaymentMethodCode {
     Fwt,
     #[serde(rename = "NON")]
     Non,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for PaymentMethodCode {
             Self::Chk => write!(f, "CHK"),
             Self::Fwt => write!(f, "FWT"),
             Self::Non => write!(f, "NON"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

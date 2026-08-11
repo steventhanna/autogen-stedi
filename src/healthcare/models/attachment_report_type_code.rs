@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// AttachmentReportTypeCode : Code indicating the title or contents of a document, report or supporting item. For example, `08` - Plan of Treatment or `CT` - Certification. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#attachment-report-type-codes) for a complete list.
 /// Code indicating the title or contents of a document, report or supporting item. For example, `08` - Plan of Treatment or `CT` - Certification. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#attachment-report-type-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AttachmentReportTypeCode {
     #[serde(rename = "03")]
     Variant03,
@@ -137,6 +137,9 @@ pub enum AttachmentReportTypeCode {
     V5,
     #[serde(rename = "XP")]
     Xp,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -204,6 +207,7 @@ impl std::fmt::Display for AttachmentReportTypeCode {
             Self::Sg => write!(f, "SG"),
             Self::V5 => write!(f, "V5"),
             Self::Xp => write!(f, "XP"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

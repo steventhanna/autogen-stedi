@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitRelatedEntityIdentification : Code identifying the type of value provided in `entityIdentificationValue`. For example, `FI` - Federal Taxpayer's Identification Number.  Payers may sometimes return other non-compliant values.
 /// Code identifying the type of value provided in `entityIdentificationValue`. For example, `FI` - Federal Taxpayer's Identification Number.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitRelatedEntityIdentification {
     #[serde(rename = "24")]
     Variant24,
@@ -41,6 +41,9 @@ pub enum BenefitRelatedEntityIdentification {
     Xv,
     #[serde(rename = "XX")]
     Xx,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -60,6 +63,7 @@ impl std::fmt::Display for BenefitRelatedEntityIdentification {
             Self::Sv => write!(f, "SV"),
             Self::Xv => write!(f, "XV"),
             Self::Xx => write!(f, "XX"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ProsthesisCrownOrInlayCode : Code indicating the placement status for the dental work. Can be set to `I` - Initial Placement or `R` - Replacement. When set to `R`, you must include either the `priorPlacementDate` or `estimatedPriorPlacementDate` properties within the `claimInformation.serviceLines[].serviceLineDateInformation` object.
 /// Code indicating the placement status for the dental work. Can be set to `I` - Initial Placement or `R` - Replacement. When set to `R`, you must include either the `priorPlacementDate` or `estimatedPriorPlacementDate` properties within the `claimInformation.serviceLines[].serviceLineDateInformation` object.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ProsthesisCrownOrInlayCode {
     #[serde(rename = "I")]
     I,
     #[serde(rename = "R")]
     R,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ProsthesisCrownOrInlayCode {
         match self {
             Self::I => write!(f, "I"),
             Self::R => write!(f, "R"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

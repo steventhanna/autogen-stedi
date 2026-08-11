@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// MaintenanceReasonCode : Code identifying the reason for the changes to subscriber identifying information, such as name, date of birth, or address. This is always `25`  Payers may sometimes return other non-compliant values.
 /// Code identifying the reason for the changes to subscriber identifying information, such as name, date of birth, or address. This is always `25`  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MaintenanceReasonCode {
     #[serde(rename = "25")]
     Variant25,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for MaintenanceReasonCode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Variant25 => write!(f, "25"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

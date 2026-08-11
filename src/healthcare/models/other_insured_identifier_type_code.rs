@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// OtherInsuredIdentifierTypeCode : Code identifying the type of identifier. Can be set to `II` - Standard Unique Health Identifier for each individual in the United States or `MI` - Member Identification Number. The code `MI` should be the subscriber's identification number as assigned by the payer, such as their subscriber ID. You should also use `MI` in claims submitted to the Indian Health Service/Contract Health Services (IHS/CHS) Fiscal Intermediary for the purpose of reporting the Tribe Residency Code (Tribe County State). For IHS/CHS claims, you should also put the SSN in the `otherInsuredAdditionalIdentifier` property.)
 /// Code identifying the type of identifier. Can be set to `II` - Standard Unique Health Identifier for each individual in the United States or `MI` - Member Identification Number. The code `MI` should be the subscriber's identification number as assigned by the payer, such as their subscriber ID. You should also use `MI` in claims submitted to the Indian Health Service/Contract Health Services (IHS/CHS) Fiscal Intermediary for the purpose of reporting the Tribe Residency Code (Tribe County State). For IHS/CHS claims, you should also put the SSN in the `otherInsuredAdditionalIdentifier` property.)
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OtherInsuredIdentifierTypeCode {
     #[serde(rename = "II")]
     Ii,
     #[serde(rename = "MI")]
     Mi,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for OtherInsuredIdentifierTypeCode {
         match self {
             Self::Ii => write!(f, "II"),
             Self::Mi => write!(f, "MI"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

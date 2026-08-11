@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DentalAttachmentReportTypeCode : Code indicating the title or contents of a document, report or supporting item. For example, `B4` - Referral Form or `DA` - Dental Models. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#attachment-report-type-codes) for a complete list.
 /// Code indicating the title or contents of a document, report or supporting item. For example, `B4` - Referral Form or `DA` - Dental Models. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#attachment-report-type-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DentalAttachmentReportTypeCode {
     #[serde(rename = "B4")]
     B4,
@@ -31,6 +31,9 @@ pub enum DentalAttachmentReportTypeCode {
     Rb,
     #[serde(rename = "RR")]
     Rr,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for DentalAttachmentReportTypeCode {
             Self::P6 => write!(f, "P6"),
             Self::Rb => write!(f, "RB"),
             Self::Rr => write!(f, "RR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

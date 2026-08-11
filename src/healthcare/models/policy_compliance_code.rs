@@ -12,7 +12,7 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PolicyComplianceCode {
     #[serde(rename = "1")]
     Variant1,
@@ -24,6 +24,9 @@ pub enum PolicyComplianceCode {
     Variant4,
     #[serde(rename = "5")]
     Variant5,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -35,6 +38,7 @@ impl std::fmt::Display for PolicyComplianceCode {
             Self::Variant3 => write!(f, "3"),
             Self::Variant4 => write!(f, "4"),
             Self::Variant5 => write!(f, "5"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

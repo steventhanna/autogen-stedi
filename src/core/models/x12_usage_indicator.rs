@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// X12UsageIndicator : Set [ISA-15](https://www.stedi.com/edi/x12/segment/ISA#ISA-15) to a different value. If not set, the default value is `P (Production Data)`.
 /// Set [ISA-15](https://www.stedi.com/edi/x12/segment/ISA#ISA-15) to a different value. If not set, the default value is `P (Production Data)`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum X12UsageIndicator {
     #[serde(rename = "I")]
     I,
@@ -21,6 +21,9 @@ pub enum X12UsageIndicator {
     T,
     #[serde(rename = "P")]
     P,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for X12UsageIndicator {
             Self::I => write!(f, "I"),
             Self::T => write!(f, "T"),
             Self::P => write!(f, "P"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

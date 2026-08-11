@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CoreConnectionType : The type of connection used for file delivery.
 /// The type of connection used for file delivery.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CoreConnectionType {
     #[serde(rename = "BUCKET")]
     Bucket,
@@ -25,6 +25,9 @@ pub enum CoreConnectionType {
     RemoteFtp,
     #[serde(rename = "STEDI_ACCOUNT_FTP")]
     StediAccountFtp,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for CoreConnectionType {
             Self::StediFtp => write!(f, "STEDI_FTP"),
             Self::RemoteFtp => write!(f, "REMOTE_FTP"),
             Self::StediAccountFtp => write!(f, "STEDI_ACCOUNT_FTP"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

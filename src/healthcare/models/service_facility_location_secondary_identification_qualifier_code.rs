@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ServiceFacilityLocationSecondaryIdentificationQualifierCode : Code identifying the type of secondary identification. Can be set to `0B` - State License Number, `G2` - Provider Commercial Number, or `LU` - Location Number.
 /// Code identifying the type of secondary identification. Can be set to `0B` - State License Number, `G2` - Provider Commercial Number, or `LU` - Location Number.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ServiceFacilityLocationSecondaryIdentificationQualifierCode {
     #[serde(rename = "0B")]
     Variant0B,
@@ -21,6 +21,9 @@ pub enum ServiceFacilityLocationSecondaryIdentificationQualifierCode {
     G2,
     #[serde(rename = "LU")]
     Lu,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for ServiceFacilityLocationSecondaryIdentificationQualifi
             Self::Variant0B => write!(f, "0B"),
             Self::G2 => write!(f, "G2"),
             Self::Lu => write!(f, "LU"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

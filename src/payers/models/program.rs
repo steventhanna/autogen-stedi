@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// Program : Insurance programs that a payer can participate in.
 /// Insurance programs that a payer can participate in.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Program {
     #[serde(rename = "AUTOMOBILE_MEDICAL")]
     AutomobileMedical,
@@ -37,6 +37,9 @@ pub enum Program {
     VeteransAffairs,
     #[serde(rename = "WORKERS_COMPENSATION")]
     WorkersCompensation,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -54,6 +57,7 @@ impl std::fmt::Display for Program {
             Self::Tricare => write!(f, "TRICARE"),
             Self::VeteransAffairs => write!(f, "VETERANS_AFFAIRS"),
             Self::WorkersCompensation => write!(f, "WORKERS_COMPENSATION"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -12,12 +12,15 @@ use crate::core::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ProfileType {
     #[serde(rename = "local")]
     Local,
     #[serde(rename = "partner")]
     Partner,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -26,6 +29,7 @@ impl std::fmt::Display for ProfileType {
         match self {
             Self::Local => write!(f, "local"),
             Self::Partner => write!(f, "partner"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// UnitForMeasurementCode : Code specifying the unit of measurement for the quantity.  Payers may sometimes return other non-compliant values.
 /// Code specifying the unit of measurement for the quantity.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UnitForMeasurementCode {
     #[serde(rename = "DA")]
     Da,
@@ -25,6 +25,9 @@ pub enum UnitForMeasurementCode {
     Wk,
     #[serde(rename = "YR")]
     Yr,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for UnitForMeasurementCode {
             Self::Vs => write!(f, "VS"),
             Self::Wk => write!(f, "WK"),
             Self::Yr => write!(f, "YR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

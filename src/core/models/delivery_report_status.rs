@@ -12,12 +12,15 @@ use crate::core::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DeliveryReportStatus {
     #[serde(rename = "FAILED")]
     Failed,
     #[serde(rename = "DELIVERED")]
     Delivered,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -26,6 +29,7 @@ impl std::fmt::Display for DeliveryReportStatus {
         match self {
             Self::Failed => write!(f, "FAILED"),
             Self::Delivered => write!(f, "DELIVERED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

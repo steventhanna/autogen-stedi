@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CobResponseBenefitsInformationCode : The code indicating the type of benefits information. Can be `1` - Active Coverage, `6` - Inactive, `R` - Other or Additional Payor, or `V` - Cannot Process.
 /// The code indicating the type of benefits information. Can be `1` - Active Coverage, `6` - Inactive, `R` - Other or Additional Payor, or `V` - Cannot Process.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CobResponseBenefitsInformationCode {
     #[serde(rename = "1")]
     Variant1,
@@ -23,6 +23,9 @@ pub enum CobResponseBenefitsInformationCode {
     R,
     #[serde(rename = "V")]
     V,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for CobResponseBenefitsInformationCode {
             Self::Variant6 => write!(f, "6"),
             Self::R => write!(f, "R"),
             Self::V => write!(f, "V"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

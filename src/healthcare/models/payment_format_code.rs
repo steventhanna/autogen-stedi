@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// PaymentFormatCode : Identifies the specific electronic payment format used for ACH transactions. These formats determine the structure and content of the electronic payment message.
 /// Identifies the specific electronic payment format used for ACH transactions. These formats determine the structure and content of the electronic payment message.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PaymentFormatCode {
     #[serde(rename = "CCP")]
     Ccp,
     #[serde(rename = "CTX")]
     Ctx,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for PaymentFormatCode {
         match self {
             Self::Ccp => write!(f, "CCP"),
             Self::Ctx => write!(f, "CTX"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

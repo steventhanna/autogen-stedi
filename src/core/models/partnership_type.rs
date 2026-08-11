@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// PartnershipType : The type of partnership, which determines the EDI standard used for exchanging transactions.
 /// The type of partnership, which determines the EDI standard used for exchanging transactions.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PartnershipType {
     #[serde(rename = "x12")]
     X12,
     #[serde(rename = "edifact")]
     Edifact,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for PartnershipType {
         match self {
             Self::X12 => write!(f, "x12"),
             Self::Edifact => write!(f, "edifact"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// TransactionType : Types of healthcare transactions supported for enrollment.
 /// Types of healthcare transactions supported for enrollment.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TransactionType {
     #[serde(rename = "claimStatus")]
     ClaimStatus,
@@ -31,6 +31,9 @@ pub enum TransactionType {
     SolicitedClaimAttachment,
     #[serde(rename = "unsolicitedClaimAttachment")]
     UnsolicitedClaimAttachment,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for TransactionType {
             Self::ClaimPayment => write!(f, "claimPayment"),
             Self::SolicitedClaimAttachment => write!(f, "solicitedClaimAttachment"),
             Self::UnsolicitedClaimAttachment => write!(f, "unsolicitedClaimAttachment"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

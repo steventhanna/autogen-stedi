@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// DfiIdNumberQualifier : Identifies the type of Depository Financial Institution (DFI) identification number being used. This specifies the format and country of the bank routing information.
 /// Identifies the type of Depository Financial Institution (DFI) identification number being used. This specifies the format and country of the bank routing information.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DfiIdNumberQualifier {
     #[serde(rename = "01")]
     Variant01,
     #[serde(rename = "04")]
     Variant04,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for DfiIdNumberQualifier {
         match self {
             Self::Variant01 => write!(f, "01"),
             Self::Variant04 => write!(f, "04"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

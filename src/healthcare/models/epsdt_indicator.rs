@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// EpsdtIndicator : Code indicating whether there was EPSDT involvement in the service. Can be set to `Y` - Yes. EPSDT is a program that provides comprehensive and preventive health care services for children under age 21 who are enrolled in Medicaid.
 /// Code indicating whether there was EPSDT involvement in the service. Can be set to `Y` - Yes. EPSDT is a program that provides comprehensive and preventive health care services for children under age 21 who are enrolled in Medicaid.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EpsdtIndicator {
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for EpsdtIndicator {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

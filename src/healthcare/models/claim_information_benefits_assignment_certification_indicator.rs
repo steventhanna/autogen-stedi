@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimInformationBenefitsAssignmentCertificationIndicator : A code indicating whether the patient or an authorized person has authorized the plan to remit payment directly to the provider. Use `W` when the patient refuses to assign benefits. Can be set to `N` - No (Payment should go to the patient), `Y` - Yes (Payment should go directly to the provider), or `W` - Not Applicable (use when patient refuses to assign benefits).
 /// A code indicating whether the patient or an authorized person has authorized the plan to remit payment directly to the provider. Use `W` when the patient refuses to assign benefits. Can be set to `N` - No (Payment should go to the patient), `Y` - Yes (Payment should go directly to the provider), or `W` - Not Applicable (use when patient refuses to assign benefits).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimInformationBenefitsAssignmentCertificationIndicator {
     #[serde(rename = "N")]
     N,
@@ -21,6 +21,9 @@ pub enum ClaimInformationBenefitsAssignmentCertificationIndicator {
     W,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for ClaimInformationBenefitsAssignmentCertificationIndica
             Self::N => write!(f, "N"),
             Self::W => write!(f, "W"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

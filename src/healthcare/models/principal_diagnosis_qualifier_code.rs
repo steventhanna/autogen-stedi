@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// PrincipalDiagnosisQualifierCode : Code identifying the type of diagnosis code used. Can be set to `ABK` - International Classification of Diseases Clinical Modification Principal Diagnosis or `BK` - International Classification of Diseases Clinical Modification (ICD-9-CM) Principal Diagnosis. Note that ICD-9 is deprecated and cannot be used in new claims.
 /// Code identifying the type of diagnosis code used. Can be set to `ABK` - International Classification of Diseases Clinical Modification Principal Diagnosis or `BK` - International Classification of Diseases Clinical Modification (ICD-9-CM) Principal Diagnosis. Note that ICD-9 is deprecated and cannot be used in new claims.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PrincipalDiagnosisQualifierCode {
     #[serde(rename = "ABK")]
     Abk,
     #[serde(rename = "BK")]
     Bk,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for PrincipalDiagnosisQualifierCode {
         match self {
             Self::Abk => write!(f, "ABK"),
             Self::Bk => write!(f, "BK"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

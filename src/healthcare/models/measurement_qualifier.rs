@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// MeasurementQualifier : Code identifying the specific measurement. Can be set to `HT` - Height, `R1` - Hemoglobin, `R2` - Hematocrit, `R3` - Epoetin Starting Dosage, or `R4` - Creatinine.
 /// Code identifying the specific measurement. Can be set to `HT` - Height, `R1` - Hemoglobin, `R2` - Hematocrit, `R3` - Epoetin Starting Dosage, or `R4` - Creatinine.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MeasurementQualifier {
     #[serde(rename = "HT")]
     Ht,
@@ -25,6 +25,9 @@ pub enum MeasurementQualifier {
     R3,
     #[serde(rename = "R4")]
     R4,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for MeasurementQualifier {
             Self::R2 => write!(f, "R2"),
             Self::R3 => write!(f, "R3"),
             Self::R4 => write!(f, "R4"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

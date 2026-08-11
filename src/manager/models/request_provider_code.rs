@@ -12,7 +12,7 @@ use crate::manager::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RequestProviderCode {
     #[serde(rename = "AD")]
     Ad,
@@ -50,6 +50,9 @@ pub enum RequestProviderCode {
     Sk,
     #[serde(rename = "SU")]
     Su,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -74,6 +77,7 @@ impl std::fmt::Display for RequestProviderCode {
             Self::Sb => write!(f, "SB"),
             Self::Sk => write!(f, "SK"),
             Self::Su => write!(f, "SU"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// UsState : United States state and territory codes using standard two-letter abbreviations.
 /// United States state and territory codes using standard two-letter abbreviations.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UsState {
     #[serde(rename = "AA")]
     Aa,
@@ -139,6 +139,9 @@ pub enum UsState {
     Wi,
     #[serde(rename = "WY")]
     Wy,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -207,6 +210,7 @@ impl std::fmt::Display for UsState {
             Self::Wv => write!(f, "WV"),
             Self::Wi => write!(f, "WI"),
             Self::Wy => write!(f, "WY"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

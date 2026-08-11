@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ConditionIndicator : Code indicating the condition of the certificate. Can be set to `38` - Certification signed by the physician is on file at the supplier's office or `ZV` - Replacement Item.
 /// Code indicating the condition of the certificate. Can be set to `38` - Certification signed by the physician is on file at the supplier's office or `ZV` - Replacement Item.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ConditionIndicator {
     #[serde(rename = "38")]
     Variant38,
     #[serde(rename = "ZV")]
     Zv,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ConditionIndicator {
         match self {
             Self::Variant38 => write!(f, "38"),
             Self::Zv => write!(f, "ZV"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

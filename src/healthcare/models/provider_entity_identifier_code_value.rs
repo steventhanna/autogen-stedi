@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ProviderEntityIdentifierCodeValue : Human-readable descriptions for provider entity identifier codes
 /// Human-readable descriptions for provider entity identifier codes
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ProviderEntityIdentifierCodeValue {
     #[serde(rename = "Employer")]
     Employer,
@@ -25,6 +25,9 @@ pub enum ProviderEntityIdentifierCodeValue {
     Clearinghouse,
     #[serde(rename = "Payer")]
     Payer,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for ProviderEntityIdentifierCodeValue {
             Self::Submitter => write!(f, "Submitter"),
             Self::Clearinghouse => write!(f, "Clearinghouse"),
             Self::Payer => write!(f, "Payer"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

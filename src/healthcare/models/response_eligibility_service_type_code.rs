@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ResponseEligibilityServiceTypeCode : A code identifying a type of service. Visit [Service Type Codes](https://www.stedi.com/docs/healthcare/send-eligibility-checks#service-type-codes) for a complete list.  This list is specific to X12 version 005010, which is the mandated version for eligibility checks. It differs from the current [X12 Service Type Codes](https://x12.org/codes/service-type-codes) list, which applies to X12 versions later than 005010.  Payers may sometimes return other non-compliant values.
 /// A code identifying a type of service. Visit [Service Type Codes](https://www.stedi.com/docs/healthcare/send-eligibility-checks#service-type-codes) for a complete list.  This list is specific to X12 version 005010, which is the mandated version for eligibility checks. It differs from the current [X12 Service Type Codes](https://x12.org/codes/service-type-codes) list, which applies to X12 versions later than 005010.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ResponseEligibilityServiceTypeCode {
     #[serde(rename = "1")]
     Variant1,
@@ -501,6 +501,9 @@ pub enum ResponseEligibilityServiceTypeCode {
     V44,
     #[serde(rename = "V45")]
     V45,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -750,6 +753,7 @@ impl std::fmt::Display for ResponseEligibilityServiceTypeCode {
             Self::V43 => write!(f, "V43"),
             Self::V44 => write!(f, "V44"),
             Self::V45 => write!(f, "V45"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ResponseEligibilityServiceType : The name of a Service Type Code listed in the `serviceTypeCodes` array. Visit [Service Type Codes](https://www.stedi.com/docs/healthcare/send-eligibility-checks#service-type-codes) for a complete list of codes and their names.  The word physician in service type codes refers to any healthcare provider, including physician assistants, nurse practitioners, and other types of healthcare professionals.  Payers may sometimes return other non-compliant values.
 /// The name of a Service Type Code listed in the `serviceTypeCodes` array. Visit [Service Type Codes](https://www.stedi.com/docs/healthcare/send-eligibility-checks#service-type-codes) for a complete list of codes and their names.  The word physician in service type codes refers to any healthcare provider, including physician assistants, nurse practitioners, and other types of healthcare professionals.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ResponseEligibilityServiceType {
     #[serde(rename = "Medical Care")]
     MedicalCare,
@@ -501,6 +501,9 @@ pub enum ResponseEligibilityServiceType {
     Cosmetic,
     #[serde(rename = "Emergency Care")]
     EmergencyCare,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -750,6 +753,7 @@ impl std::fmt::Display for ResponseEligibilityServiceType {
             Self::TissueConditioning => write!(f, "Tissue Conditioning"),
             Self::Cosmetic => write!(f, "Cosmetic"),
             Self::EmergencyCare => write!(f, "Emergency Care"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

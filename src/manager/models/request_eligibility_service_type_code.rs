@@ -12,7 +12,7 @@ use crate::manager::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RequestEligibilityServiceTypeCode {
     #[serde(rename = "1")]
     Variant1,
@@ -388,6 +388,9 @@ pub enum RequestEligibilityServiceTypeCode {
     Tn,
     #[serde(rename = "UC")]
     Uc,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -581,6 +584,7 @@ impl std::fmt::Display for RequestEligibilityServiceTypeCode {
             Self::Tc => write!(f, "TC"),
             Self::Tn => write!(f, "TN"),
             Self::Uc => write!(f, "UC"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

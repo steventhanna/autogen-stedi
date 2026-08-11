@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DiagnosisTypeCode : The type of diagnosis code you are providing. You can set to `BK` - International Classification of Diseases Clinical Modification (ICD-9-CM) Principal Diagnosis, `ABK` - International Classification of Diseases Clinical Modification (ICD-10-CM) Principal Diagnosis, `BF`- International Classification of Diseases Clinical Modification (ICD-9-CM) Diagnosis, or `ABF`- International Classification of Diseases Clinical Modification (ICD-10-CM) Diagnosis.    Note that ICD-9 codes are **deprecated** and should no longer be used in eligibility checks.
 /// The type of diagnosis code you are providing. You can set to `BK` - International Classification of Diseases Clinical Modification (ICD-9-CM) Principal Diagnosis, `ABK` - International Classification of Diseases Clinical Modification (ICD-10-CM) Principal Diagnosis, `BF`- International Classification of Diseases Clinical Modification (ICD-9-CM) Diagnosis, or `ABF`- International Classification of Diseases Clinical Modification (ICD-10-CM) Diagnosis.    Note that ICD-9 codes are **deprecated** and should no longer be used in eligibility checks.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DiagnosisTypeCode {
     #[serde(rename = "BK")]
     Bk,
@@ -23,6 +23,9 @@ pub enum DiagnosisTypeCode {
     Bf,
     #[serde(rename = "ABF")]
     Abf,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for DiagnosisTypeCode {
             Self::Abk => write!(f, "ABK"),
             Self::Bf => write!(f, "BF"),
             Self::Abf => write!(f, "ABF"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

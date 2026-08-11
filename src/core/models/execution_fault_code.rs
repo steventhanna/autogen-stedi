@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ExecutionFaultCode : A code specifying the reason for the fault. This code appears in the `code` property of the HTTP error response.
 /// A code specifying the reason for the fault. This code appears in the `code` property of the HTTP error response.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ExecutionFaultCode {
     #[serde(rename = "DELIVERY_FAILURE")]
     DeliveryFailure,
@@ -93,6 +93,9 @@ pub enum ExecutionFaultCode {
     TranslationError,
     #[serde(rename = "UNKNOWN_ERROR")]
     UnknownError,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -138,6 +141,7 @@ impl std::fmt::Display for ExecutionFaultCode {
             Self::PreviouslyRetried => write!(f, "PREVIOUSLY_RETRIED"),
             Self::TranslationError => write!(f, "TRANSLATION_ERROR"),
             Self::UnknownError => write!(f, "UNKNOWN_ERROR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// ResponseSubscriberEntityIdentifier : The entity identifier for the subscriber.
 /// The entity identifier for the subscriber.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ResponseSubscriberEntityIdentifier {
     #[serde(rename = "Insured or Subscriber")]
     InsuredOrSubscriber,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for ResponseSubscriberEntityIdentifier {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::InsuredOrSubscriber => write!(f, "Insured or Subscriber"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

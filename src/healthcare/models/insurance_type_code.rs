@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InsuranceTypeCode : Code identifying the type of insurance policy.  Payers may sometimes return other non-compliant values.
 /// Code identifying the type of insurance policy.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InsuranceTypeCode {
     #[serde(rename = "12")]
     Variant12,
@@ -105,6 +105,9 @@ pub enum InsuranceTypeCode {
     Wc,
     #[serde(rename = "WU")]
     Wu,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -156,6 +159,7 @@ impl std::fmt::Display for InsuranceTypeCode {
             Self::Tf => write!(f, "TF"),
             Self::Wc => write!(f, "WC"),
             Self::Wu => write!(f, "WU"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

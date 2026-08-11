@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// QuantityQualifierName : The name of the quantity qualifier code.  Payers may sometimes return other non-compliant values.
 /// The name of the quantity qualifier code.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum QuantityQualifierName {
     #[serde(rename = "Minimum")]
     Minimum,
@@ -51,6 +51,9 @@ pub enum QuantityQualifierName {
     Visits,
     #[serde(rename = "Years")]
     Years,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -75,6 +78,7 @@ impl std::fmt::Display for QuantityQualifierName {
             Self::AgeCommaLowValue => write!(f, "Age, Low Value"),
             Self::Visits => write!(f, "Visits"),
             Self::Years => write!(f, "Years"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

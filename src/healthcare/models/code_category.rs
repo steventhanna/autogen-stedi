@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CodeCategory : Identifies the category to which the `conditionCode` applies. Can be set to `E1` - Spectacle Lenses, `E2` - Contact Lenses, or `E3` - Spectacle Frames.
 /// Identifies the category to which the `conditionCode` applies. Can be set to `E1` - Spectacle Lenses, `E2` - Contact Lenses, or `E3` - Spectacle Frames.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CodeCategory {
     #[serde(rename = "E1")]
     E1,
@@ -21,6 +21,9 @@ pub enum CodeCategory {
     E2,
     #[serde(rename = "E3")]
     E3,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for CodeCategory {
             Self::E1 => write!(f, "E1"),
             Self::E2 => write!(f, "E2"),
             Self::E3 => write!(f, "E3"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

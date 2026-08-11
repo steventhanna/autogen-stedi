@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// FileType : The file format. For example, `EDI/EDIFACT` for an EDIFACT file or `EDI/X12` for an X12 EDI file.
 /// The file format. For example, `EDI/EDIFACT` for an EDIFACT file or `EDI/X12` for an X12 EDI file.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum FileType {
     #[serde(rename = "CSV")]
     Csv,
@@ -37,6 +37,9 @@ pub enum FileType {
     Xml,
     #[serde(rename = "ZIP")]
     Zip,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -54,6 +57,7 @@ impl std::fmt::Display for FileType {
             Self::EdiSlashX12 => write!(f, "EDI/X12"),
             Self::Xml => write!(f, "XML"),
             Self::Zip => write!(f, "ZIP"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

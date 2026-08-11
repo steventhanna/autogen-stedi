@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EventStatus : The current status of an event.
 /// The current status of an event.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EventStatus {
     #[serde(rename = "PENDING")]
     Pending,
@@ -21,6 +21,9 @@ pub enum EventStatus {
     Delivered,
     #[serde(rename = "FAILED")]
     Failed,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for EventStatus {
             Self::Pending => write!(f, "PENDING"),
             Self::Delivered => write!(f, "DELIVERED"),
             Self::Failed => write!(f, "FAILED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

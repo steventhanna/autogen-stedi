@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DrugIdentificationServiceIdQualifier : Code indicating the source of the drug code or product number. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#drug-identification-product-or-service-id-qualifier-codes) for a complete list.
 /// Code indicating the source of the drug code or product number. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#drug-identification-product-or-service-id-qualifier-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DrugIdentificationServiceIdQualifier {
     #[serde(rename = "EN")]
     En,
@@ -29,6 +29,9 @@ pub enum DrugIdentificationServiceIdQualifier {
     Uk,
     #[serde(rename = "UP")]
     Up,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for DrugIdentificationServiceIdQualifier {
             Self::On => write!(f, "ON"),
             Self::Uk => write!(f, "UK"),
             Self::Up => write!(f, "UP"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

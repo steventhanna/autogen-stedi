@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// InstitutionalMeasurementUnit : The unit of measurement for the service. Can be set to `DA` - Days or `UN` - Unit.
 /// The unit of measurement for the service. Can be set to `DA` - Days or `UN` - Unit.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalMeasurementUnit {
     #[serde(rename = "DA")]
     Da,
     #[serde(rename = "UN")]
     Un,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for InstitutionalMeasurementUnit {
         match self {
             Self::Da => write!(f, "DA"),
             Self::Un => write!(f, "UN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

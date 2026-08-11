@@ -12,7 +12,7 @@ use crate::manager::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EligibilityCheckResult {
     #[serde(rename = "ACTIVE")]
     Active,
@@ -22,6 +22,9 @@ pub enum EligibilityCheckResult {
     Investigate,
     #[serde(rename = "FAILED")]
     Failed,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -32,6 +35,7 @@ impl std::fmt::Display for EligibilityCheckResult {
             Self::Inactive => write!(f, "INACTIVE"),
             Self::Investigate => write!(f, "INVESTIGATE"),
             Self::Failed => write!(f, "FAILED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

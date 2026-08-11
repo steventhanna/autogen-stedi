@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// FrequencyCode : Code indicating the frequency at which the rental equipment is billed. Can be set to `1` - weekly, `4` - monthly, or `6` - daily.
 /// Code indicating the frequency at which the rental equipment is billed. Can be set to `1` - weekly, `4` - monthly, or `6` - daily.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum FrequencyCode {
     #[serde(rename = "1")]
     Variant1,
@@ -21,6 +21,9 @@ pub enum FrequencyCode {
     Variant4,
     #[serde(rename = "6")]
     Variant6,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for FrequencyCode {
             Self::Variant1 => write!(f, "1"),
             Self::Variant4 => write!(f, "4"),
             Self::Variant6 => write!(f, "6"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

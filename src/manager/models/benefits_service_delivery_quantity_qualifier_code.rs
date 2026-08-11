@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitsServiceDeliveryQuantityQualifierCode : Code specifying the type of quantity.  Payers may sometimes return other non-compliant values.
 /// Code specifying the type of quantity.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitsServiceDeliveryQuantityQualifierCode {
     #[serde(rename = "DY")]
     Dy,
@@ -25,6 +25,9 @@ pub enum BenefitsServiceDeliveryQuantityQualifierCode {
     Mn,
     #[serde(rename = "VS")]
     Vs,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for BenefitsServiceDeliveryQuantityQualifierCode {
             Self::Hs => write!(f, "HS"),
             Self::Mn => write!(f, "MN"),
             Self::Vs => write!(f, "VS"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

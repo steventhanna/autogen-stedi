@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// X12AuthorizationInformationQualifier : Identifies the type of information in the Authorization Information (`ISA-01`). Default is `00 - No Authorization Information Present`.
 /// Identifies the type of information in the Authorization Information (`ISA-01`). Default is `00 - No Authorization Information Present`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum X12AuthorizationInformationQualifier {
     #[serde(rename = "00")]
     Variant00,
@@ -33,6 +33,9 @@ pub enum X12AuthorizationInformationQualifier {
     Variant07,
     #[serde(rename = "08")]
     Variant08,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -48,6 +51,7 @@ impl std::fmt::Display for X12AuthorizationInformationQualifier {
             Self::Variant06 => write!(f, "06"),
             Self::Variant07 => write!(f, "07"),
             Self::Variant08 => write!(f, "08"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

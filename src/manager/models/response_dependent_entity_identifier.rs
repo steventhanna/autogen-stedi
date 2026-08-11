@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// ResponseDependentEntityIdentifier : The entity identifier for the dependent.
 /// The entity identifier for the dependent.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ResponseDependentEntityIdentifier {
     #[serde(rename = "Dependent")]
     Dependent,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for ResponseDependentEntityIdentifier {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Dependent => write!(f, "Dependent"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

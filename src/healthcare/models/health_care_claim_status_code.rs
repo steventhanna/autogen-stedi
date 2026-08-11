@@ -12,7 +12,7 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum HealthCareClaimStatusCode {
     #[serde(rename = "0")]
     Variant0,
@@ -1386,6 +1386,9 @@ pub enum HealthCareClaimStatusCode {
     Variant802,
     #[serde(rename = "803")]
     Variant803,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -2078,6 +2081,7 @@ impl std::fmt::Display for HealthCareClaimStatusCode {
             Self::Variant801 => write!(f, "801"),
             Self::Variant802 => write!(f, "802"),
             Self::Variant803 => write!(f, "803"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

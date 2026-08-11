@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InstitutionalAdjustmentGroupCode : Code identifying the general category of payment adjustment. Can be set to `CO` - Contractual Obligations, `CR` - Correction and Reversals, `OA` - Other adjustments, `PI` - Payor Initiated Reductions, or `PR` - Patient Responsibility.
 /// Code identifying the general category of payment adjustment. Can be set to `CO` - Contractual Obligations, `CR` - Correction and Reversals, `OA` - Other adjustments, `PI` - Payor Initiated Reductions, or `PR` - Patient Responsibility.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalAdjustmentGroupCode {
     #[serde(rename = "CO")]
     Co,
@@ -25,6 +25,9 @@ pub enum InstitutionalAdjustmentGroupCode {
     Pi,
     #[serde(rename = "PR")]
     Pr,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -36,6 +39,7 @@ impl std::fmt::Display for InstitutionalAdjustmentGroupCode {
             Self::Oa => write!(f, "OA"),
             Self::Pi => write!(f, "PI"),
             Self::Pr => write!(f, "PR"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

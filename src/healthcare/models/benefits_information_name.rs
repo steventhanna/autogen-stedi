@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitsInformationName : The full name of the benefits information code.  Payers may sometimes return other non-compliant values.
 /// The full name of the benefits information code.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitsInformationName {
     #[serde(rename = "Active Coverage")]
     ActiveCoverage,
@@ -85,6 +85,9 @@ pub enum BenefitsInformationName {
     HealthCareFacility,
     #[serde(rename = "Spend Down")]
     SpendDown,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -126,6 +129,7 @@ impl std::fmt::Display for BenefitsInformationName {
             Self::OtherSourceOfData => write!(f, "Other Source of Data"),
             Self::HealthCareFacility => write!(f, "Health Care Facility"),
             Self::SpendDown => write!(f, "Spend Down"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

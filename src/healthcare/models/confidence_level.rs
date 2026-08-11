@@ -12,12 +12,15 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ConfidenceLevel {
     #[serde(rename = "REVIEW_NEEDED")]
     ReviewNeeded,
     #[serde(rename = "HIGH")]
     High,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -26,6 +29,7 @@ impl std::fmt::Display for ConfidenceLevel {
         match self {
             Self::ReviewNeeded => write!(f, "REVIEW_NEEDED"),
             Self::High => write!(f, "HIGH"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

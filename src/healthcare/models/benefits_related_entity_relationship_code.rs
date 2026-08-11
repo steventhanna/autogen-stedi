@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitsRelatedEntityRelationshipCode : Code specifying the relationship between the entity and the patient.  Payers may sometimes return other non-compliant values.
 /// Code specifying the relationship between the entity and the patient.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitsRelatedEntityRelationshipCode {
     #[serde(rename = "01")]
     Variant01,
@@ -29,6 +29,9 @@ pub enum BenefitsRelatedEntityRelationshipCode {
     Variant65,
     #[serde(rename = "72")]
     Variant72,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for BenefitsRelatedEntityRelationshipCode {
             Self::Variant48 => write!(f, "48"),
             Self::Variant65 => write!(f, "65"),
             Self::Variant72 => write!(f, "72"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

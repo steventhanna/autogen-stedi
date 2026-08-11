@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// TransactionHandlingCode : Indicates the actions that should be taken by both the sender and receiver of the payment transaction. This determines whether payment should be made, remittance sent, or both.
 /// Indicates the actions that should be taken by both the sender and receiver of the payment transaction. This determines whether payment should be made, remittance sent, or both.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TransactionHandlingCode {
     #[serde(rename = "C")]
     C,
@@ -29,6 +29,9 @@ pub enum TransactionHandlingCode {
     U,
     #[serde(rename = "X")]
     X,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for TransactionHandlingCode {
             Self::P => write!(f, "P"),
             Self::U => write!(f, "U"),
             Self::X => write!(f, "X"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

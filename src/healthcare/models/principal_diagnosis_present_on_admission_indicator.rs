@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// PrincipalDiagnosisPresentOnAdmissionIndicator : Indicates whether the principal diagnosis was present on admission. Can be set to `N` - No (onset did NOT occur prior to admission to the hospital), `Y` - Yes (onset occurred prior to admission to the hospital), `U` - Unknown, or `W` - Not Applicable.
 /// Indicates whether the principal diagnosis was present on admission. Can be set to `N` - No (onset did NOT occur prior to admission to the hospital), `Y` - Yes (onset occurred prior to admission to the hospital), `U` - Unknown, or `W` - Not Applicable.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PrincipalDiagnosisPresentOnAdmissionIndicator {
     #[serde(rename = "N")]
     N,
@@ -23,6 +23,9 @@ pub enum PrincipalDiagnosisPresentOnAdmissionIndicator {
     U,
     #[serde(rename = "W")]
     W,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for PrincipalDiagnosisPresentOnAdmissionIndicator {
             Self::Y => write!(f, "Y"),
             Self::U => write!(f, "U"),
             Self::W => write!(f, "W"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

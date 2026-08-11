@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// EventPayloadObjectType : Object type discriminator for event payloads.
 /// Object type discriminator for event payloads.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EventPayloadObjectType {
     #[serde(rename = "v1.event")]
     V1Event,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for EventPayloadObjectType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::V1Event => write!(f, "v1.event"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

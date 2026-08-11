@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// QuestionResponseCode : Code indicating a yes or no condition response to the question. Can be set to `N` - No, `W` - Not Applicable, or `Y` - Yes.
 /// Code indicating a yes or no condition response to the question. Can be set to `N` - No, `W` - Not Applicable, or `Y` - Yes.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum QuestionResponseCode {
     #[serde(rename = "N")]
     N,
@@ -21,6 +21,9 @@ pub enum QuestionResponseCode {
     W,
     #[serde(rename = "Y")]
     Y,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for QuestionResponseCode {
             Self::N => write!(f, "N"),
             Self::W => write!(f, "W"),
             Self::Y => write!(f, "Y"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

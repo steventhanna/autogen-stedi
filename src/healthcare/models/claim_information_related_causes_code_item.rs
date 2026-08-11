@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimInformationRelatedCausesCodeItem : Code identifying an accompanying cause of an illness, injury or an accident. Can be set to `AA` - Auto Accident, `EM` - Employment, or `OA` - Other Accident.
 /// Code identifying an accompanying cause of an illness, injury or an accident. Can be set to `AA` - Auto Accident, `EM` - Employment, or `OA` - Other Accident.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimInformationRelatedCausesCodeItem {
     #[serde(rename = "AA")]
     Aa,
@@ -21,6 +21,9 @@ pub enum ClaimInformationRelatedCausesCodeItem {
     Em,
     #[serde(rename = "OA")]
     Oa,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for ClaimInformationRelatedCausesCodeItem {
             Self::Aa => write!(f, "AA"),
             Self::Em => write!(f, "EM"),
             Self::Oa => write!(f, "OA"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

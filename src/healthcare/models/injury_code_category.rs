@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// InjuryCodeCategory : Payers may sometimes return other non-compliant values.
 /// Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InjuryCodeCategory {
     #[serde(rename = "44")]
     Variant44,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for InjuryCodeCategory {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Variant44 => write!(f, "44"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

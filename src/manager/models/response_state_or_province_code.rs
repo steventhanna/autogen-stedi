@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ResponseStateOrProvinceCode : The US state or Canadian province code with unknown option. For example, `TN` for Tennessee or `NB` for New Brunswick.  Payers may sometimes return other non-compliant values.
 /// The US state or Canadian province code with unknown option. For example, `TN` for Tennessee or `NB` for New Brunswick.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ResponseStateOrProvinceCode {
     #[serde(rename = "NL")]
     Nl,
@@ -161,6 +161,9 @@ pub enum ResponseStateOrProvinceCode {
     Wv,
     #[serde(rename = "WY")]
     Wy,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -240,6 +243,7 @@ impl std::fmt::Display for ResponseStateOrProvinceCode {
             Self::Wi => write!(f, "WI"),
             Self::Wv => write!(f, "WV"),
             Self::Wy => write!(f, "WY"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ApplicationModes : The type of data in the request. This is either `production` when you send a request with a standard API key or `test` when you send a request in test mode with a [test API key](https://www.stedi.com/docs/api-reference/index#api-key-types). The `information` value is not currently used.  Payers may sometimes return other non-compliant values.
 /// The type of data in the request. This is either `production` when you send a request with a standard API key or `test` when you send a request in test mode with a [test API key](https://www.stedi.com/docs/api-reference/index#api-key-types). The `information` value is not currently used.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ApplicationModes {
     #[serde(rename = "production")]
     Production,
@@ -21,6 +21,9 @@ pub enum ApplicationModes {
     Test,
     #[serde(rename = "information")]
     Information,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for ApplicationModes {
             Self::Production => write!(f, "production"),
             Self::Test => write!(f, "test"),
             Self::Information => write!(f, "information"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

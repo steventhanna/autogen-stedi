@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InstitutionalClaimsExceptionCode : Code specifying the exception reason for consideration of out-of-network health care services. Can be set to `1` - Non-Network Professional Provider in Network Hospital, `2` - Emergency Care, `3` - Services or Specialist not in Network, `4` - Out-of-Service Area, `5` - State Mandates, or `6` - Other.
 /// Code specifying the exception reason for consideration of out-of-network health care services. Can be set to `1` - Non-Network Professional Provider in Network Hospital, `2` - Emergency Care, `3` - Services or Specialist not in Network, `4` - Out-of-Service Area, `5` - State Mandates, or `6` - Other.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalClaimsExceptionCode {
     #[serde(rename = "1")]
     Variant1,
@@ -27,6 +27,9 @@ pub enum InstitutionalClaimsExceptionCode {
     Variant5,
     #[serde(rename = "6")]
     Variant6,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -39,6 +42,7 @@ impl std::fmt::Display for InstitutionalClaimsExceptionCode {
             Self::Variant4 => write!(f, "4"),
             Self::Variant5 => write!(f, "5"),
             Self::Variant6 => write!(f, "6"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

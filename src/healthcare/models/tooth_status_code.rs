@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// ToothStatusCode : Can be set to `E` - To Be Extracted, `M` - Missing.
 /// Can be set to `E` - To Be Extracted, `M` - Missing.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ToothStatusCode {
     #[serde(rename = "E")]
     E,
     #[serde(rename = "M")]
     M,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for ToothStatusCode {
         match self {
             Self::E => write!(f, "E"),
             Self::M => write!(f, "M"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

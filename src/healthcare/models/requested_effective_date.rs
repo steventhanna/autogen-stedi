@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// RequestedEffectiveDate : Whether a payer supports specifying a requested effective date for transaction enrollments.
 /// Whether a payer supports specifying a requested effective date for transaction enrollments.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RequestedEffectiveDate {
     #[serde(rename = "SUPPORTED")]
     Supported,
     #[serde(rename = "NOT_SUPPORTED")]
     NotSupported,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for RequestedEffectiveDate {
         match self {
             Self::Supported => write!(f, "SUPPORTED"),
             Self::NotSupported => write!(f, "NOT_SUPPORTED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// HttpStatusCode : Stedi can return the following status codes:   - `200`: Stedi successfully generated the X12 EDI claim format required by the payer. It does not indicate whether the payer has accepted the claim - the payer will respond later with a 277CA containing this information. [Learn more about 277CAs](https://www.stedi.com/docs/healthcare/receive-claim-responses#response-types).   - `400`: The request contains one or more problems with the claim data. Examples include missing required fields, invalid values, or incorrect data types. The response includes a message describing the problem.   - `403`: The request is not permitted, such as using a test API key to submit a production transaction.
 /// Stedi can return the following status codes:   - `200`: Stedi successfully generated the X12 EDI claim format required by the payer. It does not indicate whether the payer has accepted the claim - the payer will respond later with a 277CA containing this information. [Learn more about 277CAs](https://www.stedi.com/docs/healthcare/receive-claim-responses#response-types).   - `400`: The request contains one or more problems with the claim data. Examples include missing required fields, invalid values, or incorrect data types. The response includes a message describing the problem.   - `403`: The request is not permitted, such as using a test API key to submit a production transaction.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum HttpStatusCode {
     #[serde(rename = "200 OK")]
     Variant200Ok,
@@ -21,6 +21,9 @@ pub enum HttpStatusCode {
     Variant400BadRequest,
     #[serde(rename = "403 FORBIDDEN")]
     Variant403Forbidden,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for HttpStatusCode {
             Self::Variant200Ok => write!(f, "200 OK"),
             Self::Variant400BadRequest => write!(f, "400 BAD_REQUEST"),
             Self::Variant403Forbidden => write!(f, "403 FORBIDDEN"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

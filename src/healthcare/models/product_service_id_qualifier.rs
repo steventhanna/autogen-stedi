@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ProductServiceIdQualifier : Identifies the coding system or classification used to describe medical products, services, or procedures. These qualifiers specify which standardized code set is being used to identify the healthcare service or product.
 /// Identifies the coding system or classification used to describe medical products, services, or procedures. These qualifiers specify which standardized code set is being used to identify the healthcare service or product.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ProductServiceIdQualifier {
     #[serde(rename = "HC")]
     Hc,
@@ -29,6 +29,9 @@ pub enum ProductServiceIdQualifier {
     Nu,
     #[serde(rename = "WK")]
     Wk,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for ProductServiceIdQualifier {
             Self::N4 => write!(f, "N4"),
             Self::Nu => write!(f, "NU"),
             Self::Wk => write!(f, "WK"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

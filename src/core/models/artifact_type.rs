@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ArtifactType : The format of the artifact.
 /// The format of the artifact.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ArtifactType {
     #[serde(rename = "text/csv")]
     TextSlashCsv,
@@ -45,6 +45,9 @@ pub enum ArtifactType {
     TextSlashPlain,
     #[serde(rename = "unknown")]
     Unknown,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -66,6 +69,7 @@ impl std::fmt::Display for ArtifactType {
             Self::ImageSlashTiff => write!(f, "image/tiff"),
             Self::TextSlashPlain => write!(f, "text/plain"),
             Self::Unknown => write!(f, "unknown"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

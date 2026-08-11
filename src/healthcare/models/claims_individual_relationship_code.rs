@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimsIndividualRelationshipCode : Code identifying the relationship to the person insured. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#individual-relationship-codes) for a complete list.
 /// Code identifying the relationship to the person insured. Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#individual-relationship-codes) for a complete list.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimsIndividualRelationshipCode {
     #[serde(rename = "01")]
     Variant01,
@@ -33,6 +33,9 @@ pub enum ClaimsIndividualRelationshipCode {
     Variant53,
     #[serde(rename = "G8")]
     G8,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -48,6 +51,7 @@ impl std::fmt::Display for ClaimsIndividualRelationshipCode {
             Self::Variant40 => write!(f, "40"),
             Self::Variant53 => write!(f, "53"),
             Self::G8 => write!(f, "G8"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

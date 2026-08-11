@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// EligibilityCheckErrorCode : This is a superset of all the possible codes in the sub-loops, as all errors are bubbled up to the top level of the response  Payers may sometimes return other non-compliant values.
 /// This is a superset of all the possible codes in the sub-loops, as all errors are bubbled up to the top level of the response  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EligibilityCheckErrorCode {
     #[serde(rename = "04")]
     Variant04,
@@ -125,6 +125,9 @@ pub enum EligibilityCheckErrorCode {
     Ma,
     #[serde(rename = "T4")]
     T4,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -186,6 +189,7 @@ impl std::fmt::Display for EligibilityCheckErrorCode {
             Self::Ia => write!(f, "IA"),
             Self::Ma => write!(f, "MA"),
             Self::T4 => write!(f, "T4"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

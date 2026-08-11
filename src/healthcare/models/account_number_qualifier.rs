@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// AccountNumberQualifier : Identifies the type of bank account being used for electronic payment transactions. This specifies whether the account is a checking (demand deposit) or savings account.
 /// Identifies the type of bank account being used for electronic payment transactions. This specifies whether the account is a checking (demand deposit) or savings account.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AccountNumberQualifier {
     #[serde(rename = "DA")]
     Da,
     #[serde(rename = "SA")]
     Sa,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for AccountNumberQualifier {
         match self {
             Self::Da => write!(f, "DA"),
             Self::Sa => write!(f, "SA"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

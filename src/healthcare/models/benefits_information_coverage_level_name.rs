@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitsInformationCoverageLevelName : The full name of the coverage level code.  Payers may sometimes return other non-compliant values.
 /// The full name of the coverage level code.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitsInformationCoverageLevelName {
     #[serde(rename = "Children Only")]
     ChildrenOnly,
@@ -33,6 +33,9 @@ pub enum BenefitsInformationCoverageLevelName {
     SpouseAndChildren,
     #[serde(rename = "Spouse Only")]
     SpouseOnly,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -48,6 +51,7 @@ impl std::fmt::Display for BenefitsInformationCoverageLevelName {
             Self::Individual => write!(f, "Individual"),
             Self::SpouseAndChildren => write!(f, "Spouse and Children"),
             Self::SpouseOnly => write!(f, "Spouse Only"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

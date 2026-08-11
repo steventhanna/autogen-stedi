@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InitialEnrollmentStatus : The enrollment's status when it is first created. You can create enrollments in either `DRAFT` or `STEDI_ACTION_REQUIRED` status. The default status is `DRAFT` if not specified. When you're ready for Stedi to begin processing the enrollment, set the status to `STEDI_ACTION_REQUIRED`. Once an enrollment is set to `STEDI_ACTION_REQUIRED`, only Stedi can set or update its status.
 /// The enrollment's status when it is first created. You can create enrollments in either `DRAFT` or `STEDI_ACTION_REQUIRED` status. The default status is `DRAFT` if not specified. When you're ready for Stedi to begin processing the enrollment, set the status to `STEDI_ACTION_REQUIRED`. Once an enrollment is set to `STEDI_ACTION_REQUIRED`, only Stedi can set or update its status.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InitialEnrollmentStatus {
     #[serde(rename = "DRAFT")]
     Draft,
@@ -21,6 +21,9 @@ pub enum InitialEnrollmentStatus {
     Submitted,
     #[serde(rename = "STEDI_ACTION_REQUIRED")]
     StediActionRequired,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for InitialEnrollmentStatus {
             Self::Draft => write!(f, "DRAFT"),
             Self::Submitted => write!(f, "SUBMITTED"),
             Self::StediActionRequired => write!(f, "STEDI_ACTION_REQUIRED"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// DependentRelationship : The name of the `relationToSubscriberCode`. For example, `Child` when the code is `19`.
 /// The name of the `relationToSubscriberCode`. For example, `Child` when the code is `19`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DependentRelationship {
     #[serde(rename = "Spouse")]
     Spouse,
@@ -31,6 +31,9 @@ pub enum DependentRelationship {
     LifePartner,
     #[serde(rename = "Other Relationship")]
     OtherRelationship,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -45,6 +48,7 @@ impl std::fmt::Display for DependentRelationship {
             Self::CadaverDonor => write!(f, "Cadaver Donor"),
             Self::LifePartner => write!(f, "Life Partner"),
             Self::OtherRelationship => write!(f, "Other Relationship"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

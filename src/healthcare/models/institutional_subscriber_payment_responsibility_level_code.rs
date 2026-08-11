@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InstitutionalSubscriberPaymentResponsibilityLevelCode : The payer's level of responsibility for paying this claim. Can be set to `A` - Payer Responsibility Four, `B` - Payer Responsibility Five, `C` - Payer Responsibility Six, `D` - Payer Responsibility Seven, `E` - Payer Responsibility Eight, `F` - Payer Responsibility Nine, `G` - Payer Responsibility Ten, `H` - Payer Responsibility Eleven, `P` - Primary, `S` - Secondary, `T` Tertiary, or `U` - Unknown (only use in payer-to-payer COB claims).
 /// The payer's level of responsibility for paying this claim. Can be set to `A` - Payer Responsibility Four, `B` - Payer Responsibility Five, `C` - Payer Responsibility Six, `D` - Payer Responsibility Seven, `E` - Payer Responsibility Eight, `F` - Payer Responsibility Nine, `G` - Payer Responsibility Ten, `H` - Payer Responsibility Eleven, `P` - Primary, `S` - Secondary, `T` Tertiary, or `U` - Unknown (only use in payer-to-payer COB claims).
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalSubscriberPaymentResponsibilityLevelCode {
     #[serde(rename = "A")]
     A,
@@ -39,6 +39,9 @@ pub enum InstitutionalSubscriberPaymentResponsibilityLevelCode {
     T,
     #[serde(rename = "U")]
     U,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -57,6 +60,7 @@ impl std::fmt::Display for InstitutionalSubscriberPaymentResponsibilityLevelCode
             Self::S => write!(f, "S"),
             Self::T => write!(f, "T"),
             Self::U => write!(f, "U"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

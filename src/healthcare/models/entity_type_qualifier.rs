@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// EntityTypeQualifier : The type of entity.  Payers may sometimes return other non-compliant values.
 /// The type of entity.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EntityTypeQualifier {
     #[serde(rename = "Person")]
     Person,
     #[serde(rename = "Non-Person Entity")]
     NonPersonEntity,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for EntityTypeQualifier {
         match self {
             Self::Person => write!(f, "Person"),
             Self::NonPersonEntity => write!(f, "Non-Person Entity"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

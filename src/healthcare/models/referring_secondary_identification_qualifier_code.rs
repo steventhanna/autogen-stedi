@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ReferringSecondaryIdentificationQualifierCode : The type of identifier used in `secondaryIdentifier`. Can be set to `0B` - State License Number, `1G` - Provider UPIN Number, or `G2` - Provider Commercial Number. Note that UPIN is deprecated and should not be used.
 /// The type of identifier used in `secondaryIdentifier`. Can be set to `0B` - State License Number, `1G` - Provider UPIN Number, or `G2` - Provider Commercial Number. Note that UPIN is deprecated and should not be used.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ReferringSecondaryIdentificationQualifierCode {
     #[serde(rename = "0B")]
     Variant0B,
@@ -21,6 +21,9 @@ pub enum ReferringSecondaryIdentificationQualifierCode {
     Variant1G,
     #[serde(rename = "G2")]
     G2,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for ReferringSecondaryIdentificationQualifierCode {
             Self::Variant0B => write!(f, "0B"),
             Self::Variant1G => write!(f, "1G"),
             Self::G2 => write!(f, "G2"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

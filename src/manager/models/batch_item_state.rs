@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BatchItemState : The current state of a batch item, which represents an eligibility check within a batch.
 /// The current state of a batch item, which represents an eligibility check within a batch.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BatchItemState {
     #[serde(rename = "PENDING")]
     Pending,
@@ -29,6 +29,9 @@ pub enum BatchItemState {
     Completed,
     #[serde(rename = "COMPLETED_WITH_ERRORS")]
     CompletedWithErrors,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -42,6 +45,7 @@ impl std::fmt::Display for BatchItemState {
             Self::Retrying => write!(f, "RETRYING"),
             Self::Completed => write!(f, "COMPLETED"),
             Self::CompletedWithErrors => write!(f, "COMPLETED_WITH_ERRORS"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

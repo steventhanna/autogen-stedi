@@ -12,7 +12,7 @@ use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
 /// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InstitutionalOtherSubscriberInformationPaymentResponsibilityLevelCode {
     #[serde(rename = "A")]
     A,
@@ -38,6 +38,9 @@ pub enum InstitutionalOtherSubscriberInformationPaymentResponsibilityLevelCode {
     T,
     #[serde(rename = "U")]
     U,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -56,6 +59,7 @@ impl std::fmt::Display for InstitutionalOtherSubscriberInformationPaymentRespons
             Self::S => write!(f, "S"),
             Self::T => write!(f, "T"),
             Self::U => write!(f, "U"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

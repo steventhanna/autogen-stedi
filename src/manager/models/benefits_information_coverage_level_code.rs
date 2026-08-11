@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// BenefitsInformationCoverageLevelCode : Code indicating the level of coverage for the patient.   This will either be `CHD` - Children Only, `DEP` - Dependents Only, `ECH` - Employee and Children, `EMP` - Employee Only, `ESP` - Employee and Spouse, `FAM` - Family, `IND` - Individual, `SPC` - Spouse and Children, `SPO` - Spouse Only, or `Unknown`.  Payers may sometimes return other non-compliant values.
 /// Code indicating the level of coverage for the patient.   This will either be `CHD` - Children Only, `DEP` - Dependents Only, `ECH` - Employee and Children, `EMP` - Employee Only, `ESP` - Employee and Spouse, `FAM` - Family, `IND` - Individual, `SPC` - Spouse and Children, `SPO` - Spouse Only, or `Unknown`.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BenefitsInformationCoverageLevelCode {
     #[serde(rename = "CHD")]
     Chd,
@@ -33,6 +33,9 @@ pub enum BenefitsInformationCoverageLevelCode {
     Spc,
     #[serde(rename = "SPO")]
     Spo,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -48,6 +51,7 @@ impl std::fmt::Display for BenefitsInformationCoverageLevelCode {
             Self::Ind => write!(f, "IND"),
             Self::Spc => write!(f, "SPC"),
             Self::Spo => write!(f, "SPO"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

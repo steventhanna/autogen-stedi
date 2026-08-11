@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 /// EncounterReferenceIdentificationQualifier : The type of information you provided in the `priorAuthorizationOrReferralNumber` property. You can set this to `9F` - Referral Number or `G1` - Prior Authorization Number.
 /// The type of information you provided in the `priorAuthorizationOrReferralNumber` property. You can set this to `9F` - Referral Number or `G1` - Prior Authorization Number.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EncounterReferenceIdentificationQualifier {
     #[serde(rename = "9F")]
     Variant9F,
     #[serde(rename = "G1")]
     G1,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -27,6 +30,7 @@ impl std::fmt::Display for EncounterReferenceIdentificationQualifier {
         match self {
             Self::Variant9F => write!(f, "9F"),
             Self::G1 => write!(f, "G1"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

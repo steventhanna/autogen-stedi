@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// ClaimFrequencyCode : Identify the type of claim. Can be set to: `1` - indicates an original claim, `7` - Indicates the new claim is a replacement or correction, `8` - Indicates the claim is void or canceled
 /// Identify the type of claim. Can be set to: `1` - indicates an original claim, `7` - Indicates the new claim is a replacement or correction, `8` - Indicates the claim is void or canceled
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ClaimFrequencyCode {
     #[serde(rename = "1")]
     Variant1,
@@ -21,6 +21,9 @@ pub enum ClaimFrequencyCode {
     Variant7,
     #[serde(rename = "8")]
     Variant8,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -30,6 +33,7 @@ impl std::fmt::Display for ClaimFrequencyCode {
             Self::Variant1 => write!(f, "1"),
             Self::Variant7 => write!(f, "7"),
             Self::Variant8 => write!(f, "8"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

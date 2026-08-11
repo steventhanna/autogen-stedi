@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// InPlanNetworkIndicatorName : The name of the in-plan network indicator code.  Payers may sometimes return other non-compliant values.
 /// The name of the in-plan network indicator code.  Payers may sometimes return other non-compliant values.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum InPlanNetworkIndicatorName {
     #[serde(rename = "Yes")]
     Yes,
@@ -23,6 +23,9 @@ pub enum InPlanNetworkIndicatorName {
     Unknown,
     #[serde(rename = "Not Applicable")]
     NotApplicable,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -33,6 +36,7 @@ impl std::fmt::Display for InPlanNetworkIndicatorName {
             Self::No => write!(f, "No"),
             Self::Unknown => write!(f, "Unknown"),
             Self::NotApplicable => write!(f, "Not Applicable"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

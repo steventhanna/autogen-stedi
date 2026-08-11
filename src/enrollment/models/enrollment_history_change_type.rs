@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// EnrollmentHistoryChangeType : The type of change recorded in the enrollment history.
 /// The type of change recorded in the enrollment history.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum EnrollmentHistoryChangeType {
     #[serde(rename = "STATUS_CHANGE")]
     StatusChange,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for EnrollmentHistoryChangeType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::StatusChange => write!(f, "STATUS_CHANGE"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

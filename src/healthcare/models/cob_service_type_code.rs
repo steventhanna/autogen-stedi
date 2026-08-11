@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 /// CobServiceTypeCode : The service type code for the encounter. If not provided, the default value is `30`.
 /// The service type code for the encounter. If not provided, the default value is `30`.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CobServiceTypeCode {
     #[serde(rename = "30")]
     Variant30,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -24,6 +27,7 @@ impl std::fmt::Display for CobServiceTypeCode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Variant30 => write!(f, "30"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }

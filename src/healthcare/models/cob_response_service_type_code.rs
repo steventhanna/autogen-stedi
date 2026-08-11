@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 /// CobResponseServiceTypeCode : Code identifying the type of services included in a `benefitsInformation` object.
 /// Code identifying the type of services included in a `benefitsInformation` object.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CobResponseServiceTypeCode {
     #[serde(rename = "1")]
     Variant1,
@@ -37,6 +37,9 @@ pub enum CobResponseServiceTypeCode {
     Mh,
     #[serde(rename = "UC")]
     Uc,
+    /// Any value not defined in the spec (payers may return non-compliant values).
+    #[serde(untagged)]
+    UnknownValue(String),
 
 }
 
@@ -54,6 +57,7 @@ impl std::fmt::Display for CobResponseServiceTypeCode {
             Self::Al => write!(f, "AL"),
             Self::Mh => write!(f, "MH"),
             Self::Uc => write!(f, "UC"),
+            Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }
