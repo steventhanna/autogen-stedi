@@ -12,19 +12,19 @@ use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
 /// TaskDefinition : A discriminated union of task definitions. Supports multiple task types with future extensibility.
-/// A discriminated union of task definitions. Supports multiple task types with future extensibility.
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum TaskDefinition {
-    FollowInstructions(Box<models::FollowInstructions>),
-    ProvideFilledPdf(Box<models::ProvideFilledPdf>),
-    ProvideInformation(Box<models::ProvideInformation>),
-    ManualTask(Box<models::ManualTask>),
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+pub struct TaskDefinition {
+    /// A flexible task definition for collecting structured information. It supports text inputs, document uploads, or instruction-only workflows through configurable fields.
+    #[serde(rename = "manualTask")]
+    pub manual_task: Box<models::ManualTask>,
 }
 
-impl Default for TaskDefinition {
-    fn default() -> Self {
-        Self::FollowInstructions(Default::default())
+impl TaskDefinition {
+    /// A discriminated union of task definitions. Supports multiple task types with future extensibility.
+    pub fn new(manual_task: models::ManualTask) -> TaskDefinition {
+        TaskDefinition {
+            manual_task: Box::new(manual_task),
+        }
     }
 }
 
