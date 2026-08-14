@@ -11,23 +11,19 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// ValidationExceptionField : Describes one specific validation failure for an input member.
+/// ConflictExceptionResponseContent : The request conflicts with the current state of the resource.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct ValidationExceptionField {
-    /// A detailed description of the validation failure.
+pub struct ConflictExceptionResponseContent {
+    /// Why the request failed. The wording can change, so branch on the exception type, not this text.
     #[serde(rename = "message")]
     pub message: String,
-    /// A JSONPointer expression to the structure member whose value failed to satisfy the modeled constraints.
-    #[serde(rename = "path")]
-    pub path: String,
 }
 
-impl ValidationExceptionField {
-    /// Describes one specific validation failure for an input member.
-    pub fn new(message: String, path: String) -> ValidationExceptionField {
-        ValidationExceptionField {
+impl ConflictExceptionResponseContent {
+    /// The request conflicts with the current state of the resource.
+    pub fn new(message: String) -> ConflictExceptionResponseContent {
+        ConflictExceptionResponseContent {
             message,
-            path,
         }
     }
 }

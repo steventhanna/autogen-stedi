@@ -12,18 +12,19 @@ use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
 /// TaskResponseData : A discriminated union of task response data. Contains structured data collected when completing specific task types.
-/// A discriminated union of task response data. Contains structured data collected when completing specific task types.
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum TaskResponseData {
-    PdfUpload(Box<models::PdfUpload>),
-    ProvideInformation1(Box<models::ProvideInformation1>),
-    ManualTask1(Box<models::ManualTask1>),
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+pub struct TaskResponseData {
+    /// Values provided when updating or completing a manual task. Visit [Manage enrollment tasks](https://www.stedi.com/docs/healthcare/transaction-enrollment-tasks-documents#api) for details.
+    #[serde(rename = "manualTask")]
+    pub manual_task: Box<models::ManualTaskResponse>,
 }
 
-impl Default for TaskResponseData {
-    fn default() -> Self {
-        Self::PdfUpload(Default::default())
+impl TaskResponseData {
+    /// A discriminated union of task response data. Contains structured data collected when completing specific task types.
+    pub fn new(manual_task: models::ManualTaskResponse) -> TaskResponseData {
+        TaskResponseData {
+            manual_task: Box::new(manual_task),
+        }
     }
 }
 

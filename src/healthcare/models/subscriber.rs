@@ -22,7 +22,7 @@ pub struct Subscriber {
     /// The subscriber's date of birth. This property is **required** if the subscriber is an individual.
     #[serde(rename = "dateOfBirth", skip_serializing_if = "Option::is_none")]
     pub date_of_birth: Option<String>,
-    /// The subscriber's first name. This property is **recommended** when the subscriber is an individual. Some payers reject requests without the `firstName` property.
+    /// The subscriber's first name. This property is **recommended** when the subscriber is an individual. Omit when the subscriber is an organization. Some payers reject requests without the `firstName` property.
     #[serde(rename = "firstName", skip_serializing_if = "Option::is_none")]
     pub first_name: Option<String>,
     /// Identifies the subscriber's gender. This property is **required** when the subscriber is the patient. Can be set to `F` - Female, `M` - Male, or `U` - Unknown.   Some payers may reject the claim if the patient's gender doesn't match the gender they have recorded in their member records. If the gender isn't known or the patient declines to answer, use `U` or perform an eligibility check to determine the gender according to the payer's records.
@@ -34,7 +34,7 @@ pub struct Subscriber {
     /// Identifies the type of insurance policy within a specific insurance program. This property is **required** when sending claims to Medicare and Medicare is not the primary payer (`paymentResponsibilityLevelCode` is not set to `P`). Otherwise, don't include this property in the claim.  Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#insurance-type-codes) for a complete list of insurance type codes.
     #[serde(rename = "insuranceTypeCode", skip_serializing_if = "Option::is_none")]
     pub insurance_type_code: Option<models::SubscriberInsuranceTypeCode>,
-    /// The subscriber's last name. This property is **required** if the subscriber is an individual.   **Don't** include the subscriber's name suffix, such as Jr. or III. Use the designated `suffix` property instead.
+    /// The subscriber's last name. This property is **required** if the subscriber is an individual. Omit when the subscriber is an organization.   **Don't** include the subscriber's name suffix, such as Jr. or III. Use the designated `suffix` property instead.
     #[serde(rename = "lastName", skip_serializing_if = "Option::is_none")]
     pub last_name: Option<String>,
     /// The member ID for the subscriber's insurance policy. This property is **required** if the subscriber is an individual.
@@ -43,7 +43,7 @@ pub struct Subscriber {
     /// The subscriber's middle name or initial.
     #[serde(rename = "middleName", skip_serializing_if = "Option::is_none")]
     pub middle_name: Option<String>,
-    /// The business name of the entity submitting the claim. When the subscriber is an organization, you should identify the patient in the `dependent` object.
+    /// The business name of the entity submitting the claim. This is **required** when the subscriber is an organization.   When the subscriber is an organization, you should identify the patient in the `dependent` object.
     #[serde(rename = "organizationName", skip_serializing_if = "Option::is_none")]
     pub organization_name: Option<String>,
     #[serde(rename = "paymentResponsibilityLevelCode", skip_serializing_if = "Option::is_none")]

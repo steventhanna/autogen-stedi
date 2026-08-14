@@ -11,22 +11,18 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// ConflictExceptionResponseContent : Exception returned when a resource conflict is detected, such as a duplicate submission already in progress.
+/// ConflictExceptionResponseContent : The request conflicts with the current state of the resource.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConflictExceptionResponseContent {
-    /// Unique error code identifying the specific type of error.
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
-    pub code: Option<String>,
-    /// Human readable error message explaining why the request was rejected.
+    /// Why the request failed. The wording can change, so branch on the exception type, not this text.
     #[serde(rename = "message")]
     pub message: String,
 }
 
 impl ConflictExceptionResponseContent {
-    /// Exception returned when a resource conflict is detected, such as a duplicate submission already in progress.
+    /// The request conflicts with the current state of the resource.
     pub fn new(message: String) -> ConflictExceptionResponseContent {
         ConflictExceptionResponseContent {
-            code: None,
             message,
         }
     }
