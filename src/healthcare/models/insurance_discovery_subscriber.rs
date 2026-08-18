@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct InsuranceDiscoverySubscriber {
     /// The subscriber's current or previous address. We strongly recommend providing this information if possible to improve the probability of finding matching coverage.  We especially recommend providing the patient’s ZIP Code, as this helps narrow down the list of probable payers. ZIP Code search isn’t an exact match, so even the first 3-4 digits of the patient’s current ZIP Code can help improve the results. If the patient’s current address isn’t available, you can try a full or partial ZIP Code from one of the patient’s previous addresses or even one in close proximity.
     #[serde(rename = "address", skip_serializing_if = "Option::is_none")]
-    pub address: Option<Box<models::Address>>,
+    pub address: Option<Box<models::InsuranceDiscoveryAddress>>,
     /// The subscriber's date of birth (DOB), formatted as YYYYMMDD.
     #[serde(rename = "dateOfBirth", skip_serializing_if = "Option::is_none")]
     pub date_of_birth: Option<String>,

@@ -11,23 +11,23 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// UnauthorizedExceptionResponseContent : The server response when the authorizer failed to authenticate the caller.
+/// ValidationFailure : A single way in which the request failed validation.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct UnauthorizedExceptionResponseContent {
-    /// Error classification code
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
-    pub code: Option<String>,
-    /// Human-readable error message
+pub struct ValidationFailure {
+    /// What was wrong with this part of the request
     #[serde(rename = "message")]
     pub message: String,
+    /// A JSON pointer to the part of the request that failed validation
+    #[serde(rename = "path", skip_serializing_if = "Option::is_none")]
+    pub path: Option<String>,
 }
 
-impl UnauthorizedExceptionResponseContent {
-    /// The server response when the authorizer failed to authenticate the caller.
-    pub fn new(message: String) -> UnauthorizedExceptionResponseContent {
-        UnauthorizedExceptionResponseContent {
-            code: None,
+impl ValidationFailure {
+    /// A single way in which the request failed validation.
+    pub fn new(message: String) -> ValidationFailure {
+        ValidationFailure {
             message,
+            path: None,
         }
     }
 }

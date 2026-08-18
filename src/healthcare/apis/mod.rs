@@ -114,6 +114,7 @@ impl From<&str> for ContentType {
 pub mod claim_acknowledgments_api;
 pub mod claim_submission_api;
 pub mod coordination_of_benefits_api;
+pub mod default_api;
 pub mod insurance_discovery_api;
 pub mod payers_api;
 pub mod real_time_claim_status_api;

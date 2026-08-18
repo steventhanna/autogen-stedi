@@ -27,6 +27,12 @@ pub struct InformationClaimStatus {
     /// Not used.
     #[serde(rename = "remittanceTraceNumber", skip_serializing_if = "Option::is_none")]
     pub remittance_trace_number: Option<String>,
+    /// The action the payer took on the claim.
+    #[serde(rename = "statusInformationActionCode", skip_serializing_if = "Option::is_none")]
+    pub status_information_action_code: Option<models::ClaimLevelStatusInformationActionCode>,
+    /// The description of the `statusInformationActionCode`.
+    #[serde(rename = "statusInformationActionCodeValue", skip_serializing_if = "Option::is_none")]
+    pub status_information_action_code_value: Option<models::ClaimLevelStatusInformationActionCodeValue>,
     /// The effective date of the status information.
     #[serde(rename = "statusInformationEffectiveDate", skip_serializing_if = "Option::is_none")]
     pub status_information_effective_date: Option<String>,
@@ -46,6 +52,8 @@ impl InformationClaimStatus {
             information_statuses: None,
             remittance_date: None,
             remittance_trace_number: None,
+            status_information_action_code: None,
+            status_information_action_code_value: None,
             status_information_effective_date: None,
             status_message: None,
             total_claim_charge_amount: None,
