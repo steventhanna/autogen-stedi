@@ -11,17 +11,27 @@
 use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
+/// ManualTask : A task assigned to a responsible party that requires them to collect and submit a defined set of fields. The task is completed by supplying a `ManualTaskResponse` whose values satisfy the declared `fields`.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ManualTask {
-    /// A flexible task definition for collecting structured information. It supports text inputs, document uploads, or instruction-only workflows through configurable fields.
-    #[serde(rename = "manualTask")]
-    pub manual_task: Box<models::ManualTask>,
+    /// Fields required to complete the task. Each entry defines the key, human-readable label, optional description, and type for values in the response. Can be empty for instruction-only tasks.
+    #[serde(rename = "fields")]
+    pub fields: Vec<models::ManualTaskField>,
+    /// Instructions for completing the task.
+    #[serde(rename = "instructions")]
+    pub instructions: String,
+    /// Links to help complete the task. This can include payer portals, reference documentation, or document download links for Stedi-provided template PDFs.
+    #[serde(rename = "links", skip_serializing_if = "Option::is_none")]
+    pub links: Option<Vec<models::TaskLink>>,
 }
 
 impl ManualTask {
-    pub fn new(manual_task: models::ManualTask) -> ManualTask {
+    /// A task assigned to a responsible party that requires them to collect and submit a defined set of fields. The task is completed by supplying a `ManualTaskResponse` whose values satisfy the declared `fields`.
+    pub fn new(fields: Vec<models::ManualTaskField>, instructions: String) -> ManualTask {
         ManualTask {
-            manual_task: Box::new(manual_task),
+            fields,
+            instructions,
+            links: None,
         }
     }
 }
