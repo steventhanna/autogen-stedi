@@ -15,15 +15,81 @@ use crate::event_destinations::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
+/// struct for typed errors of method [`event_destinations_create_destination`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EventDestinationsCreateDestinationError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::EventDestinationsLimitExceededExceptionResponseContent),
+    Status409(models::ConflictExceptionResponseContent),
+    Status413(models::ContentTooLargeExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`event_destinations_delete_destination`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EventDestinationsDeleteDestinationError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status404(models::NotFoundExceptionResponseContent),
+    Status409(models::ConflictExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`event_destinations_get_destination`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EventDestinationsGetDestinationError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status404(models::NotFoundExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`event_destinations_get_destination_secret`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EventDestinationsGetDestinationSecretError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status404(models::NotFoundExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`event_destinations_get_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EventDestinationsGetEventError {
-    Status400(models::ValidationExceptionResponseContent),
-    Status401(models::UnauthorizedExceptionResponseContent),
-    Status403(models::AccessDeniedExceptionResponseContent),
-    Status404(models::ResourceNotFoundExceptionResponseContent),
-    Status500(models::InternalFailureExceptionResponseContent),
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status404(models::NotFoundExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`event_destinations_list_destinations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EventDestinationsListDestinationsError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
     UnknownValue(serde_json::Value),
 }
 
@@ -31,13 +97,220 @@ pub enum EventDestinationsGetEventError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EventDestinationsListEventsError {
-    Status400(models::ValidationExceptionResponseContent),
-    Status401(models::UnauthorizedExceptionResponseContent),
-    Status403(models::AccessDeniedExceptionResponseContent),
-    Status500(models::InternalFailureExceptionResponseContent),
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`event_destinations_rotate_destination_secret`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EventDestinationsRotateDestinationSecretError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status404(models::NotFoundExceptionResponseContent),
+    Status409(models::ConflictExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`event_destinations_update_destination`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EventDestinationsUpdateDestinationError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status404(models::NotFoundExceptionResponseContent),
+    Status409(models::ConflictExceptionResponseContent),
+    Status413(models::ContentTooLargeExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+
+/// Creates an event destination. Returns destination details and a signing secret for verifying event payloads.
+pub async fn event_destinations_create_destination(configuration: &configuration::Configuration, event_destinations_create_destination_request_content: models::EventDestinationsCreateDestinationRequestContent, idempotency_key: Option<&str>) -> Result<models::EventDestinationsCreateDestinationResponseContent, Error<EventDestinationsCreateDestinationError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_body_event_destinations_create_destination_request_content = event_destinations_create_destination_request_content;
+    let p_header_idempotency_key = idempotency_key;
+
+    let uri_str = format!("{}/destinations", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(param_value) = p_header_idempotency_key {
+        req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+    req_builder = req_builder.json(&p_body_event_destinations_create_destination_request_content);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsCreateDestinationResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsCreateDestinationResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<EventDestinationsCreateDestinationError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Deletes an existing destination. This action is irreversible. Deleting a destination that is already deleted succeeds with the same response (idempotent).
+pub async fn event_destinations_delete_destination(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>) -> Result<(), Error<EventDestinationsDeleteDestinationError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_destination_id = destination_id;
+    let p_header_idempotency_key = idempotency_key;
+
+    let uri_str = format!("{}/destinations/{destinationId}", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(param_value) = p_header_idempotency_key {
+        req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+
+    if !status.is_client_error() && !status.is_server_error() {
+        Ok(())
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<EventDestinationsDeleteDestinationError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Retrieves details for an existing event destination.
+pub async fn event_destinations_get_destination(configuration: &configuration::Configuration, destination_id: &str) -> Result<models::EventDestinationsGetDestinationResponseContent, Error<EventDestinationsGetDestinationError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_destination_id = destination_id;
+
+    let uri_str = format!("{}/destinations/{destinationId}", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsGetDestinationResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsGetDestinationResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<EventDestinationsGetDestinationError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Retrieves the current signing secret for a destination. Use this secret to verify the authenticity of event payloads.
+pub async fn event_destinations_get_destination_secret(configuration: &configuration::Configuration, destination_id: &str) -> Result<models::EventDestinationsGetDestinationSecretResponseContent, Error<EventDestinationsGetDestinationSecretError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_destination_id = destination_id;
+
+    let uri_str = format!("{}/destinations/{destinationId}/secret", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsGetDestinationSecretResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsGetDestinationSecretResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<EventDestinationsGetDestinationSecretError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
 
 /// Retrieves the details of an existing event by its identifier.
 pub async fn event_destinations_get_event(configuration: &configuration::Configuration, event_id: &str) -> Result<models::EventDestinationsGetEventResponseContent, Error<EventDestinationsGetEventError>> {
@@ -80,6 +353,66 @@ pub async fn event_destinations_get_event(configuration: &configuration::Configu
     } else {
         let content = resp.text().await?;
         let entity: Option<EventDestinationsGetEventError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Lists all destinations configured for your account. Results are paginated.
+pub async fn event_destinations_list_destinations(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, status: Option<models::DestinationStatus>, event_type: Option<&str>) -> Result<models::EventDestinationsListDestinationsResponseContent, Error<EventDestinationsListDestinationsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_status = status;
+    let p_query_event_type = event_type;
+
+    let uri_str = format!("{}/destinations", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_query_page_size {
+        req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_page_token {
+        req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_status {
+        req_builder = req_builder.query(&[("status", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_event_type {
+        req_builder = req_builder.query(&[("eventType", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsListDestinationsResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsListDestinationsResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<EventDestinationsListDestinationsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -154,6 +487,108 @@ pub async fn event_destinations_list_events(configuration: &configuration::Confi
     } else {
         let content = resp.text().await?;
         let entity: Option<EventDestinationsListEventsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Rotates the signing secret for a destination. The previous secret remains valid for the period specified by `previousSecretExpiryHours` (or `0` for immediate invalidation) to allow for a graceful transition.
+pub async fn event_destinations_rotate_destination_secret(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>, event_destinations_rotate_destination_secret_request_content: Option<models::EventDestinationsRotateDestinationSecretRequestContent>) -> Result<models::EventDestinationsRotateDestinationSecretResponseContent, Error<EventDestinationsRotateDestinationSecretError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_destination_id = destination_id;
+    let p_header_idempotency_key = idempotency_key;
+    let p_body_event_destinations_rotate_destination_secret_request_content = event_destinations_rotate_destination_secret_request_content;
+
+    let uri_str = format!("{}/destinations/{destinationId}/secret/rotate", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(param_value) = p_header_idempotency_key {
+        req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+    req_builder = req_builder.json(&p_body_event_destinations_rotate_destination_secret_request_content);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsRotateDestinationSecretResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsRotateDestinationSecretResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<EventDestinationsRotateDestinationSecretError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Updates an existing destination configuration.
+pub async fn event_destinations_update_destination(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>, event_destinations_update_destination_request_content: Option<models::EventDestinationsUpdateDestinationRequestContent>) -> Result<models::EventDestinationsUpdateDestinationResponseContent, Error<EventDestinationsUpdateDestinationError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_destination_id = destination_id;
+    let p_header_idempotency_key = idempotency_key;
+    let p_body_event_destinations_update_destination_request_content = event_destinations_update_destination_request_content;
+
+    let uri_str = format!("{}/destinations/{destinationId}", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(param_value) = p_header_idempotency_key {
+        req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+    req_builder = req_builder.json(&p_body_event_destinations_update_destination_request_content);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsUpdateDestinationResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsUpdateDestinationResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<EventDestinationsUpdateDestinationError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

@@ -11,22 +11,18 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// InternalFailureExceptionResponseContent : The server response when an unexpected error occurred while processing request.
+/// TooManyRequestsExceptionResponseContent : The caller has exceeded a rate limit. Retry with backoff.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct InternalFailureExceptionResponseContent {
-    /// Error classification code
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
-    pub code: Option<String>,
-    /// Human-readable error message
+pub struct TooManyRequestsExceptionResponseContent {
+    /// Why the request failed. The wording can change, so branch on the exception type, not this text.
     #[serde(rename = "message")]
     pub message: String,
 }
 
-impl InternalFailureExceptionResponseContent {
-    /// The server response when an unexpected error occurred while processing request.
-    pub fn new(message: String) -> InternalFailureExceptionResponseContent {
-        InternalFailureExceptionResponseContent {
-            code: None,
+impl TooManyRequestsExceptionResponseContent {
+    /// The caller has exceeded a rate limit. Retry with backoff.
+    pub fn new(message: String) -> TooManyRequestsExceptionResponseContent {
+        TooManyRequestsExceptionResponseContent {
             message,
         }
     }

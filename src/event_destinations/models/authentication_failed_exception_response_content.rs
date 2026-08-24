@@ -11,22 +11,18 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// AccessDeniedExceptionResponseContent : The server response for authorization failure.
+/// AuthenticationFailedExceptionResponseContent : The request credentials are missing or not valid.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct AccessDeniedExceptionResponseContent {
-    /// Error classification code
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
-    pub code: Option<String>,
-    /// Human-readable error message
+pub struct AuthenticationFailedExceptionResponseContent {
+    /// Why the request failed. The wording can change, so branch on the exception type, not this text.
     #[serde(rename = "message")]
     pub message: String,
 }
 
-impl AccessDeniedExceptionResponseContent {
-    /// The server response for authorization failure.
-    pub fn new(message: String) -> AccessDeniedExceptionResponseContent {
-        AccessDeniedExceptionResponseContent {
-            code: None,
+impl AuthenticationFailedExceptionResponseContent {
+    /// The request credentials are missing or not valid.
+    pub fn new(message: String) -> AuthenticationFailedExceptionResponseContent {
+        AuthenticationFailedExceptionResponseContent {
             message,
         }
     }
