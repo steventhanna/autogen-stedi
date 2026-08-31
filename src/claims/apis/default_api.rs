@@ -39,6 +39,19 @@ pub enum SubmitClaimAttachmentRawX12Error {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`validate_professional_claim_submission`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ValidateProfessionalClaimSubmissionError {
+    Status400(models::ValidateProfessionalClaimSubmission400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ValidateProfessionalClaimSubmission403ErrorResponseContent),
+    Status404(models::ResourceNotFoundExceptionResponseContent),
+    Status429(models::ValidateProfessionalClaimSubmission429ErrorResponseContent),
+    Status500(models::ValidateProfessionalClaimSubmission500ErrorResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
 
 /// Generate a pre-signed URL to upload a 275 claim attachment file
 pub async fn create_claim_attachment_file(configuration: &configuration::Configuration, create_claim_attachment_file_request_content: models::CreateClaimAttachmentFileRequestContent) -> Result<models::CreateClaimAttachmentFileResponseContent, Error<CreateClaimAttachmentFileError>> {
@@ -128,6 +141,52 @@ pub async fn submit_claim_attachment_raw_x12(configuration: &configuration::Conf
     } else {
         let content = resp.text().await?;
         let entity: Option<SubmitClaimAttachmentRawX12Error> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Validate a professional claim in the Stedi JSON format without submitting it
+pub async fn validate_professional_claim_submission(configuration: &configuration::Configuration, validate_professional_claim_submission_request_content: models::ValidateProfessionalClaimSubmissionRequestContent) -> Result<models::ValidateProfessionalClaimSubmissionResponseContent, Error<ValidateProfessionalClaimSubmissionError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_body_validate_professional_claim_submission_request_content = validate_professional_claim_submission_request_content;
+
+    let uri_str = format!("{}/professional-claim-submissions/validate", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+    req_builder = req_builder.json(&p_body_validate_professional_claim_submission_request_content);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ValidateProfessionalClaimSubmissionResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ValidateProfessionalClaimSubmissionResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ValidateProfessionalClaimSubmissionError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
