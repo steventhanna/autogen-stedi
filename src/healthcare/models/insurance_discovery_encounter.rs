@@ -11,7 +11,7 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// InsuranceDiscoveryEncounter : The date range for the service being requested. If you don't specify a service date (either a single day or a range of dates), Stedi defaults to the current date.   You can specify either a single `dateOfService` or a `beginningDateOfService` and `endDateOfService`.
+/// InsuranceDiscoveryEncounter : Specify the date range and type of coverage.   - Set either a single `dateOfService` or a `beginningDateOfService` and `endDateOfService`. If you don't specify a service date, Stedi defaults to the current date.   - Set `serviceTypeCodes` to `[\"35\"]` to narrow the search to dental payers. Omit it to default to searching medical payers.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct InsuranceDiscoveryEncounter {
     /// The beginning date, formatted as YYYYMMDD.
@@ -23,15 +23,19 @@ pub struct InsuranceDiscoveryEncounter {
     /// The end date, formatted as YYYYMMDD. If you don't specify an end date, Stedi defaults to the same date as `beginningDateOfService`.
     #[serde(rename = "endDateOfService", skip_serializing_if = "Option::is_none")]
     pub end_date_of_service: Option<String>,
+    /// A service type code (STC) to focus the coverage search. Currently supports codes `30` (Health Benefit Plan Coverage) and `35` (Dental Care). If empty, Stedi defaults to code `30`.  Stedi limits the coverage search to payers that support this STC. For example, if you submit `35`, Stedi only searches and returns results for payers that support dental use cases.
+    #[serde(rename = "serviceTypeCodes", skip_serializing_if = "Option::is_none")]
+    pub service_type_codes: Option<Vec<models::RequestInsuranceDiscoveryServiceTypeCode>>,
 }
 
 impl InsuranceDiscoveryEncounter {
-    /// The date range for the service being requested. If you don't specify a service date (either a single day or a range of dates), Stedi defaults to the current date.   You can specify either a single `dateOfService` or a `beginningDateOfService` and `endDateOfService`.
+    /// Specify the date range and type of coverage.   - Set either a single `dateOfService` or a `beginningDateOfService` and `endDateOfService`. If you don't specify a service date, Stedi defaults to the current date.   - Set `serviceTypeCodes` to `[\"35\"]` to narrow the search to dental payers. Omit it to default to searching medical payers.
     pub fn new() -> InsuranceDiscoveryEncounter {
         InsuranceDiscoveryEncounter {
             beginning_date_of_service: None,
             date_of_service: None,
             end_date_of_service: None,
+            service_type_codes: None,
         }
     }
 }

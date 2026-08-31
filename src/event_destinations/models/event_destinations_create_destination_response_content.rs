@@ -43,7 +43,7 @@ pub struct EventDestinationsCreateDestinationResponseContent {
     pub signing_secret: String,
     /// The destination's current status. Stedi only sends event payloads to `ENABLED` destinations.
     #[serde(rename = "status")]
-    pub status: models::DestinationStatus,
+    pub status: models::EventDestinationsDestinationStatus,
     /// Last update timestamp for this destination.
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
@@ -51,7 +51,7 @@ pub struct EventDestinationsCreateDestinationResponseContent {
 
 impl EventDestinationsCreateDestinationResponseContent {
     /// Output containing the created destination details and signing secret.
-    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, description: String, destination_url: String, event_types: Vec<String>, id: String, name: String, signing_secret: String, status: models::DestinationStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> EventDestinationsCreateDestinationResponseContent {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, description: String, destination_url: String, event_types: Vec<String>, id: String, name: String, signing_secret: String, status: models::EventDestinationsDestinationStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> EventDestinationsCreateDestinationResponseContent {
         EventDestinationsCreateDestinationResponseContent {
             concurrency_limit: None,
             created_at,

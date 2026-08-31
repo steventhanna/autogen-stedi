@@ -31,7 +31,7 @@ pub struct EventDestinationsUpdateDestinationRequestContent {
     pub name: Option<String>,
     /// The destination's status. Set to `ENABLED` to receive event deliveries or `DISABLED` to pause them.
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<models::DestinationInputStatus>,
+    pub status: Option<models::EventDestinationsDestinationInputStatus>,
 }
 
 impl EventDestinationsUpdateDestinationRequestContent {
