@@ -1142,6 +1142,8 @@ pub mod request_dependent_reference_identification_qualifier;
 pub use self::request_dependent_reference_identification_qualifier::RequestDependentReferenceIdentificationQualifier;
 pub mod request_eligibility_service_type_code;
 pub use self::request_eligibility_service_type_code::RequestEligibilityServiceTypeCode;
+pub mod request_insurance_discovery_service_type_code;
+pub use self::request_insurance_discovery_service_type_code::RequestInsuranceDiscoveryServiceTypeCode;
 pub mod request_provider_address;
 pub use self::request_provider_address::RequestProviderAddress;
 pub mod request_provider_code;

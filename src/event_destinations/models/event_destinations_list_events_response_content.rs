@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct EventDestinationsListEventsResponseContent {
     /// The list of event summaries.
     #[serde(rename = "items")]
-    pub items: Vec<models::EventSummary>,
+    pub items: Vec<models::EventDestinationsEventSummary>,
     /// Token that you can supply in subsequent requests to retrieve the next page of results. If not returned, there are no more results.
     #[serde(rename = "nextPageToken", skip_serializing_if = "Option::is_none")]
     pub next_page_token: Option<String>,
@@ -24,7 +24,7 @@ pub struct EventDestinationsListEventsResponseContent {
 
 impl EventDestinationsListEventsResponseContent {
     /// Output containing the list of events.
-    pub fn new(items: Vec<models::EventSummary>) -> EventDestinationsListEventsResponseContent {
+    pub fn new(items: Vec<models::EventDestinationsEventSummary>) -> EventDestinationsListEventsResponseContent {
         EventDestinationsListEventsResponseContent {
             items,
             next_page_token: None,

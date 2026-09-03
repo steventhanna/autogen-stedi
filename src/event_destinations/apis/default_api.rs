@@ -358,7 +358,7 @@ pub async fn event_destinations_get_event(configuration: &configuration::Configu
 }
 
 /// Lists all destinations configured for your account. Results are paginated.
-pub async fn event_destinations_list_destinations(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, status: Option<models::DestinationStatus>, event_type: Option<&str>) -> Result<models::EventDestinationsListDestinationsResponseContent, Error<EventDestinationsListDestinationsError>> {
+pub async fn event_destinations_list_destinations(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, status: Option<models::EventDestinationsDestinationStatus>, event_type: Option<&str>) -> Result<models::EventDestinationsListDestinationsResponseContent, Error<EventDestinationsListDestinationsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
@@ -418,7 +418,7 @@ pub async fn event_destinations_list_destinations(configuration: &configuration:
 }
 
 /// Lists all events for your account. Results are paginated.
-pub async fn event_destinations_list_events(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, event_id: Option<&str>, status: Option<Vec<models::EventStatus>>, event_type: Option<&str>, created: Option<Vec<String>>) -> Result<models::EventDestinationsListEventsResponseContent, Error<EventDestinationsListEventsError>> {
+pub async fn event_destinations_list_events(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, event_id: Option<&str>, status: Option<Vec<models::EventDestinationsEventStatus>>, event_type: Option<&str>, created: Option<Vec<String>>) -> Result<models::EventDestinationsListEventsResponseContent, Error<EventDestinationsListEventsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
