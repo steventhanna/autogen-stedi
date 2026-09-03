@@ -31,7 +31,7 @@ pub struct EventDestinationsCreateDestinationRequestContent {
     pub name: String,
     /// The destination's status upon creation. Default is `ENABLED`.
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<models::DestinationInputStatus>,
+    pub status: Option<models::EventDestinationsDestinationInputStatus>,
 }
 
 impl EventDestinationsCreateDestinationRequestContent {
