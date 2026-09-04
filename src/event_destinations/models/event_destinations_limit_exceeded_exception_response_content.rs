@@ -14,6 +14,7 @@ use serde::{Deserialize, Serialize};
 /// EventDestinationsLimitExceededExceptionResponseContent : The account has reached its maximum number of event destinations. Delete an existing destination or request a limit increase before creating another. Not retryable — the caller must change account state before retrying.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EventDestinationsLimitExceededExceptionResponseContent {
+    /// Why the request failed. The wording can change, so branch on the exception type, not this text.
     #[serde(rename = "message")]
     pub message: String,
 }

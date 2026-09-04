@@ -32,7 +32,7 @@ pub struct InsuranceDiscoveryDependent {
     /// The dependent's middle name or initial.
     #[serde(rename = "middleName", skip_serializing_if = "Option::is_none")]
     pub middle_name: Option<String>,
-    /// The dependent's Social Security Number (SSN). We strongly recommend providing this information if possible to improve the probability of finding matching coverage.
+    /// The dependent's Social Security Number (SSN).   - **Medical coverage:** The patient's full SSN is best, but even the last 4 digits of the SSN can help narrow down matching coverage.   - **Dental coverage:** Providing the SSN is especially important. Many dental payers accept SSN in place of a member ID. When included, Stedi can search with additional dental carriers that accept SSN instead of member ID. If you don't have the subscriber's member ID but can include the SSN, Stedi is more likely to return active dental coverage.
     #[serde(rename = "ssn", skip_serializing_if = "Option::is_none")]
     pub ssn: Option<String>,
 }
