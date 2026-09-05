@@ -11,21 +11,21 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsListEventsResponseContent : Output containing the list of events.
+/// ListEventDestinationsResponseContent : Output containing the list of destinations.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsListEventsResponseContent {
-    /// The list of event summaries.
+pub struct ListEventDestinationsResponseContent {
+    /// The list of destination summaries.
     #[serde(rename = "items")]
-    pub items: Vec<models::EventSummary>,
+    pub items: Vec<models::EventDestinationsDestinationSummary>,
     /// Token that you can supply in subsequent requests to retrieve the next page of results. If not returned, there are no more results.
     #[serde(rename = "nextPageToken", skip_serializing_if = "Option::is_none")]
     pub next_page_token: Option<String>,
 }
 
-impl EventDestinationsListEventsResponseContent {
-    /// Output containing the list of events.
-    pub fn new(items: Vec<models::EventSummary>) -> EventDestinationsListEventsResponseContent {
-        EventDestinationsListEventsResponseContent {
+impl ListEventDestinationsResponseContent {
+    /// Output containing the list of destinations.
+    pub fn new(items: Vec<models::EventDestinationsDestinationSummary>) -> ListEventDestinationsResponseContent {
+        ListEventDestinationsResponseContent {
             items,
             next_page_token: None,
         }

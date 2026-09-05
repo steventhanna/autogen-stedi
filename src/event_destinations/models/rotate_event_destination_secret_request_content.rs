@@ -11,18 +11,18 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsRotateDestinationSecretRequestContent : Input for rotating a destination's signing secret.
+/// RotateEventDestinationSecretRequestContent : Input for rotating a destination's signing secret.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsRotateDestinationSecretRequestContent {
+pub struct RotateEventDestinationSecretRequestContent {
     /// The number of hours you want the previous secret to remain valid after rotation.   - Default is 24 hours.   - Set to `0` when you want the previous secret to expire immediately — in-flight payloads signed with the previous secret fail verification.   - You can't rotate again until this grace period expires.
     #[serde(rename = "previousSecretExpiryHours", skip_serializing_if = "Option::is_none")]
     pub previous_secret_expiry_hours: Option<f64>,
 }
 
-impl EventDestinationsRotateDestinationSecretRequestContent {
+impl RotateEventDestinationSecretRequestContent {
     /// Input for rotating a destination's signing secret.
-    pub fn new() -> EventDestinationsRotateDestinationSecretRequestContent {
-        EventDestinationsRotateDestinationSecretRequestContent {
+    pub fn new() -> RotateEventDestinationSecretRequestContent {
+        RotateEventDestinationSecretRequestContent {
             previous_secret_expiry_hours: None,
         }
     }

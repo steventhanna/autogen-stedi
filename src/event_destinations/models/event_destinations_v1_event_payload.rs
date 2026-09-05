@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// V1EventPayload : A v1 thin event envelope that signals a state change. Consumers fetch current resource state via API using the resource reference. This is the exact payload delivered to webhook destinations.
+/// EventDestinationsV1EventPayload : A v1 thin event envelope that signals a state change. Consumers fetch current resource state via API using the resource reference. This is the exact payload delivered to webhook destinations.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct V1EventPayload {
+pub struct EventDestinationsV1EventPayload {
     /// Stedi account identifier (UUID).
     #[serde(rename = "account")]
     pub account: String,
@@ -22,28 +22,28 @@ pub struct V1EventPayload {
     pub created: chrono::DateTime<chrono::FixedOffset>,
     /// The environment in which the event was produced.
     #[serde(rename = "environment")]
-    pub environment: models::EventEnvironment,
+    pub environment: models::EventDestinationsEventEnvironment,
     /// An identifier for the event, formatted as `evt_{UUID}`.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
     /// Object type discriminator. Identifies the schema version of this payload.
     #[serde(rename = "object")]
-    pub object: models::EventPayloadObjectType,
+    pub object: models::EventDestinationsEventPayloadObjectType,
     /// Other resources related to the event. Only present when there are related resources.
     #[serde(rename = "relatedResources", skip_serializing_if = "Option::is_none")]
-    pub related_resources: Option<Vec<models::EventPayloadResourceRef>>,
+    pub related_resources: Option<Vec<models::EventDestinationsEventPayloadResourceRef>>,
     /// Information about the resource that triggered the event. You can use this information to retrieve additional information about the resource.
     #[serde(rename = "resource")]
-    pub resource: Box<models::EventPayloadResourceRef>,
+    pub resource: Box<models::EventDestinationsEventPayloadResourceRef>,
     /// The event type in dot notation, such as `enrollment.activated`.
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub r#type: Option<String>,
 }
 
-impl V1EventPayload {
+impl EventDestinationsV1EventPayload {
     /// A v1 thin event envelope that signals a state change. Consumers fetch current resource state via API using the resource reference. This is the exact payload delivered to webhook destinations.
-    pub fn new(account: String, created: chrono::DateTime<chrono::FixedOffset>, environment: models::EventEnvironment, object: models::EventPayloadObjectType, resource: models::EventPayloadResourceRef) -> V1EventPayload {
-        V1EventPayload {
+    pub fn new(account: String, created: chrono::DateTime<chrono::FixedOffset>, environment: models::EventDestinationsEventEnvironment, object: models::EventDestinationsEventPayloadObjectType, resource: models::EventDestinationsEventPayloadResourceRef) -> EventDestinationsV1EventPayload {
+        EventDestinationsV1EventPayload {
             account,
             created,
             environment,

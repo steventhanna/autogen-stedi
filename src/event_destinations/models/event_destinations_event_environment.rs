@@ -11,33 +11,33 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// DestinationStatus : The destination's current status. Stedi only sends event payloads to `ENABLED` destinations.
-/// The destination's current status. Stedi only sends event payloads to `ENABLED` destinations.
+/// EventDestinationsEventEnvironment : The environment in which an event was produced.
+/// The environment in which an event was produced.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum DestinationStatus {
-    #[serde(rename = "ENABLED")]
-    Enabled,
-    #[serde(rename = "DISABLED")]
-    Disabled,
+pub enum EventDestinationsEventEnvironment {
+    #[serde(rename = "TEST")]
+    Test,
+    #[serde(rename = "PRODUCTION")]
+    Production,
     /// Any value not defined in the spec (payers may return non-compliant values).
     #[serde(untagged)]
     UnknownValue(String),
 
 }
 
-impl std::fmt::Display for DestinationStatus {
+impl std::fmt::Display for EventDestinationsEventEnvironment {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Enabled => write!(f, "ENABLED"),
-            Self::Disabled => write!(f, "DISABLED"),
+            Self::Test => write!(f, "TEST"),
+            Self::Production => write!(f, "PRODUCTION"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }
 
-impl Default for DestinationStatus {
-    fn default() -> DestinationStatus {
-        Self::Enabled
+impl Default for EventDestinationsEventEnvironment {
+    fn default() -> EventDestinationsEventEnvironment {
+        Self::Test
     }
 }
 

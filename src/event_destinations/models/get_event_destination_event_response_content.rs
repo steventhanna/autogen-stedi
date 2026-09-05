@@ -11,12 +11,15 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventSummary : A summary representation of an event, returned in list responses.
+/// GetEventDestinationEventResponseContent : Output containing the event details.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventSummary {
+pub struct GetEventDestinationEventResponseContent {
     /// An ISO 8601 timestamp of when the event was created.
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    /// The event payload Stedi delivers to event destinations.
+    #[serde(rename = "eventPayload")]
+    pub event_payload: Box<models::EventDestinationsEventPayload>,
     /// The type of event, such as `enrollment.activated`.
     #[serde(rename = "eventType")]
     pub event_type: String,
@@ -25,14 +28,15 @@ pub struct EventSummary {
     pub id: String,
     /// The current status of the event. Can be:   - `DELIVERED`: Stedi successfully delivered the event to all relevant event destinations.   - `PENDING`: Stedi is still trying to deliver the event to one or more event destinations. Events may stay in this state for multiple days as Stedi automatically retries.   - `FAILED`: Stedi couldn't deliver the event to at least one event destination and is no longer retrying.  Deliveries to some event destinations may have been successful.
     #[serde(rename = "status")]
-    pub status: models::EventStatus,
+    pub status: models::EventDestinationsEventStatus,
 }
 
-impl EventSummary {
-    /// A summary representation of an event, returned in list responses.
-    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_type: String, id: String, status: models::EventStatus) -> EventSummary {
-        EventSummary {
+impl GetEventDestinationEventResponseContent {
+    /// Output containing the event details.
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_payload: models::EventDestinationsEventPayload, event_type: String, id: String, status: models::EventDestinationsEventStatus) -> GetEventDestinationEventResponseContent {
+        GetEventDestinationEventResponseContent {
             created_at,
+            event_payload: Box::new(event_payload),
             event_type,
             id,
             status,

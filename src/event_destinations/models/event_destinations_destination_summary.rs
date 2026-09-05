@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsUpdateDestinationResponseContent : Output containing the updated destination details.
+/// EventDestinationsDestinationSummary : A summary representation of a destination, returned in list responses.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsUpdateDestinationResponseContent {
+pub struct EventDestinationsDestinationSummary {
     /// The maximum number of concurrent deliveries for this destination. Contact Stedi to change your account limits.
     #[serde(rename = "concurrencyLimit", skip_serializing_if = "Option::is_none")]
     pub concurrency_limit: Option<f64>,
@@ -40,16 +40,16 @@ pub struct EventDestinationsUpdateDestinationResponseContent {
     pub name: String,
     /// The destination's current status. Stedi only sends event payloads to `ENABLED` destinations.
     #[serde(rename = "status")]
-    pub status: models::DestinationStatus,
+    pub status: models::EventDestinationsDestinationStatus,
     /// Last update timestamp for this destination.
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
-impl EventDestinationsUpdateDestinationResponseContent {
-    /// Output containing the updated destination details.
-    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, description: String, destination_url: String, event_types: Vec<String>, id: String, name: String, status: models::DestinationStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> EventDestinationsUpdateDestinationResponseContent {
-        EventDestinationsUpdateDestinationResponseContent {
+impl EventDestinationsDestinationSummary {
+    /// A summary representation of a destination, returned in list responses.
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, description: String, destination_url: String, event_types: Vec<String>, id: String, name: String, status: models::EventDestinationsDestinationStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> EventDestinationsDestinationSummary {
+        EventDestinationsDestinationSummary {
             concurrency_limit: None,
             created_at,
             description,

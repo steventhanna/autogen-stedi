@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventPayloadResourceRef : A reference to a resource affected by an event.
+/// EventDestinationsEventPayloadResourceRef : A reference to a resource affected by an event.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventPayloadResourceRef {
+pub struct EventDestinationsEventPayloadResourceRef {
     /// The resource identifier.
     #[serde(rename = "id")]
     pub id: String,
@@ -22,10 +22,10 @@ pub struct EventPayloadResourceRef {
     pub r#type: String,
 }
 
-impl EventPayloadResourceRef {
+impl EventDestinationsEventPayloadResourceRef {
     /// A reference to a resource affected by an event.
-    pub fn new(id: String, r#type: String) -> EventPayloadResourceRef {
-        EventPayloadResourceRef {
+    pub fn new(id: String, r#type: String) -> EventDestinationsEventPayloadResourceRef {
+        EventDestinationsEventPayloadResourceRef {
             id,
             r#type,
         }

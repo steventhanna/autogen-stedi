@@ -11,30 +11,33 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventPayloadObjectType : Object type discriminator for event payloads.
-/// Object type discriminator for event payloads.
+/// EventDestinationsDestinationStatus : The destination's current status. Stedi only sends event payloads to `ENABLED` destinations.
+/// The destination's current status. Stedi only sends event payloads to `ENABLED` destinations.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum EventPayloadObjectType {
-    #[serde(rename = "v1.event")]
-    V1Event,
+pub enum EventDestinationsDestinationStatus {
+    #[serde(rename = "ENABLED")]
+    Enabled,
+    #[serde(rename = "DISABLED")]
+    Disabled,
     /// Any value not defined in the spec (payers may return non-compliant values).
     #[serde(untagged)]
     UnknownValue(String),
 
 }
 
-impl std::fmt::Display for EventPayloadObjectType {
+impl std::fmt::Display for EventDestinationsDestinationStatus {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::V1Event => write!(f, "v1.event"),
+            Self::Enabled => write!(f, "ENABLED"),
+            Self::Disabled => write!(f, "DISABLED"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }
 
-impl Default for EventPayloadObjectType {
-    fn default() -> EventPayloadObjectType {
-        Self::V1Event
+impl Default for EventDestinationsDestinationStatus {
+    fn default() -> EventDestinationsDestinationStatus {
+        Self::Enabled
     }
 }
 

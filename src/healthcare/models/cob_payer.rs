@@ -16,7 +16,7 @@ pub struct CobPayer {
     /// The payer's name, such as `CIGNA`.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// The `tradingPartnerServiceId` (Payer ID) you used to identify the payer in the COB request.
+    /// The identifier the payer returns in the response, which may differ from the `tradingPartnerServiceId` you sent. You can use `meta.traceId` to correlate a response to your request.
     #[serde(rename = "payerIdentification", skip_serializing_if = "Option::is_none")]
     pub payer_identification: Option<String>,
 }
