@@ -11,36 +11,30 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventStatus : The current status of an event.
-/// The current status of an event.
+/// EventDestinationsEventPayloadObjectType : Object type discriminator for event payloads.
+/// Object type discriminator for event payloads.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum EventStatus {
-    #[serde(rename = "PENDING")]
-    Pending,
-    #[serde(rename = "DELIVERED")]
-    Delivered,
-    #[serde(rename = "FAILED")]
-    Failed,
+pub enum EventDestinationsEventPayloadObjectType {
+    #[serde(rename = "v1.event")]
+    V1Event,
     /// Any value not defined in the spec (payers may return non-compliant values).
     #[serde(untagged)]
     UnknownValue(String),
 
 }
 
-impl std::fmt::Display for EventStatus {
+impl std::fmt::Display for EventDestinationsEventPayloadObjectType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Pending => write!(f, "PENDING"),
-            Self::Delivered => write!(f, "DELIVERED"),
-            Self::Failed => write!(f, "FAILED"),
+            Self::V1Event => write!(f, "v1.event"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }
 
-impl Default for EventStatus {
-    fn default() -> EventStatus {
-        Self::Pending
+impl Default for EventDestinationsEventPayloadObjectType {
+    fn default() -> EventDestinationsEventPayloadObjectType {
+        Self::V1Event
     }
 }
 

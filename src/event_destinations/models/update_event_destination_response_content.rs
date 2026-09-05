@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsCreateDestinationResponseContent : Output containing the created destination details and signing secret.
+/// UpdateEventDestinationResponseContent : Output containing the updated destination details.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsCreateDestinationResponseContent {
+pub struct UpdateEventDestinationResponseContent {
     /// The maximum number of concurrent deliveries for this destination. Contact Stedi to change your account limits.
     #[serde(rename = "concurrencyLimit", skip_serializing_if = "Option::is_none")]
     pub concurrency_limit: Option<f64>,
@@ -38,21 +38,18 @@ pub struct EventDestinationsCreateDestinationResponseContent {
     /// A human-readable name for the destination. Stedi displays this name in the portal.
     #[serde(rename = "name")]
     pub name: String,
-    /// The signing secret for verifying event payloads. Store it securely. Visit [verify event signatures](https://www.stedi.com/docs/healthcare/event-destinations-message-handling#verify-authenticity-and-receipt-time) for details.
-    #[serde(rename = "signingSecret")]
-    pub signing_secret: String,
     /// The destination's current status. Stedi only sends event payloads to `ENABLED` destinations.
     #[serde(rename = "status")]
-    pub status: models::DestinationStatus,
+    pub status: models::EventDestinationsDestinationStatus,
     /// Last update timestamp for this destination.
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
-impl EventDestinationsCreateDestinationResponseContent {
-    /// Output containing the created destination details and signing secret.
-    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, description: String, destination_url: String, event_types: Vec<String>, id: String, name: String, signing_secret: String, status: models::DestinationStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> EventDestinationsCreateDestinationResponseContent {
-        EventDestinationsCreateDestinationResponseContent {
+impl UpdateEventDestinationResponseContent {
+    /// Output containing the updated destination details.
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, description: String, destination_url: String, event_types: Vec<String>, id: String, name: String, status: models::EventDestinationsDestinationStatus, updated_at: chrono::DateTime<chrono::FixedOffset>) -> UpdateEventDestinationResponseContent {
+        UpdateEventDestinationResponseContent {
             concurrency_limit: None,
             created_at,
             description,
@@ -61,7 +58,6 @@ impl EventDestinationsCreateDestinationResponseContent {
             id,
             last_delivery_time: None,
             name,
-            signing_secret,
             status,
             updated_at,
         }

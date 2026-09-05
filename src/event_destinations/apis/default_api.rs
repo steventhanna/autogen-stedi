@@ -15,10 +15,10 @@ use crate::event_destinations::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
-/// struct for typed errors of method [`event_destinations_create_destination`]
+/// struct for typed errors of method [`create_event_destination`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsCreateDestinationError {
+pub enum CreateEventDestinationError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::EventDestinationsLimitExceededExceptionResponseContent),
@@ -29,10 +29,10 @@ pub enum EventDestinationsCreateDestinationError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`event_destinations_delete_destination`]
+/// struct for typed errors of method [`delete_event_destination`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsDeleteDestinationError {
+pub enum DeleteEventDestinationError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::ForbiddenExceptionResponseContent),
@@ -43,10 +43,10 @@ pub enum EventDestinationsDeleteDestinationError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`event_destinations_get_destination`]
+/// struct for typed errors of method [`get_event_destination`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsGetDestinationError {
+pub enum GetEventDestinationError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::ForbiddenExceptionResponseContent),
@@ -56,10 +56,22 @@ pub enum EventDestinationsGetDestinationError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`event_destinations_get_destination_secret`]
+/// struct for typed errors of method [`get_event_destination_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsGetDestinationSecretError {
+pub enum GetEventDestinationEventError {
+    Status400(models::InvalidRequestExceptionResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ForbiddenExceptionResponseContent),
+    Status404(models::NotFoundExceptionResponseContent),
+    Status500(models::InternalServerExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`get_event_destination_secret`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetEventDestinationSecretError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::ForbiddenExceptionResponseContent),
@@ -69,22 +81,21 @@ pub enum EventDestinationsGetDestinationSecretError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`event_destinations_get_event`]
+/// struct for typed errors of method [`list_event_destination_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsGetEventError {
+pub enum ListEventDestinationEventsError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::ForbiddenExceptionResponseContent),
-    Status404(models::NotFoundExceptionResponseContent),
     Status500(models::InternalServerExceptionResponseContent),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`event_destinations_list_destinations`]
+/// struct for typed errors of method [`list_event_destinations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsListDestinationsError {
+pub enum ListEventDestinationsError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::ForbiddenExceptionResponseContent),
@@ -93,21 +104,10 @@ pub enum EventDestinationsListDestinationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`event_destinations_list_events`]
+/// struct for typed errors of method [`rotate_event_destination_secret`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsListEventsError {
-    Status400(models::InvalidRequestExceptionResponseContent),
-    Status401(models::AuthenticationFailedExceptionResponseContent),
-    Status403(models::ForbiddenExceptionResponseContent),
-    Status500(models::InternalServerExceptionResponseContent),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`event_destinations_rotate_destination_secret`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum EventDestinationsRotateDestinationSecretError {
+pub enum RotateEventDestinationSecretError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::ForbiddenExceptionResponseContent),
@@ -118,10 +118,10 @@ pub enum EventDestinationsRotateDestinationSecretError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`event_destinations_update_destination`]
+/// struct for typed errors of method [`update_event_destination`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum EventDestinationsUpdateDestinationError {
+pub enum UpdateEventDestinationError {
     Status400(models::InvalidRequestExceptionResponseContent),
     Status401(models::AuthenticationFailedExceptionResponseContent),
     Status403(models::ForbiddenExceptionResponseContent),
@@ -135,9 +135,9 @@ pub enum EventDestinationsUpdateDestinationError {
 
 
 /// Creates an event destination. Returns destination details and a signing secret for verifying event payloads.
-pub async fn event_destinations_create_destination(configuration: &configuration::Configuration, event_destinations_create_destination_request_content: models::EventDestinationsCreateDestinationRequestContent, idempotency_key: Option<&str>) -> Result<models::EventDestinationsCreateDestinationResponseContent, Error<EventDestinationsCreateDestinationError>> {
+pub async fn create_event_destination(configuration: &configuration::Configuration, create_event_destination_request_content: models::CreateEventDestinationRequestContent, idempotency_key: Option<&str>) -> Result<models::CreateEventDestinationResponseContent, Error<CreateEventDestinationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_body_event_destinations_create_destination_request_content = event_destinations_create_destination_request_content;
+    let p_body_create_event_destination_request_content = create_event_destination_request_content;
     let p_header_idempotency_key = idempotency_key;
 
     let uri_str = format!("{}/destinations", configuration.base_path);
@@ -157,7 +157,7 @@ pub async fn event_destinations_create_destination(configuration: &configuration
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_body_event_destinations_create_destination_request_content);
+    req_builder = req_builder.json(&p_body_create_event_destination_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -174,18 +174,18 @@ pub async fn event_destinations_create_destination(configuration: &configuration
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsCreateDestinationResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsCreateDestinationResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateEventDestinationResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateEventDestinationResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsCreateDestinationError> = serde_json::from_str(&content).ok();
+        let entity: Option<CreateEventDestinationError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
 /// Deletes an existing destination. This action is irreversible. Deleting a destination that is already deleted succeeds with the same response (idempotent).
-pub async fn event_destinations_delete_destination(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>) -> Result<(), Error<EventDestinationsDeleteDestinationError>> {
+pub async fn delete_event_destination(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>) -> Result<(), Error<DeleteEventDestinationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_destination_id = destination_id;
     let p_header_idempotency_key = idempotency_key;
@@ -217,13 +217,13 @@ pub async fn event_destinations_delete_destination(configuration: &configuration
         Ok(())
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsDeleteDestinationError> = serde_json::from_str(&content).ok();
+        let entity: Option<DeleteEventDestinationError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
 /// Retrieves details for an existing event destination.
-pub async fn event_destinations_get_destination(configuration: &configuration::Configuration, destination_id: &str) -> Result<models::EventDestinationsGetDestinationResponseContent, Error<EventDestinationsGetDestinationError>> {
+pub async fn get_event_destination(configuration: &configuration::Configuration, destination_id: &str) -> Result<models::GetEventDestinationResponseContent, Error<GetEventDestinationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_destination_id = destination_id;
 
@@ -257,63 +257,18 @@ pub async fn event_destinations_get_destination(configuration: &configuration::C
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsGetDestinationResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsGetDestinationResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetEventDestinationResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetEventDestinationResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsGetDestinationError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-/// Retrieves the current signing secret for a destination. Use this secret to verify the authenticity of event payloads.
-pub async fn event_destinations_get_destination_secret(configuration: &configuration::Configuration, destination_id: &str) -> Result<models::EventDestinationsGetDestinationSecretResponseContent, Error<EventDestinationsGetDestinationSecretError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_path_destination_id = destination_id;
-
-    let uri_str = format!("{}/destinations/{destinationId}/secret", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref apikey) = configuration.api_key {
-        let key = apikey.key.clone();
-        let value = match apikey.prefix {
-            Some(ref prefix) => format!("{} {}", prefix, key),
-            None => key,
-        };
-        req_builder = req_builder.header("Authorization", value);
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsGetDestinationSecretResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsGetDestinationSecretResponseContent`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<EventDestinationsGetDestinationSecretError> = serde_json::from_str(&content).ok();
+        let entity: Option<GetEventDestinationError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
 /// Retrieves the details of an existing event by its identifier.
-pub async fn event_destinations_get_event(configuration: &configuration::Configuration, event_id: &str) -> Result<models::EventDestinationsGetEventResponseContent, Error<EventDestinationsGetEventError>> {
+pub async fn get_event_destination_event(configuration: &configuration::Configuration, event_id: &str) -> Result<models::GetEventDestinationEventResponseContent, Error<GetEventDestinationEventError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_event_id = event_id;
 
@@ -347,39 +302,24 @@ pub async fn event_destinations_get_event(configuration: &configuration::Configu
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsGetEventResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsGetEventResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetEventDestinationEventResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetEventDestinationEventResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsGetEventError> = serde_json::from_str(&content).ok();
+        let entity: Option<GetEventDestinationEventError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
-/// Lists all destinations configured for your account. Results are paginated.
-pub async fn event_destinations_list_destinations(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, status: Option<models::DestinationStatus>, event_type: Option<&str>) -> Result<models::EventDestinationsListDestinationsResponseContent, Error<EventDestinationsListDestinationsError>> {
+/// Retrieves the current signing secret for a destination. Use this secret to verify the authenticity of event payloads.
+pub async fn get_event_destination_secret(configuration: &configuration::Configuration, destination_id: &str) -> Result<models::GetEventDestinationSecretResponseContent, Error<GetEventDestinationSecretError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_query_page_size = page_size;
-    let p_query_page_token = page_token;
-    let p_query_status = status;
-    let p_query_event_type = event_type;
+    let p_path_destination_id = destination_id;
 
-    let uri_str = format!("{}/destinations", configuration.base_path);
+    let uri_str = format!("{}/destinations/{destinationId}/secret", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_query_page_size {
-        req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_page_token {
-        req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_status {
-        req_builder = req_builder.query(&[("status", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_event_type {
-        req_builder = req_builder.query(&[("eventType", &param_value.to_string())]);
-    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -407,18 +347,18 @@ pub async fn event_destinations_list_destinations(configuration: &configuration:
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsListDestinationsResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsListDestinationsResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetEventDestinationSecretResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetEventDestinationSecretResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsListDestinationsError> = serde_json::from_str(&content).ok();
+        let entity: Option<GetEventDestinationSecretError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
 /// Lists all events for your account. Results are paginated.
-pub async fn event_destinations_list_events(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, event_id: Option<&str>, status: Option<Vec<models::EventStatus>>, event_type: Option<&str>, created: Option<Vec<String>>) -> Result<models::EventDestinationsListEventsResponseContent, Error<EventDestinationsListEventsError>> {
+pub async fn list_event_destination_events(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, event_id: Option<&str>, status: Option<Vec<models::EventDestinationsEventStatus>>, event_type: Option<&str>, created: Option<Vec<String>>) -> Result<models::ListEventDestinationEventsResponseContent, Error<ListEventDestinationEventsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
@@ -481,22 +421,82 @@ pub async fn event_destinations_list_events(configuration: &configuration::Confi
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsListEventsResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsListEventsResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListEventDestinationEventsResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListEventDestinationEventsResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsListEventsError> = serde_json::from_str(&content).ok();
+        let entity: Option<ListEventDestinationEventsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Lists all destinations configured for your account. Results are paginated.
+pub async fn list_event_destinations(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, status: Option<models::EventDestinationsDestinationStatus>, event_type: Option<&str>) -> Result<models::ListEventDestinationsResponseContent, Error<ListEventDestinationsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_status = status;
+    let p_query_event_type = event_type;
+
+    let uri_str = format!("{}/destinations", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_query_page_size {
+        req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_page_token {
+        req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_status {
+        req_builder = req_builder.query(&[("status", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_event_type {
+        req_builder = req_builder.query(&[("eventType", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListEventDestinationsResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListEventDestinationsResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ListEventDestinationsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
 /// Rotates the signing secret for a destination. The previous secret remains valid for the period specified by `previousSecretExpiryHours` (or `0` for immediate invalidation) to allow for a graceful transition.
-pub async fn event_destinations_rotate_destination_secret(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>, event_destinations_rotate_destination_secret_request_content: Option<models::EventDestinationsRotateDestinationSecretRequestContent>) -> Result<models::EventDestinationsRotateDestinationSecretResponseContent, Error<EventDestinationsRotateDestinationSecretError>> {
+pub async fn rotate_event_destination_secret(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>, rotate_event_destination_secret_request_content: Option<models::RotateEventDestinationSecretRequestContent>) -> Result<models::RotateEventDestinationSecretResponseContent, Error<RotateEventDestinationSecretError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_destination_id = destination_id;
     let p_header_idempotency_key = idempotency_key;
-    let p_body_event_destinations_rotate_destination_secret_request_content = event_destinations_rotate_destination_secret_request_content;
+    let p_body_rotate_event_destination_secret_request_content = rotate_event_destination_secret_request_content;
 
     let uri_str = format!("{}/destinations/{destinationId}/secret/rotate", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -515,7 +515,7 @@ pub async fn event_destinations_rotate_destination_secret(configuration: &config
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_body_event_destinations_rotate_destination_secret_request_content);
+    req_builder = req_builder.json(&p_body_rotate_event_destination_secret_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -532,22 +532,22 @@ pub async fn event_destinations_rotate_destination_secret(configuration: &config
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsRotateDestinationSecretResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsRotateDestinationSecretResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RotateEventDestinationSecretResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RotateEventDestinationSecretResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsRotateDestinationSecretError> = serde_json::from_str(&content).ok();
+        let entity: Option<RotateEventDestinationSecretError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
 /// Updates an existing destination configuration.
-pub async fn event_destinations_update_destination(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>, event_destinations_update_destination_request_content: Option<models::EventDestinationsUpdateDestinationRequestContent>) -> Result<models::EventDestinationsUpdateDestinationResponseContent, Error<EventDestinationsUpdateDestinationError>> {
+pub async fn update_event_destination(configuration: &configuration::Configuration, destination_id: &str, idempotency_key: Option<&str>, update_event_destination_request_content: Option<models::UpdateEventDestinationRequestContent>) -> Result<models::UpdateEventDestinationResponseContent, Error<UpdateEventDestinationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_destination_id = destination_id;
     let p_header_idempotency_key = idempotency_key;
-    let p_body_event_destinations_update_destination_request_content = event_destinations_update_destination_request_content;
+    let p_body_update_event_destination_request_content = update_event_destination_request_content;
 
     let uri_str = format!("{}/destinations/{destinationId}", configuration.base_path, destinationId=crate::event_destinations::apis::urlencode(p_path_destination_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -566,7 +566,7 @@ pub async fn event_destinations_update_destination(configuration: &configuration
         };
         req_builder = req_builder.header("Authorization", value);
     };
-    req_builder = req_builder.json(&p_body_event_destinations_update_destination_request_content);
+    req_builder = req_builder.json(&p_body_update_event_destination_request_content);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -583,12 +583,12 @@ pub async fn event_destinations_update_destination(configuration: &configuration
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EventDestinationsUpdateDestinationResponseContent`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EventDestinationsUpdateDestinationResponseContent`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateEventDestinationResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateEventDestinationResponseContent`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<EventDestinationsUpdateDestinationError> = serde_json::from_str(&content).ok();
+        let entity: Option<UpdateEventDestinationError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
