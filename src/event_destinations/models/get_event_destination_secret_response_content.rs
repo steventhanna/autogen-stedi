@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsGetDestinationSecretResponseContent : Output containing the destination's signing secret.
+/// GetEventDestinationSecretResponseContent : Output containing the destination's signing secret.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsGetDestinationSecretResponseContent {
+pub struct GetEventDestinationSecretResponseContent {
     /// Expiration timestamp for the previous secret. Only present when a secret rotation is in progress.
     #[serde(rename = "previousSecretExpiresAt", skip_serializing_if = "Option::is_none")]
     pub previous_secret_expires_at: Option<chrono::DateTime<chrono::FixedOffset>>,
@@ -22,10 +22,10 @@ pub struct EventDestinationsGetDestinationSecretResponseContent {
     pub signing_secret: String,
 }
 
-impl EventDestinationsGetDestinationSecretResponseContent {
+impl GetEventDestinationSecretResponseContent {
     /// Output containing the destination's signing secret.
-    pub fn new(signing_secret: String) -> EventDestinationsGetDestinationSecretResponseContent {
-        EventDestinationsGetDestinationSecretResponseContent {
+    pub fn new(signing_secret: String) -> GetEventDestinationSecretResponseContent {
+        GetEventDestinationSecretResponseContent {
             previous_secret_expires_at: None,
             signing_secret,
         }

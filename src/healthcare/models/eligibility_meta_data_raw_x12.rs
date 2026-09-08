@@ -20,7 +20,7 @@ pub struct EligibilityMetaDataRawX12 {
     /// The biller ID Stedi assigns to this request.
     #[serde(rename = "billerId", skip_serializing_if = "Option::is_none")]
     pub biller_id: Option<String>,
-    /// The transaction identifier in the request's `BHT03` element. This identifier isn't guaranteed to be globally unique. We recommend using the `id` property to identify and track eligibility checks instead.
+    /// The transaction identifier in the outbound request's `BHT03` element that Stedi assigns.   Although a unique identifier, instead of this property, we recommend using `id` to identify and track eligibility checks. An eligibility check's `id` is guaranteed to be globally unique, and you can use it to deep link to the eligibility check's results within the Stedi portal.
     #[serde(rename = "outboundTraceId", skip_serializing_if = "Option::is_none")]
     pub outbound_trace_id: Option<String>,
     /// The sender ID Stedi assigns to this request.
@@ -29,7 +29,7 @@ pub struct EligibilityMetaDataRawX12 {
     /// The submitter ID Stedi assigns to this request.
     #[serde(rename = "submitterId", skip_serializing_if = "Option::is_none")]
     pub submitter_id: Option<String>,
-    /// The transaction identifier in the response's `BHT03` element. This should be the same as the `outboundTraceId`.
+    /// The transaction identifier in the response's `BHT03` element, taken from the request's `BHT03` element.
     #[serde(rename = "traceId", skip_serializing_if = "Option::is_none")]
     pub trace_id: Option<String>,
 }

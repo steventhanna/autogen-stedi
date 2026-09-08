@@ -11,33 +11,36 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// DestinationInputStatus : The desired status of a destination, as set by the user.
-/// The desired status of a destination, as set by the user.
+/// EventDestinationsEventStatus : The current status of an event.
+/// The current status of an event.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum DestinationInputStatus {
-    #[serde(rename = "ENABLED")]
-    Enabled,
-    #[serde(rename = "DISABLED")]
-    Disabled,
+pub enum EventDestinationsEventStatus {
+    #[serde(rename = "PENDING")]
+    Pending,
+    #[serde(rename = "DELIVERED")]
+    Delivered,
+    #[serde(rename = "FAILED")]
+    Failed,
     /// Any value not defined in the spec (payers may return non-compliant values).
     #[serde(untagged)]
     UnknownValue(String),
 
 }
 
-impl std::fmt::Display for DestinationInputStatus {
+impl std::fmt::Display for EventDestinationsEventStatus {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Enabled => write!(f, "ENABLED"),
-            Self::Disabled => write!(f, "DISABLED"),
+            Self::Pending => write!(f, "PENDING"),
+            Self::Delivered => write!(f, "DELIVERED"),
+            Self::Failed => write!(f, "FAILED"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }
 
-impl Default for DestinationInputStatus {
-    fn default() -> DestinationInputStatus {
-        Self::Enabled
+impl Default for EventDestinationsEventStatus {
+    fn default() -> EventDestinationsEventStatus {
+        Self::Pending
     }
 }
 

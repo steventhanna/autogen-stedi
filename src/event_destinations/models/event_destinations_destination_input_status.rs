@@ -11,33 +11,33 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventEnvironment : The environment in which an event was produced.
-/// The environment in which an event was produced.
+/// EventDestinationsDestinationInputStatus : The desired status of a destination, as set by the user.
+/// The desired status of a destination, as set by the user.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum EventEnvironment {
-    #[serde(rename = "TEST")]
-    Test,
-    #[serde(rename = "PRODUCTION")]
-    Production,
+pub enum EventDestinationsDestinationInputStatus {
+    #[serde(rename = "ENABLED")]
+    Enabled,
+    #[serde(rename = "DISABLED")]
+    Disabled,
     /// Any value not defined in the spec (payers may return non-compliant values).
     #[serde(untagged)]
     UnknownValue(String),
 
 }
 
-impl std::fmt::Display for EventEnvironment {
+impl std::fmt::Display for EventDestinationsDestinationInputStatus {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Test => write!(f, "TEST"),
-            Self::Production => write!(f, "PRODUCTION"),
+            Self::Enabled => write!(f, "ENABLED"),
+            Self::Disabled => write!(f, "DISABLED"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
 }
 
-impl Default for EventEnvironment {
-    fn default() -> EventEnvironment {
-        Self::Test
+impl Default for EventDestinationsDestinationInputStatus {
+    fn default() -> EventDestinationsDestinationInputStatus {
+        Self::Enabled
     }
 }
 

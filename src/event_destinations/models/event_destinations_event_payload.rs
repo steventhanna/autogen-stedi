@@ -11,18 +11,18 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventPayload : The event payload, discriminated by object type. Each variant corresponds to a versioned event schema.
+/// EventDestinationsEventPayload : The event payload, discriminated by object type. Each variant corresponds to a versioned event schema.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventPayload {
+pub struct EventDestinationsEventPayload {
     /// A `v1` thin event payload.
     #[serde(rename = "v1Event")]
-    pub v1_event: Box<models::V1EventPayload>,
+    pub v1_event: Box<models::EventDestinationsV1EventPayload>,
 }
 
-impl EventPayload {
+impl EventDestinationsEventPayload {
     /// The event payload, discriminated by object type. Each variant corresponds to a versioned event schema.
-    pub fn new(v1_event: models::V1EventPayload) -> EventPayload {
-        EventPayload {
+    pub fn new(v1_event: models::EventDestinationsV1EventPayload) -> EventDestinationsEventPayload {
+        EventDestinationsEventPayload {
             v1_event: Box::new(v1_event),
         }
     }

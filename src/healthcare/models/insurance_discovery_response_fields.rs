@@ -25,6 +25,9 @@ pub struct InsuranceDiscoveryResponseFields {
     /// Information about the payer for this coverage. Note that payer names and IDs aren't normalized, so you'll need to handle matching these results to Stedi's Payer Network or your own internal payer list.
     #[serde(rename = "payer", skip_serializing_if = "Option::is_none")]
     pub payer: Option<Box<models::DiscoveryPayer>>,
+    /// The primary payer ID for this payer in [Stedi’s Payer Network](https://www.stedi.com/healthcare/network). When empty, normalize the payer ID from `payer.payorIdentification`.
+    #[serde(rename = "payerId", skip_serializing_if = "Option::is_none")]
+    pub payer_id: Option<String>,
     /// Contains the dates associated with coverage for this health plan. This information can help you determine the patient's eligibility for benefits.     - All dates are formatted as YYYYMMDD (for single dates) or as YYYYMMDD-YYYYMMDD (for date ranges).     - Properties contain a single date unless otherwise noted.     - Most payers return either `plan` or `planBegin` and `planEnd`, but the exact dates returned depend on the payer's discretion and the specific health plan.     - If the date of service is after the earliest ending `plan`, `eligibility`, `planEnd`, `eligibilityEnd`, `policyEffective`, or `policyExpiration` value, the patient likely doesn't have active coverage.
     #[serde(rename = "planDateInformation", skip_serializing_if = "Option::is_none")]
     pub plan_date_information: Option<Box<models::DiscoveryPlanDateInformation>>,
@@ -46,6 +49,7 @@ impl InsuranceDiscoveryResponseFields {
             confidence: None,
             dependent: None,
             payer: None,
+            payer_id: None,
             plan_date_information: None,
             plan_information: None,
             provider: None,

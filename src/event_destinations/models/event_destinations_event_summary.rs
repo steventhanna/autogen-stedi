@@ -11,15 +11,12 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsGetEventResponseContent : Output containing the event details.
+/// EventDestinationsEventSummary : A summary representation of an event, returned in list responses.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsGetEventResponseContent {
+pub struct EventDestinationsEventSummary {
     /// An ISO 8601 timestamp of when the event was created.
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
-    /// The event payload Stedi delivers to event destinations.
-    #[serde(rename = "eventPayload")]
-    pub event_payload: Box<models::EventPayload>,
     /// The type of event, such as `enrollment.activated`.
     #[serde(rename = "eventType")]
     pub event_type: String,
@@ -28,15 +25,14 @@ pub struct EventDestinationsGetEventResponseContent {
     pub id: String,
     /// The current status of the event. Can be:   - `DELIVERED`: Stedi successfully delivered the event to all relevant event destinations.   - `PENDING`: Stedi is still trying to deliver the event to one or more event destinations. Events may stay in this state for multiple days as Stedi automatically retries.   - `FAILED`: Stedi couldn't deliver the event to at least one event destination and is no longer retrying.  Deliveries to some event destinations may have been successful.
     #[serde(rename = "status")]
-    pub status: models::EventStatus,
+    pub status: models::EventDestinationsEventStatus,
 }
 
-impl EventDestinationsGetEventResponseContent {
-    /// Output containing the event details.
-    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_payload: models::EventPayload, event_type: String, id: String, status: models::EventStatus) -> EventDestinationsGetEventResponseContent {
-        EventDestinationsGetEventResponseContent {
+impl EventDestinationsEventSummary {
+    /// A summary representation of an event, returned in list responses.
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, event_type: String, id: String, status: models::EventDestinationsEventStatus) -> EventDestinationsEventSummary {
+        EventDestinationsEventSummary {
             created_at,
-            event_payload: Box::new(event_payload),
             event_type,
             id,
             status,

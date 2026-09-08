@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsRotateDestinationSecretResponseContent : Output containing the new signing secret.
+/// RotateEventDestinationSecretResponseContent : Output containing the new signing secret.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsRotateDestinationSecretResponseContent {
+pub struct RotateEventDestinationSecretResponseContent {
     /// Expiration timestamp for the secret this rotation replaced. Equals the rotation time when you set `previousSecretExpiryHours` to `0`. You can't rotate again until this timestamp passes.
     #[serde(rename = "previousSecretExpiresAt", skip_serializing_if = "Option::is_none")]
     pub previous_secret_expires_at: Option<chrono::DateTime<chrono::FixedOffset>>,
@@ -22,10 +22,10 @@ pub struct EventDestinationsRotateDestinationSecretResponseContent {
     pub signing_secret: String,
 }
 
-impl EventDestinationsRotateDestinationSecretResponseContent {
+impl RotateEventDestinationSecretResponseContent {
     /// Output containing the new signing secret.
-    pub fn new(signing_secret: String) -> EventDestinationsRotateDestinationSecretResponseContent {
-        EventDestinationsRotateDestinationSecretResponseContent {
+    pub fn new(signing_secret: String) -> RotateEventDestinationSecretResponseContent {
+        RotateEventDestinationSecretResponseContent {
             previous_secret_expires_at: None,
             signing_secret,
         }

@@ -11,9 +11,9 @@
 use crate::event_destinations::models;
 use serde::{Deserialize, Serialize};
 
-/// EventDestinationsUpdateDestinationRequestContent : Input for updating a destination.
+/// CreateEventDestinationRequestContent : Input for creating a new destination.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct EventDestinationsUpdateDestinationRequestContent {
+pub struct CreateEventDestinationRequestContent {
     /// Maximum concurrent deliveries for this destination. If not set, Stedi applies your account default (typically 5). Stedi rejects requests exceeding your account maximum (typically 20) with a `400` error. Contact Stedi to change your limits.
     #[serde(rename = "concurrencyLimit", skip_serializing_if = "Option::is_none")]
     pub concurrency_limit: Option<f64>,
@@ -21,28 +21,28 @@ pub struct EventDestinationsUpdateDestinationRequestContent {
     #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     /// The URL where you want Stedi to deliver payloads through HTTP `POST`.
-    #[serde(rename = "destinationUrl", skip_serializing_if = "Option::is_none")]
-    pub destination_url: Option<String>,
+    #[serde(rename = "destinationUrl")]
+    pub destination_url: String,
     /// The event types you want Stedi to send to this destination. Visit [event types](https://www.stedi.com/docs/healthcare/event-destinations-event-types) for a complete list.
-    #[serde(rename = "eventTypes", skip_serializing_if = "Option::is_none")]
-    pub event_types: Option<Vec<String>>,
+    #[serde(rename = "eventTypes")]
+    pub event_types: Vec<String>,
     /// A human-readable name for the destination. Stedi displays this name in the portal.
-    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
-    /// The destination's status. Set to `ENABLED` to receive event deliveries or `DISABLED` to pause them.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// The destination's status upon creation. Default is `ENABLED`.
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<models::DestinationInputStatus>,
+    pub status: Option<models::EventDestinationsDestinationInputStatus>,
 }
 
-impl EventDestinationsUpdateDestinationRequestContent {
-    /// Input for updating a destination.
-    pub fn new() -> EventDestinationsUpdateDestinationRequestContent {
-        EventDestinationsUpdateDestinationRequestContent {
+impl CreateEventDestinationRequestContent {
+    /// Input for creating a new destination.
+    pub fn new(destination_url: String, event_types: Vec<String>, name: String) -> CreateEventDestinationRequestContent {
+        CreateEventDestinationRequestContent {
             concurrency_limit: None,
             description: None,
-            destination_url: None,
-            event_types: None,
-            name: None,
+            destination_url,
+            event_types,
+            name,
             status: None,
         }
     }
