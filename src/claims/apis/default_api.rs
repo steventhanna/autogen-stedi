@@ -27,6 +27,72 @@ pub enum CreateClaimAttachmentFileError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`create_professional_claim_submission`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateProfessionalClaimSubmissionError {
+    Status400(models::CreateProfessionalClaimSubmission400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::CreateProfessionalClaimSubmission403ErrorResponseContent),
+    Status404(models::ResourceNotFoundExceptionResponseContent),
+    Status409(models::ConflictExceptionResponseContent),
+    Status429(models::CreateProfessionalClaimSubmission429ErrorResponseContent),
+    Status500(models::CreateProfessionalClaimSubmission500ErrorResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`get_claim`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetClaimError {
+    Status400(models::GetClaim400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::GetClaim403ErrorResponseContent),
+    Status404(models::GetClaim404ErrorResponseContent),
+    Status429(models::GetClaim429ErrorResponseContent),
+    Status500(models::GetClaim500ErrorResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`get_claim_timeline`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetClaimTimelineError {
+    Status400(models::GetClaimTimeline400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::GetClaimTimeline403ErrorResponseContent),
+    Status404(models::GetClaimTimeline404ErrorResponseContent),
+    Status429(models::GetClaimTimeline429ErrorResponseContent),
+    Status500(models::GetClaimTimeline500ErrorResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`get_professional_claim_submission`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetProfessionalClaimSubmissionError {
+    Status400(models::GetProfessionalClaimSubmission400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::GetProfessionalClaimSubmission403ErrorResponseContent),
+    Status404(models::GetProfessionalClaimSubmission404ErrorResponseContent),
+    Status429(models::GetProfessionalClaimSubmission429ErrorResponseContent),
+    Status500(models::GetProfessionalClaimSubmission500ErrorResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`list_claims`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListClaimsError {
+    Status400(models::ListClaims400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ListClaims403ErrorResponseContent),
+    Status404(models::ResourceNotFoundExceptionResponseContent),
+    Status429(models::ListClaims429ErrorResponseContent),
+    Status500(models::ListClaims500ErrorResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`submit_claim_attachment_raw_x12`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -36,6 +102,19 @@ pub enum SubmitClaimAttachmentRawX12Error {
     Status404(models::ResourceNotFoundExceptionResponseContent),
     Status429(models::ThrottlingExceptionResponseContent),
     Status500(models::InternalFailureExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`validate_professional_claim_submission`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ValidateProfessionalClaimSubmissionError {
+    Status400(models::ValidateProfessionalClaimSubmission400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::ValidateProfessionalClaimSubmission403ErrorResponseContent),
+    Status404(models::ResourceNotFoundExceptionResponseContent),
+    Status429(models::ValidateProfessionalClaimSubmission429ErrorResponseContent),
+    Status500(models::ValidateProfessionalClaimSubmission500ErrorResponseContent),
     UnknownValue(serde_json::Value),
 }
 
@@ -86,6 +165,273 @@ pub async fn create_claim_attachment_file(configuration: &configuration::Configu
     }
 }
 
+/// Submit a professional claim in JSON modeled after the CMS-1500 form structure
+pub async fn create_professional_claim_submission(configuration: &configuration::Configuration, create_professional_claim_submission_request_content: models::CreateProfessionalClaimSubmissionRequestContent, idempotency_key: Option<&str>) -> Result<models::CreateProfessionalClaimSubmissionResponseContent, Error<CreateProfessionalClaimSubmissionError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_body_create_professional_claim_submission_request_content = create_professional_claim_submission_request_content;
+    let p_header_idempotency_key = idempotency_key;
+
+    let uri_str = format!("{}/professional-claim-submissions", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(param_value) = p_header_idempotency_key {
+        req_builder = req_builder.header("Idempotency-Key", param_value.to_string());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+    req_builder = req_builder.json(&p_body_create_professional_claim_submission_request_content);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateProfessionalClaimSubmissionResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateProfessionalClaimSubmissionResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<CreateProfessionalClaimSubmissionError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Retrieve summary information for a claim, including current processing status and key details from its most recent submission
+pub async fn get_claim(configuration: &configuration::Configuration, id: &str) -> Result<models::GetClaimResponseContent, Error<GetClaimError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_id = id;
+
+    let uri_str = format!("{}/claims/{id}", configuration.base_path, id=crate::claims::apis::urlencode(p_path_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetClaimResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetClaimResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<GetClaimError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Retrieve a paginated list of a claim's timeline entries, newest first. Timeline entries include submissions, acknowledgments, and claim payment information
+pub async fn get_claim_timeline(configuration: &configuration::Configuration, id: &str, page_size: Option<f64>, page_token: Option<&str>) -> Result<models::GetClaimTimelineResponseContent, Error<GetClaimTimelineError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_id = id;
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+
+    let uri_str = format!("{}/claims/{id}/timeline", configuration.base_path, id=crate::claims::apis::urlencode(p_path_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_query_page_size {
+        req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_page_token {
+        req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetClaimTimelineResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetClaimTimelineResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<GetClaimTimelineError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Retrieve a claim's data and map it to Stedi's CMS-1500 JSON format
+pub async fn get_professional_claim_submission(configuration: &configuration::Configuration, id: &str) -> Result<models::GetProfessionalClaimSubmissionResponseContent, Error<GetProfessionalClaimSubmissionError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_id = id;
+
+    let uri_str = format!("{}/professional-claim-submissions/{id}", configuration.base_path, id=crate::claims::apis::urlencode(p_path_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetProfessionalClaimSubmissionResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetProfessionalClaimSubmissionResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<GetProfessionalClaimSubmissionError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Retrieve a paginated list of claim records, newest first. Filter by status, patient control numbers, or submission time
+pub async fn list_claims(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, status: Option<Vec<models::ClaimStatus>>, patient_control_numbers: Option<Vec<String>>, submitted_after: Option<chrono::DateTime<chrono::FixedOffset>>, submitted_before: Option<chrono::DateTime<chrono::FixedOffset>>) -> Result<models::ListClaimsResponseContent, Error<ListClaimsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_query_page_size = page_size;
+    let p_query_page_token = page_token;
+    let p_query_status = status;
+    let p_query_patient_control_numbers = patient_control_numbers;
+    let p_query_submitted_after = submitted_after;
+    let p_query_submitted_before = submitted_before;
+
+    let uri_str = format!("{}/claims", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_query_page_size {
+        req_builder = req_builder.query(&[("pageSize", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_page_token {
+        req_builder = req_builder.query(&[("pageToken", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_status {
+        req_builder = match "multi" {
+            "multi" => req_builder.query(&param_value.into_iter().map(|p| ("status".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => req_builder.query(&[("status", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref param_value) = p_query_patient_control_numbers {
+        req_builder = match "multi" {
+            "multi" => req_builder.query(&param_value.into_iter().map(|p| ("patientControlNumbers".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => req_builder.query(&[("patientControlNumbers", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref param_value) = p_query_submitted_after {
+        req_builder = req_builder.query(&[("submittedAfter", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
+    }
+    if let Some(ref param_value) = p_query_submitted_before {
+        req_builder = req_builder.query(&[("submittedBefore", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListClaimsResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListClaimsResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ListClaimsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
 /// Submit a 275 claim attachment in X12 EDI format
 pub async fn submit_claim_attachment_raw_x12(configuration: &configuration::Configuration, submit_claim_attachment_raw_x12_request_content: models::SubmitClaimAttachmentRawX12RequestContent) -> Result<models::SubmitClaimAttachmentRawX12ResponseContent, Error<SubmitClaimAttachmentRawX12Error>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -128,6 +474,52 @@ pub async fn submit_claim_attachment_raw_x12(configuration: &configuration::Conf
     } else {
         let content = resp.text().await?;
         let entity: Option<SubmitClaimAttachmentRawX12Error> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Validate a professional claim in the Stedi JSON format without submitting it
+pub async fn validate_professional_claim_submission(configuration: &configuration::Configuration, validate_professional_claim_submission_request_content: models::ValidateProfessionalClaimSubmissionRequestContent) -> Result<models::ValidateProfessionalClaimSubmissionResponseContent, Error<ValidateProfessionalClaimSubmissionError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_body_validate_professional_claim_submission_request_content = validate_professional_claim_submission_request_content;
+
+    let uri_str = format!("{}/professional-claim-submissions/validate", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+    req_builder = req_builder.json(&p_body_validate_professional_claim_submission_request_content);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ValidateProfessionalClaimSubmissionResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ValidateProfessionalClaimSubmissionResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ValidateProfessionalClaimSubmissionError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
