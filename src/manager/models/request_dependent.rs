@@ -26,7 +26,7 @@ pub struct RequestDependent {
     /// The number assigned to each family member born with the same birth date, such as twins or triplets. Use to indicate the birth order when there are multiple births associated with the provided birth date.
     #[serde(rename = "birthSequenceNumber", skip_serializing_if = "Option::is_none")]
     pub birth_sequence_number: Option<String>,
-    /// The dependent's date of birth (DOB). We **strongly recommend** including the DOB in your request. Many payers need this information to identify the patient in their system and will immediately return an error when it's not provided.
+    /// The dependent's date of birth (DOB). We **strongly recommend** including the DOB in your request. Many payers need this information to identify the patient in their system and immediately return an error when it's not provided.
     #[serde(rename = "dateOfBirth", skip_serializing_if = "Option::is_none")]
     pub date_of_birth: Option<String>,
     /// The eligibility category for the dependent.

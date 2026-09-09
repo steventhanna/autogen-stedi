@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EligibilityRawX12CheckRequestContent {
-    /// An identifier that allows Stedi to group eligibility checks for the same patient into a unified record in the Stedi portal called an [eligibility search](https://www.stedi.com/docs/healthcare/eligibility-searches-view).  This property is for use by Stedi tools only, such as Stedi's MCP server.
+    /// An identifier that allows Stedi to group eligibility checks for the same patient into a unified record in the Stedi portal called an [eligibility search](https://www.stedi.com/docs/healthcare/eligibility-views).  This property is for use by Stedi tools only, such as Stedi's MCP server.
     #[serde(rename = "eligibilitySearchId", skip_serializing_if = "Option::is_none")]
     pub eligibility_search_id: Option<String>,
     /// A unique identifier for the patient that Stedi uses to identify and correlate historical eligibility checks for the same individual. We recommend including this value in all requests.

@@ -20,7 +20,7 @@ pub struct EligibilityMetaDataJson {
     /// The biller ID Stedi assigns to this request.
     #[serde(rename = "billerId", skip_serializing_if = "Option::is_none")]
     pub biller_id: Option<String>,
-    /// A unique identifier Stedi assigns to this check.  Instead of this property, we recommend using `id` to identify and track eligibility checks. An eligibility check's `id` is guaranteed to be globally unique, and you can use it to deep link to the eligibility check's results within the Stedi portal.
+    /// The unique identifier Stedi sent to identify this check to the payer.  Instead of this property, we recommend using `id` to identify and track eligibility checks. An eligibility check's `id` is guaranteed to be globally unique, and you can use it to deep link to the eligibility check's results within the Stedi portal.
     #[serde(rename = "outboundTraceId", skip_serializing_if = "Option::is_none")]
     pub outbound_trace_id: Option<String>,
     /// The sender ID Stedi assigns to this request.
@@ -29,7 +29,7 @@ pub struct EligibilityMetaDataJson {
     /// The submitter ID Stedi assigns to this request.
     #[serde(rename = "submitterId", skip_serializing_if = "Option::is_none")]
     pub submitter_id: Option<String>,
-    /// The transaction identifier the payer sends in the response. This should be the same as the `outboundTraceId`.
+    /// A unique identifier Stedi assigns to this check. This should be the same as the `outboundTraceId`.
     #[serde(rename = "traceId", skip_serializing_if = "Option::is_none")]
     pub trace_id: Option<String>,
 }

@@ -24,6 +24,9 @@ pub struct ClaimStatusRawX12ResponseContent {
     pub dependent: Option<Box<models::Member>>,
     #[serde(rename = "errorResponse", skip_serializing_if = "Option::is_none")]
     pub error_response: Option<Box<models::ErrorResponse>>,
+    /// A globally unique identifier for this claim status check across all Stedi accounts. It's formatted as `csc_<uuid>`. For example: `csc_550e8400-e29b-41d4-a716-446655440000`. You can use this ID to track this claim status check and to construct deep links to claim status checks in the Stedi portal.
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
     /// The syntax error code in the 999 Implementation Acknowledgment. It indicates the type of error (if present) in the EDI request syntax. Visit `IK502` in the [Implementation Acknowledgment specification](https://portal.stedi.com/app/guides/view/hipaa/implementation-acknowledgment-x231/01HRF41ES1DVGCA6X1EHSRPFXZ#properties.heading.properties.transaction_set_response_header_AK2_loop.items.properties.transaction_set_response_trailer_IK5.properties.implementation_transaction_set_syntax_error_code_02) for a complete list.
     #[serde(rename = "implementationTransactionSetSyntaxError", skip_serializing_if = "Option::is_none")]
     pub implementation_transaction_set_syntax_error: Option<String>,
@@ -64,6 +67,7 @@ impl ClaimStatusRawX12ResponseContent {
             control_number: None,
             dependent: None,
             error_response: None,
+            id: None,
             implementation_transaction_set_syntax_error: None,
             meta: None,
             payer: None,
