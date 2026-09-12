@@ -13,10 +13,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Confidence {
-    /// The confidence level for the match.
+    /// The confidence level for the match. Set to `REVIEW_NEEDED` for all responses. False positives are possible, and you **must** always check subscriber information to confirm that the coverage is a match for the patient.
     #[serde(rename = "level", skip_serializing_if = "Option::is_none")]
     pub level: Option<models::ConfidenceLevel>,
-    /// A reason for the confidence level. For example, `This record was identified as a low confidence match due to a DOB partial match`.
+    /// A reason for the confidence level, if one is available. For example, `This record was identified as a low confidence match due to a DOB partial match`. Not always included in the response.
     #[serde(rename = "reason", skip_serializing_if = "Option::is_none")]
     pub reason: Option<String>,
 }
