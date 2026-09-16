@@ -11,10 +11,10 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// InsuranceDiscoverySubscriber : Demographic information for the patient when they are the health plan subscriber. We strongly recommend providing as much information as possible to improve the probability of finding matching coverage.  We especially recommend providing the subscriber's Social Security Number and their address - particularly their ZIP Code.
+/// InsuranceDiscoverySubscriber : Demographic information for the patient when they are the health plan subscriber. We strongly recommend providing as much information as possible to improve the probability of finding matching coverage.  We especially recommend including the subscriber's Social Security Number and their address - particularly their state and, if known, their ZIP Code.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct InsuranceDiscoverySubscriber {
-    /// The subscriber's current or previous address. We strongly recommend providing this information if possible to improve the probability of finding matching coverage.  We especially recommend providing the patient’s ZIP Code, as this helps narrow down the list of probable payers. ZIP Code search isn’t an exact match, so even the first 3-4 digits of the patient’s current ZIP Code can help improve the results. If the patient’s current address isn’t available, you can try a full or partial ZIP Code from one of the patient’s previous addresses or even one in close proximity.
+    /// The subscriber's current or previous address. We strongly recommend providing this information if possible to improve the probability of finding matching coverage.  We especially recommend providing the patient's state and, if known, their ZIP Code. If the patient's current address isn't available, you can try using the state from one of the patient's previous addresses.
     #[serde(rename = "address", skip_serializing_if = "Option::is_none")]
     pub address: Option<Box<models::InsuranceDiscoveryAddress>>,
     /// The subscriber's date of birth (DOB), formatted as YYYYMMDD.
@@ -38,7 +38,7 @@ pub struct InsuranceDiscoverySubscriber {
 }
 
 impl InsuranceDiscoverySubscriber {
-    /// Demographic information for the patient when they are the health plan subscriber. We strongly recommend providing as much information as possible to improve the probability of finding matching coverage.  We especially recommend providing the subscriber's Social Security Number and their address - particularly their ZIP Code.
+    /// Demographic information for the patient when they are the health plan subscriber. We strongly recommend providing as much information as possible to improve the probability of finding matching coverage.  We especially recommend including the subscriber's Social Security Number and their address - particularly their state and, if known, their ZIP Code.
     pub fn new(first_name: String, last_name: String) -> InsuranceDiscoverySubscriber {
         InsuranceDiscoverySubscriber {
             address: None,

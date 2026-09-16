@@ -15,6 +15,22 @@ use crate::healthcare::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
+/// struct for typed errors of method [`create_eligibility_check`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateEligibilityCheckError {
+    Status400(models::CreateEligibilityCheck400ErrorResponseContent),
+    Status401(models::AuthenticationFailedExceptionResponseContent),
+    Status403(models::CreateEligibilityCheck403ErrorResponseContent),
+    Status404(models::ResourceNotFoundExceptionResponseContent),
+    Status413(models::ContentTooLargeExceptionResponseContent),
+    Status429(models::CreateEligibilityCheck429ErrorResponseContent),
+    Status500(models::CreateEligibilityCheck500ErrorResponseContent),
+    Status503(models::ServiceUnavailableExceptionResponseContent),
+    Status504(models::GatewayTimeoutExceptionResponseContent),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`eligibility_check`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -43,6 +59,56 @@ pub enum EligibilityRawX12CheckError {
     UnknownValue(serde_json::Value),
 }
 
+
+/// Submit a real-time 270/271 eligibility check in JSON format
+pub async fn create_eligibility_check(configuration: &configuration::Configuration, create_eligibility_check_request_content: models::CreateEligibilityCheckRequestContent, x_forwarded_for: Option<&str>) -> Result<models::CreateEligibilityCheckResponseContent, Error<CreateEligibilityCheckError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_body_create_eligibility_check_request_content = create_eligibility_check_request_content;
+    let p_header_x_forwarded_for = x_forwarded_for;
+
+    let uri_str = format!("{}/eligibility-check", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(param_value) = p_header_x_forwarded_for {
+        req_builder = req_builder.header("X-Forwarded-For", param_value.to_string());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
+    req_builder = req_builder.json(&p_body_create_eligibility_check_request_content);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateEligibilityCheckResponseContent`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateEligibilityCheckResponseContent`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<CreateEligibilityCheckError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
 
 /// Submit a real-time 270/271 eligibility check in JSON format
 pub async fn eligibility_check(configuration: &configuration::Configuration, eligibility_check_request_content: models::EligibilityCheckRequestContent, x_forwarded_for: Option<&str>) -> Result<models::EligibilityCheckResponseContent, Error<EligibilityCheckError>> {

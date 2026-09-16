@@ -1,3 +1,5 @@
+pub mod claim_payment_advice_with_electronic_funds_transfer_enrollment_process;
+pub use self::claim_payment_advice_with_electronic_funds_transfer_enrollment_process::ClaimPaymentAdviceWithElectronicFundsTransferEnrollmentProcess;
 pub mod claim_payment_enrollment_process;
 pub use self::claim_payment_enrollment_process::ClaimPaymentEnrollmentProcess;
 pub mod claim_status_inquiry_enrollment_process;
@@ -8,6 +10,8 @@ pub mod coverage_type;
 pub use self::coverage_type::CoverageType;
 pub mod dental_claim_enrollment_process;
 pub use self::dental_claim_enrollment_process::DentalClaimEnrollmentProcess;
+pub mod electronic_funds_transfer_enrollment_process;
+pub use self::electronic_funds_transfer_enrollment_process::ElectronicFundsTransferEnrollmentProcess;
 pub mod eligibility_inquiry_enrollment_process;
 pub use self::eligibility_inquiry_enrollment_process::EligibilityInquiryEnrollmentProcess;
 pub mod enrollment_info;
