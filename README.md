@@ -120,8 +120,9 @@ tracing or opentelemetry crates — it only routes every request through whateve
 attach.
 
 > **Breaking in 0.4:** `Configuration.client` changed from `reqwest::Client` to
-> `reqwest_middleware::ClientWithMiddleware`. `StediClient::new` is unaffected; if you built a
-> `Configuration` by hand, update it to use a `ClientWithMiddleware`.
+> `reqwest_middleware::ClientWithMiddleware`, and the crate moved to reqwest 0.13 /
+> reqwest-middleware 0.5 (pair it with reqwest-tracing 0.7). `StediClient::new` is unaffected; if
+> you built a `Configuration` by hand, update it to use a `ClientWithMiddleware`.
 
 ## Error Handling
 
