@@ -16,7 +16,7 @@ pub struct InsuranceDiscoveryResponseFields {
     /// Information about the patient's healthcare benefits, such as coverage level (individual vs. family), coverage type (deductibles, copays, etc.), out of pocket maximums, and more. This is the same information you would get from a standard eligibility check.    Payers typically return at least the following properties: `code`, `coverageLevelCode`, `serviceTypeCodes`, and either `benefitAmount` or `benefitPercent`. However, the exact properties returned in this object are up to the payer's discretion.    Visit [Determine patient benefits](https://www.stedi.com/docs/healthcare/eligibility-active-coverage-benefits) in our eligibility check documentation for more information about benefit types, details about how to interpret the response, and additional examples.
     #[serde(rename = "benefitsInformation", skip_serializing_if = "Option::is_none")]
     pub benefits_information: Option<Vec<models::DiscoveryBenefitsInformation>>,
-    /// Information indicating how likely it is that this coverage is a match for the patient submitted in the insurance discovery request.    Even if the confidence level is high, you **must** always check the subscriber information to confirm that the coverage is a match for the patient.
+    /// Information indicating how likely it is that this coverage is a match for the patient submitted in the Insurance Discovery request.
     #[serde(rename = "confidence", skip_serializing_if = "Option::is_none")]
     pub confidence: Option<Box<models::Confidence>>,
     /// Information about the dependent for this coverage. You should **always** review this information to ensure that the coverage Stedi found is a match for the patient.

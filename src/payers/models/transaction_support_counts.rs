@@ -16,6 +16,9 @@ pub struct TransactionSupportCounts {
     /// Number of matching payers that support 835 Electronic Remittance Advices (ERAs).
     #[serde(rename = "claimPayment")]
     pub claim_payment: Box<models::TransactionSupportCountsItem>,
+    /// Number of matching payers that support 835 Electronic Remittance Advice (ERA) with Electronic Funds Transfer (EFT).
+    #[serde(rename = "claimPaymentAdviceWithElectronicFundsTransfer")]
+    pub claim_payment_advice_with_electronic_funds_transfer: Box<models::TransactionSupportCountsItem>,
     /// Number of matching payers that support 276/277 real-time claim status.
     #[serde(rename = "claimStatus")]
     pub claim_status: Box<models::TransactionSupportCountsItem>,
@@ -25,6 +28,9 @@ pub struct TransactionSupportCounts {
     /// Number of matching payers that support 837D dental claims.
     #[serde(rename = "dentalClaimSubmission")]
     pub dental_claim_submission: Box<models::TransactionSupportCountsItem>,
+    /// Number of matching payers that support Electronic Funds Transfer (EFT).
+    #[serde(rename = "electronicFundsTransfer")]
+    pub electronic_funds_transfer: Box<models::TransactionSupportCountsItem>,
     /// Number of matching payers that support 270/271 eligibility checks.
     #[serde(rename = "eligibilityCheck")]
     pub eligibility_check: Box<models::TransactionSupportCountsItem>,
@@ -40,12 +46,14 @@ pub struct TransactionSupportCounts {
 }
 
 impl TransactionSupportCounts {
-    pub fn new(claim_payment: models::TransactionSupportCountsItem, claim_status: models::TransactionSupportCountsItem, coordination_of_benefits: models::TransactionSupportCountsItem, dental_claim_submission: models::TransactionSupportCountsItem, eligibility_check: models::TransactionSupportCountsItem, institutional_claim_submission: models::TransactionSupportCountsItem, professional_claim_submission: models::TransactionSupportCountsItem, unsolicited_claim_attachment: models::TransactionSupportCountsItem) -> TransactionSupportCounts {
+    pub fn new(claim_payment: models::TransactionSupportCountsItem, claim_payment_advice_with_electronic_funds_transfer: models::TransactionSupportCountsItem, claim_status: models::TransactionSupportCountsItem, coordination_of_benefits: models::TransactionSupportCountsItem, dental_claim_submission: models::TransactionSupportCountsItem, electronic_funds_transfer: models::TransactionSupportCountsItem, eligibility_check: models::TransactionSupportCountsItem, institutional_claim_submission: models::TransactionSupportCountsItem, professional_claim_submission: models::TransactionSupportCountsItem, unsolicited_claim_attachment: models::TransactionSupportCountsItem) -> TransactionSupportCounts {
         TransactionSupportCounts {
             claim_payment: Box::new(claim_payment),
+            claim_payment_advice_with_electronic_funds_transfer: Box::new(claim_payment_advice_with_electronic_funds_transfer),
             claim_status: Box::new(claim_status),
             coordination_of_benefits: Box::new(coordination_of_benefits),
             dental_claim_submission: Box::new(dental_claim_submission),
+            electronic_funds_transfer: Box::new(electronic_funds_transfer),
             eligibility_check: Box::new(eligibility_check),
             institutional_claim_submission: Box::new(institutional_claim_submission),
             professional_claim_submission: Box::new(professional_claim_submission),
