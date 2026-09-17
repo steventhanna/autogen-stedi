@@ -25,7 +25,7 @@ top.
 
 ```toml
 [dependencies]
-autogen-stedi = "0.2"
+autogen-stedi = "0.4"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
 
@@ -33,7 +33,7 @@ Compile only the APIs you need (faster builds):
 
 ```toml
 [dependencies]
-autogen-stedi = { version = "0.2", default-features = false, features = ["healthcare", "native-tls"] }
+autogen-stedi = { version = "0.4", default-features = false, features = ["healthcare", "native-tls"] }
 ```
 
 > **Note:** with `default-features = false` you must enable a TLS backend — either `native-tls`
@@ -97,6 +97,31 @@ let mut healthcare = client.healthcare();
 healthcare.base_path = "http://localhost:8080".to_string();
 # }
 ```
+
+## Middleware
+
+Every generated `Configuration.client` is a `reqwest_middleware::ClientWithMiddleware`. Use
+`StediClient::builder` to attach middleware — for example a tracing, retry, or logging layer — to
+every request the client makes:
+
+```rust,no_run
+use autogen_stedi::StediClient;
+
+# fn example(my_middleware: impl autogen_stedi::reqwest_middleware::Middleware) {
+let client = StediClient::builder("your-api-key")
+    .with(my_middleware)
+    .build();
+# }
+```
+
+`autogen_stedi::reqwest_middleware` is re-exported so you build middleware against the same
+version this crate links. The crate itself emits no spans, logs no URLs, and depends on no
+tracing or opentelemetry crates — it only routes every request through whatever middleware you
+attach.
+
+> **Breaking in 0.4:** `Configuration.client` changed from `reqwest::Client` to
+> `reqwest_middleware::ClientWithMiddleware`. `StediClient::new` is unaffected; if you built a
+> `Configuration` by hand, update it to use a `ClientWithMiddleware`.
 
 ## Error Handling
 
