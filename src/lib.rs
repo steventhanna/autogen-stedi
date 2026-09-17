@@ -53,6 +53,25 @@
 //! base URL (including the dated API version, e.g. `/2024-04-01`) is baked in from the spec; you can
 //! still override `base_path` on the returned value to point at a proxy or mock server.
 //!
+//! ## Middleware
+//!
+//! Every generated `Configuration.client` is a [`reqwest_middleware::ClientWithMiddleware`]. Use
+//! [`StediClient::builder`] to attach middleware — for example a `reqwest_tracing::TracingMiddleware`
+//! installed by the application — to every request the client makes:
+//!
+//! ```no_run
+//! use autogen_stedi::StediClient;
+//!
+//! # fn example(my_middleware: impl reqwest_middleware::Middleware) {
+//! let client = StediClient::builder("your-api-key")
+//!     .with(my_middleware)
+//!     .build();
+//! # }
+//! ```
+//!
+//! This crate emits no spans, logs no URLs, and has no `opentelemetry` dependency; it only routes
+//! requests through whatever middleware chain you attach.
+//!
 //! ## Error handling
 //!
 //! Calls return `Result<T, apis::Error<E>>`, where `E` is the endpoint-specific error enum.
@@ -66,7 +85,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! autogen-stedi = { version = "0.1", default-features = false, features = ["healthcare", "native-tls"] }
+//! autogen-stedi = { version = "0.4", default-features = false, features = ["healthcare", "native-tls"] }
 //! ```
 
 #![allow(unused_imports)]
@@ -89,4 +108,8 @@ pub mod payers;
 
 pub mod client;
 
-pub use client::StediClient;
+pub use client::{StediClient, StediClientBuilder};
+
+/// Re-exported so callers build middleware against the same `reqwest_middleware` version this
+/// crate links.
+pub use reqwest_middleware;
