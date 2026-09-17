@@ -26,7 +26,7 @@ pub struct ClaimStatusEncounter {
     /// The date the service ended.
     #[serde(rename = "endDateOfService", skip_serializing_if = "Option::is_none")]
     pub end_date_of_service: Option<String>,
-    /// The application or location identifier. Required if the application or location system identifier is known.
+    /// The application or location system identifier. Some payers use this value to route your request to the correct claims adjudication system.  Though this property is optional, omitting it can cause a payer to report that they couldn't find a claim even when it exists. This is common for institutional claims. Include this property when you know the value the payer expects.
     #[serde(rename = "locationIdentifier", skip_serializing_if = "Option::is_none")]
     pub location_identifier: Option<String>,
     /// The patient account number provided by the service provider.
