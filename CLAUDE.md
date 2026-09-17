@@ -16,9 +16,13 @@ openapi-generator). Only `src/lib.rs` and `src/client.rs` are hand-written.
 - The rust generator emits absolute `crate::apis` / `crate::models` paths. `generate.sh` rewrites
   these to `crate::<service>::…` after copying the generated code into `src/<service>/`, so it
   compiles inside a submodule. **This rewrite is the one subtle part — preserve its ordering.**
-- `src/client.rs` holds a `StediClient` that stores the API key and, via a macro, exposes a
-  per-service accessor returning that service's `Configuration` (base URL from the spec + API key
-  in the `Authorization: Key <key>` header).
+- `src/client.rs` holds a `StediClient` that stores the API key and a `reqwest_middleware::ClientWithMiddleware`,
+  and, via a macro, exposes a per-service accessor returning that service's `Configuration` (base
+  URL from the spec + API key in the `Authorization: Key <key>` header + the client's middleware
+  chain). `StediClient::builder` (`StediClientBuilder`) attaches `reqwest_middleware` middleware;
+  the crate itself never creates spans or logs URLs. Generation uses `supportMiddleware=true`,
+  which changes `Configuration.client`'s type and adds a `ReqwestMiddleware` `Error` variant per
+  service — see the Regeneration section.
 
 ## Commands
 

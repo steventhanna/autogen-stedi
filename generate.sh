@@ -62,7 +62,7 @@ for svc in $SERVICES; do
     -g rust \
     --library reqwest \
     --skip-validate-spec \
-    --additional-properties=packageName=autogen-stedi-$svc,supportAsync=true \
+    --additional-properties=packageName=autogen-stedi-$svc,supportAsync=true,supportMiddleware=true \
     -o "$WORK/gen-$svc" \
     2>&1 | tail -3
 
