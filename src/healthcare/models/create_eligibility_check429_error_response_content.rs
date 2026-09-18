@@ -15,6 +15,7 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum CreateEligibilityCheck429ErrorResponseContent {
     TooManyRequestsException(Box<models::TooManyRequestsException>),
+    EligibilityCheckThrottledException(Box<models::EligibilityCheckThrottledException>),
     ThrottlingException(Box<models::ThrottlingException>),
 }
 

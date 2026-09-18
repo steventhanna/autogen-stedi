@@ -25,6 +25,7 @@ pub enum CreateEligibilityCheckError {
     Status404(models::ResourceNotFoundExceptionResponseContent),
     Status413(models::ContentTooLargeExceptionResponseContent),
     Status429(models::CreateEligibilityCheck429ErrorResponseContent),
+    Status451(models::EligibilityCheckNonUsOriginExceptionResponseContent),
     Status500(models::CreateEligibilityCheck500ErrorResponseContent),
     Status503(models::ServiceUnavailableExceptionResponseContent),
     Status504(models::GatewayTimeoutExceptionResponseContent),
