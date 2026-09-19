@@ -20,7 +20,7 @@ pub struct Status {
     /// The description of the `entityCode`. For example, `Public Health Service Facility`.
     #[serde(rename = "entity", skip_serializing_if = "Option::is_none")]
     pub entity: Option<models::Entity>,
-    /// The code identifying the organizational entity, physical location, property, or individual associated with the `statusCode`. For example, `4H` - Emergency Department.  Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#entity-identifiers) for a complete list.
+    /// The code identifying the organizational entity, physical location, property, or individual associated with the `statusCode`. For example, `4H` - Emergency Department.  Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#entity-identifier) for a complete list.
     #[serde(rename = "entityCode", skip_serializing_if = "Option::is_none")]
     pub entity_code: Option<models::EntityCode>,
     /// The category code for the status. Visit [Claim Status Category Codes](https://x12.org/codes/claim-status-category-codes) in the official X12 documentation for a complete list.
