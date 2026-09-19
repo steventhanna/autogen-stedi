@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 pub struct PlanStatus {
     #[serde(rename = "planDetails", skip_serializing_if = "Option::is_none")]
     pub plan_details: Option<String>,
-    /// Service Type Codes (STCs) related to the benefit type. For example, `7` - Anesthesia. Visit [Service Type Codes](https://www.stedi.com/docs/healthcare/send-eligibility-checks#service-type-codes) for a complete list.  This list is specific to X12 version 005010, which is the mandated version for eligibility checks. It differs from the current [X12 Service Type Codes](https://x12.org/codes/service-type-codes) list, which applies to X12 versions later than 005010.  Payers may sometimes return other non-compliant values.
+    /// Service Type Codes (STCs) related to the benefit type. For example, `7` - Anesthesia. Visit [Service Type Codes](https://www.stedi.com/docs/healthcare/eligibility-active-coverage-benefits#service-type-codes) for a complete list.  This list is specific to X12 version 005010, which is the mandated version for eligibility checks. It differs from the current [X12 Service Type Codes](https://x12.org/codes/service-type-codes) list, which applies to X12 versions later than 005010.  Payers may sometimes return other non-compliant values.
     #[serde(rename = "serviceTypeCodes", skip_serializing_if = "Option::is_none")]
     pub service_type_codes: Option<Vec<models::ResponseEligibilityServiceTypeCode>>,
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
