@@ -54,7 +54,7 @@ pub struct EligibilityRawX12CheckResponseContent {
     pub status: Option<String>,
     #[serde(rename = "subscriber", skip_serializing_if = "Option::is_none")]
     pub subscriber: Option<Box<models::ResponseSubscriber>>,
-    /// A unique identifier for the eligibility request. It's used to trace the transaction. Stedi always generates a trace number for internal tracking, and the payer may generate one as well. You can also optionally [supply your own trace number](https://www.stedi.com/docs/healthcare/send-eligibility-checks#trn) in a `TRN` segment.  Stedi returns its internal trace number in this array as well as the trace numbers from you and the payer (if provided).
+    /// A unique identifier for the eligibility request. It's used to trace the transaction. Stedi always generates a trace number for internal tracking, and the payer may generate one as well. You can also optionally [supply your own trace number](https://www.stedi.com/docs/healthcare/send-eligibility-checks#trace-number) in a `TRN` segment.  Stedi returns its internal trace number in this array as well as the trace numbers from you and the payer (if provided).
     #[serde(rename = "subscriberTraceNumbers", skip_serializing_if = "Option::is_none")]
     pub subscriber_trace_numbers: Option<Vec<models::SubscriberTraceNumber>>,
     /// An ID for the payer you identified in the original eligibility check request. This value may differ from the `tradingPartnerServiceId` you submitted in the original request because it reflects the payer's internal concept of their ID, not necessarily the ID Stedi uses to route requests to this payer.
