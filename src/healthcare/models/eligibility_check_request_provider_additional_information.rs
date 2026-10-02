@@ -32,7 +32,7 @@ pub struct EligibilityCheckRequestProviderAdditionalInformation {
     /// The provider's Medicare provider number.
     #[serde(rename = "medicareProviderNumber", skip_serializing_if = "Option::is_none")]
     pub medicare_provider_number: Option<String>,
-    /// The provider's personal identification number.
+    /// The provider's personal identification number (PIN). For payers Medicaid California, AltaMed, and Kern Family Health Care, this property is **required** and should be the [password the provider uses to log in to the payer's portal](https://www.stedi.com/docs/healthcare/eligibility-troubleshooting#portal-credentials). Otherwise, this isn't commonly used.
     #[serde(rename = "personalIdentificationNumber", skip_serializing_if = "Option::is_none")]
     pub personal_identification_number: Option<String>,
     /// The provider's plan network identification number.
