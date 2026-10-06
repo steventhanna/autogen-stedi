@@ -17,6 +17,9 @@ pub struct ProviderContact {
     /// The contact's city. This should match exactly what the payer has on file for the provider.
     #[serde(rename = "city")]
     pub city: String,
+    /// The country for the contact's address. Defaults to `US` when omitted. Must agree with `state`. Stedi rejects requests with `country` and `state` mismatches.
+    #[serde(rename = "country", skip_serializing_if = "Option::is_none")]
+    pub country: Option<models::CountryCode>,
     /// The contact's email address. Set this to where you want the payer to send communications regarding the enrollment. This can be different from the provider's email if needed.
     #[serde(rename = "email")]
     pub email: String,
@@ -32,7 +35,7 @@ pub struct ProviderContact {
     /// The contact's phone number. Set this to where you want the payer to direct communications regarding the enrollment. This can be different from the provider's phone number if needed.
     #[serde(rename = "phone")]
     pub phone: String,
-    /// The contact's two-letter state abbreviation. For example, `PA`, or `MD`. This should match exactly what the payer has on file for the provider.
+    /// The contact's two-letter state, territory, or province abbreviation. For example, `PA`, or `MD`. Must belong to `country`. This should match exactly what the payer has on file for the provider.
     #[serde(rename = "state")]
     pub state: models::UsState,
     /// The contact's street address, including the street number, name, and any suite or apartment number. This should match exactly what the payer has on file for the provider.
@@ -41,7 +44,7 @@ pub struct ProviderContact {
     /// The contact's street address continued. This should match exactly what the payer has on file for the provider.
     #[serde(rename = "streetAddress2", skip_serializing_if = "Option::is_none")]
     pub street_address2: Option<String>,
-    /// The contact's five-digit ZIP code. This should match exactly what the payer has on file for the provider.
+    /// The contact's ZIP or postal code. For a US address, this is a five-digit ZIP code (such as `12345`) or a ZIP + 4-digit extension (`12345-4321`. For a Canadian address, this is a six-character postal code, which is returned in `A1A 1A1` form. This should match exactly what the payer has on file for the provider.
     #[serde(rename = "zipCode")]
     pub zip_code: String,
 }
@@ -51,6 +54,7 @@ impl ProviderContact {
     pub fn new(city: String, email: String, phone: String, state: models::UsState, street_address1: String, zip_code: String) -> ProviderContact {
         ProviderContact {
             city,
+            country: None,
             email,
             first_name: None,
             last_name: None,
