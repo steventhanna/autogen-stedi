@@ -20,6 +20,9 @@ pub struct EligibilityCheckRequestSubscriber {
     /// The subscriber's address.
     #[serde(rename = "address", skip_serializing_if = "Option::is_none")]
     pub address: Option<Box<models::EligibilityCheckRequestSubscriberAddress>>,
+    /// The number assigned to each family member born with the same birth date, such as twins or triplets. Use to indicate the birth order when there are multiple births associated with the provided birth date.
+    #[serde(rename = "birthSequenceNumber", skip_serializing_if = "Option::is_none")]
+    pub birth_sequence_number: Option<i32>,
     /// The subscriber's date of birth.
     #[serde(rename = "dateOfBirth", skip_serializing_if = "Option::is_none")]
     pub date_of_birth: Option<String>,
@@ -43,6 +46,7 @@ impl EligibilityCheckRequestSubscriber {
         EligibilityCheckRequestSubscriber {
             additional_information: None,
             address: None,
+            birth_sequence_number: None,
             date_of_birth: None,
             gender: None,
             member_id: None,

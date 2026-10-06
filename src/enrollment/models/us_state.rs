@@ -11,8 +11,8 @@
 use crate::enrollment::models;
 use serde::{Deserialize, Serialize};
 
-/// UsState : United States state and territory codes using standard two-letter abbreviations.
-/// United States state and territory codes using standard two-letter abbreviations.
+/// UsState : US state, territory, and Armed Forces codes plus Canadian province and territory codes, using standard two-letter abbreviations. Each code belongs to one country and must agree with the address `country`.
+/// US state, territory, and Armed Forces codes plus Canadian province and territory codes, using standard two-letter abbreviations. Each code belongs to one country and must agree with the address `country`.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UsState {
     #[serde(rename = "AA")]
@@ -139,6 +139,32 @@ pub enum UsState {
     Wi,
     #[serde(rename = "WY")]
     Wy,
+    #[serde(rename = "AB")]
+    Ab,
+    #[serde(rename = "BC")]
+    Bc,
+    #[serde(rename = "MB")]
+    Mb,
+    #[serde(rename = "NB")]
+    Nb,
+    #[serde(rename = "NL")]
+    Nl,
+    #[serde(rename = "NS")]
+    Ns,
+    #[serde(rename = "NT")]
+    Nt,
+    #[serde(rename = "NU")]
+    Nu,
+    #[serde(rename = "ON")]
+    On,
+    #[serde(rename = "PE")]
+    Pe,
+    #[serde(rename = "QC")]
+    Qc,
+    #[serde(rename = "SK")]
+    Sk,
+    #[serde(rename = "YT")]
+    Yt,
     /// Any value not defined in the spec (payers may return non-compliant values).
     #[serde(untagged)]
     UnknownValue(String),
@@ -210,6 +236,19 @@ impl std::fmt::Display for UsState {
             Self::Wv => write!(f, "WV"),
             Self::Wi => write!(f, "WI"),
             Self::Wy => write!(f, "WY"),
+            Self::Ab => write!(f, "AB"),
+            Self::Bc => write!(f, "BC"),
+            Self::Mb => write!(f, "MB"),
+            Self::Nb => write!(f, "NB"),
+            Self::Nl => write!(f, "NL"),
+            Self::Ns => write!(f, "NS"),
+            Self::Nt => write!(f, "NT"),
+            Self::Nu => write!(f, "NU"),
+            Self::On => write!(f, "ON"),
+            Self::Pe => write!(f, "PE"),
+            Self::Qc => write!(f, "QC"),
+            Self::Sk => write!(f, "SK"),
+            Self::Yt => write!(f, "YT"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }
