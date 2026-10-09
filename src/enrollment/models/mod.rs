@@ -8,6 +8,8 @@ pub mod claim_payment;
 pub use self::claim_payment::ClaimPayment;
 pub mod claim_status;
 pub use self::claim_status::ClaimStatus;
+pub mod country_code;
+pub use self::country_code::CountryCode;
 pub mod create_enrollment_document_download_response_content;
 pub use self::create_enrollment_document_download_response_content::CreateEnrollmentDocumentDownloadResponseContent;
 pub mod create_enrollment_document_upload_request_content;
