@@ -14,33 +14,34 @@ use serde::{Deserialize, Serialize};
 /// ServiceLineDateInformation : Identify specific dates related to the service rendered.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ServiceLineDateInformation {
-    /// Required when a Durable Medical Equipment Regional Carrier Certificate of Medical Necessity (DMERC CMN) or DMERC Information Form (DIF), or Oxygen Therapy Certification is included on this service line.
+    /// Required when a Durable Medical Equipment Regional Carrier Certificate of Medical Necessity (DMERC CMN) or DMERC Information Form (DIF), or Oxygen Therapy Certification is included on this service line, formatted as `YYYYMMDD`.
     #[serde(rename = "beginTherapyDate", skip_serializing_if = "Option::is_none")]
     pub begin_therapy_date: Option<String>,
+    /// The certification revision or recertification date, formatted as `YYYYMMDD`.
     #[serde(rename = "certificationRevisionOrRecertificationDate", skip_serializing_if = "Option::is_none")]
     pub certification_revision_or_recertification_date: Option<String>,
-    /// Required on initial EPO claims service lines for dialysis patients when test results are being billed or reported.
+    /// Required on initial EPO claims service lines for dialysis patients when test results are being billed or reported, formatted as `YYYYMMDD`.
     #[serde(rename = "hemoglobinTestDate", skip_serializing_if = "Option::is_none")]
     pub hemoglobin_test_date: Option<String>,
-    /// Required when this date is known to impact adjudication for claims involving spinal manipulation, physcial therapy, occupational therapy, or speech language pathology.
+    /// Required when this date is known to impact adjudication for claims involving spinal manipulation, physcial therapy, occupational therapy, or speech language pathology, formatted as `YYYYMMDD`.
     #[serde(rename = "initialTreatmentDate", skip_serializing_if = "Option::is_none")]
     pub initial_treatment_date: Option<String>,
-    /// This is the date the ordering physician signed the CMN or Oxygen Therapy Certification, or the date the supplier signed the DMERC Information Form (DIF).
+    /// This is the date the ordering physician signed the CMN or Oxygen Therapy Certification, or the date the supplier signed the DMERC Information Form (DIF), formatted as `YYYYMMDD`.
     #[serde(rename = "lastCertificationDate", skip_serializing_if = "Option::is_none")]
     pub last_certification_date: Option<String>,
-    /// Required for claims involving spinal manipulation.
+    /// Required for claims involving spinal manipulation, formatted as `YYYYMMDD`.
     #[serde(rename = "lastXRayDate", skip_serializing_if = "Option::is_none")]
     pub last_x_ray_date: Option<String>,
-    /// Required when a drug is billed for this line and a prescription was written (or otherwise communicated by the prescriber if not written).
+    /// Required when a drug is billed for this line and a prescription was written (or otherwise communicated by the prescriber if not written), formatted as `YYYYMMDD`.
     #[serde(rename = "prescriptionDate", skip_serializing_if = "Option::is_none")]
     pub prescription_date: Option<String>,
-    /// Required on initial EPO claims service lines for dialysis patients when test results are being billed or reported.
+    /// Required on initial EPO claims service lines for dialysis patients when test results are being billed or reported, formatted as `YYYYMMDD`.
     #[serde(rename = "serumCreatineTestDate", skip_serializing_if = "Option::is_none")]
     pub serum_creatine_test_date: Option<String>,
-    /// Required when billing or reporting products that were shipped.
+    /// Required when billing or reporting products that were shipped, formatted as `YYYYMMDD`.
     #[serde(rename = "shippedDate", skip_serializing_if = "Option::is_none")]
     pub shipped_date: Option<String>,
-    /// This is the date of the latest visit or consultation.
+    /// This is the date of the latest visit or consultation, formatted as `YYYYMMDD`.
     #[serde(rename = "treatmentOrTherapyDate", skip_serializing_if = "Option::is_none")]
     pub treatment_or_therapy_date: Option<String>,
 }
