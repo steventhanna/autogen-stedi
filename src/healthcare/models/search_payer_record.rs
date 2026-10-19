@@ -19,6 +19,9 @@ pub struct SearchPayerRecord {
     /// A URL pointing to an image file (`.png`, `.jpeg`, or `.jpg`) with the payer's logo. This is the same logo Stedi displays in the [Payer Network](https://www.stedi.com/healthcare/network). You can use this property to display payer logos in your system or application.  This property is only returned when a payer logo is available.
     #[serde(rename = "avatarUrl", skip_serializing_if = "Option::is_none")]
     pub avatar_url: Option<String>,
+    /// A shorter version of the payer's display name for use in dense UI views. This property is only returned when a concise name is available for the payer.
+    #[serde(rename = "conciseName", skip_serializing_if = "Option::is_none")]
+    pub concise_name: Option<String>,
     /// A list of insurance coverage types that indicates whether this payer supports transactions for medical coverage, dental coverage, vision coverage, or a combination of these. For example: `[\"medical\"]` or `[\"medical\", \"dental\", \"vision\"]`.  When this array isn't in the response, it means Stedi hasn't classified the payer's coverage types yet, **not** that the payer doesn't support any coverage types.
     #[serde(rename = "coverageTypes", skip_serializing_if = "Option::is_none")]
     pub coverage_types: Option<Vec<models::CoverageType>>,
@@ -28,21 +31,27 @@ pub struct SearchPayerRecord {
     /// Employer Identification Numbers (EINs) associated with this payer.
     #[serde(rename = "employerIdentificationNumbers", skip_serializing_if = "Option::is_none")]
     pub employer_identification_numbers: Option<Vec<String>>,
-    /// Information about the [transaction enrollment process](https://www.stedi.com/docs/healthcare/transaction-enrollment) for this payer.
+    /// Details about the [transaction enrollment process](https://www.stedi.com/docs/healthcare/transaction-enrollment) for this payer, if available. This object may not be returned for some payers.
     #[serde(rename = "enrollment", skip_serializing_if = "Option::is_none")]
     pub enrollment: Option<Box<models::EnrollmentInfo>>,
     /// Alternative names associated with a payer. These additional names help you search for and identify payers using the name most familiar to your organization.
     #[serde(rename = "names")]
     pub names: Vec<String>,
-    /// A list of US state codes, territories, or `NATIONAL` that indicates the geographic regions where this payer operates. For example: `[\"CA\", \"OR\"]` for a regional payer, or `[\"NATIONAL\"]` for a payer that operates throughout the entire United States.  When this array isn't in the response, it means Stedi hasn't classified the payer's operating states yet.
+    /// A list of US state codes, territories, or `NATIONAL` that indicates the geographic regions where this payer operates. For example: `[\"CA\", \"OR\"]` for a regional payer, or `[\"NATIONAL\"]` for a payer that operates in all 50 U.S. states. Supported territories are listed separately.  When this array isn't in the response, it means Stedi hasn't classified the payer's operating states yet.
     #[serde(rename = "operatingStates", skip_serializing_if = "Option::is_none")]
     pub operating_states: Option<Vec<models::OperatingStateCode>>,
-    /// The parent payer group entity this payer belongs to. This is for metadata purposes and doesn't necessarily relate to the payer's enrollment process or other capabilities.
+    /// The identifier for the corporate or brand group to which the payer belongs. The parent payer group is organizational metadata only – it doesn't affect routing, enrollment, or transaction support. Payers sharing a parent payer group may have different enrollment processes or other behaviors. This property is only returned when the payer has a parent payer group.
     #[serde(rename = "parentPayerGroupId", skip_serializing_if = "Option::is_none")]
     pub parent_payer_group_id: Option<String>,
+    /// The name of the corporate or brand group to which the payer belongs. The parent payer group is organizational metadata only – it doesn't affect routing, enrollment, or transaction support. Payers sharing a parent payer group may have different enrollment processes or other behaviors. This property is only returned when the payer has a parent payer group.
+    #[serde(rename = "parentPayerGroupName", skip_serializing_if = "Option::is_none")]
+    pub parent_payer_group_name: Option<String>,
     /// The most commonly used ID for a payer. This value often corresponds to the name the payer uses internally and provides to patients on member ID cards.
     #[serde(rename = "primaryPayerId")]
     pub primary_payer_id: String,
+    /// A list of insurance programs that this payer participates in. For example: `[\"MEDICAID\", \"MEDICARE\"]`. If Stedi hasn't assigned any programs to this payer, this array is empty.
+    #[serde(rename = "programs")]
+    pub programs: Vec<models::Program>,
     /// A unique ID that Stedi assigned to this payer and uses internally for routing requests. This ID will not change even if the `primaryPayerId` is updated.
     #[serde(rename = "stediId")]
     pub stedi_id: String,
@@ -54,10 +63,11 @@ pub struct SearchPayerRecord {
 }
 
 impl SearchPayerRecord {
-    pub fn new(aliases: Vec<String>, display_name: String, names: Vec<String>, primary_payer_id: String, stedi_id: String, transaction_support: models::SearchPayerTransactionSupport) -> SearchPayerRecord {
+    pub fn new(aliases: Vec<String>, display_name: String, names: Vec<String>, primary_payer_id: String, programs: Vec<models::Program>, stedi_id: String, transaction_support: models::SearchPayerTransactionSupport) -> SearchPayerRecord {
         SearchPayerRecord {
             aliases,
             avatar_url: None,
+            concise_name: None,
             coverage_types: None,
             display_name,
             employer_identification_numbers: None,
@@ -65,7 +75,9 @@ impl SearchPayerRecord {
             names,
             operating_states: None,
             parent_payer_group_id: None,
+            parent_payer_group_name: None,
             primary_payer_id,
+            programs,
             stedi_id,
             transaction_support: Box::new(transaction_support),
             urls: None,
