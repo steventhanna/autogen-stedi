@@ -16,13 +16,13 @@ pub struct ClaimsClaimStatus {
     /// The bill type identification.
     #[serde(rename = "billTypeIdentifier", skip_serializing_if = "Option::is_none")]
     pub bill_type_identifier: Option<String>,
-    /// The starting date of the service.
+    /// The starting date of the service, formatted as `YYYYMMDD`.
     #[serde(rename = "claimServiceBeginDate", skip_serializing_if = "Option::is_none")]
     pub claim_service_begin_date: Option<String>,
-    /// The date of the service.
+    /// The date of the service, formatted as `YYYYMMDD`.
     #[serde(rename = "claimServiceDate", skip_serializing_if = "Option::is_none")]
     pub claim_service_date: Option<String>,
-    /// The ending date of the service.
+    /// The ending date of the service, formatted as `YYYYMMDD`.
     #[serde(rename = "claimServiceEndDate", skip_serializing_if = "Option::is_none")]
     pub claim_service_end_date: Option<String>,
     /// The identifier the clearinghouse assigned to the original claim.
