@@ -11,7 +11,7 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// SearchPayersResponseContent : Common output structure for list operations with pagination support.
+/// SearchPayersResponseContent : Authenticated output — see `SearchPayers`.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchPayersResponseContent {
     /// Matching payers sorted by relevance, with the most relevant matches listed first.
@@ -26,7 +26,7 @@ pub struct SearchPayersResponseContent {
 }
 
 impl SearchPayersResponseContent {
-    /// Common output structure for list operations with pagination support.
+    /// Authenticated output — see `SearchPayers`.
     pub fn new(items: Vec<models::SearchResult>, stats: models::SearchResultsStats) -> SearchPayersResponseContent {
         SearchPayersResponseContent {
             items,
