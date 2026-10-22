@@ -14,6 +14,9 @@ use serde::{Deserialize, Serialize};
 /// ProviderSummary : Summary information for a provider, typically used in list operations.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ProviderSummary {
+    /// The date and time Stedi created the provider record.
+    #[serde(rename = "createdAt")]
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// A unique identifier Stedi assigns to this provider internally.
     #[serde(rename = "id")]
     pub id: String,
@@ -29,17 +32,22 @@ pub struct ProviderSummary {
     /// The type of tax ID. Can be either an `EIN` - Employer Identification Number, or an `SSN` - Social Security Number.
     #[serde(rename = "taxIdType", skip_serializing_if = "Option::is_none")]
     pub tax_id_type: Option<models::TaxIdType>,
+    /// The date and time Stedi last updated the provider record.
+    #[serde(rename = "updatedAt")]
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl ProviderSummary {
     /// Summary information for a provider, typically used in list operations.
-    pub fn new(id: String, name: String, npi: String) -> ProviderSummary {
+    pub fn new(created_at: chrono::DateTime<chrono::FixedOffset>, id: String, name: String, npi: String, updated_at: chrono::DateTime<chrono::FixedOffset>) -> ProviderSummary {
         ProviderSummary {
+            created_at,
             id,
             name,
             npi,
             tax_id: None,
             tax_id_type: None,
+            updated_at,
         }
     }
 }
