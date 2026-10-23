@@ -13,10 +13,13 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct InstitutionalServiceLineDateInformation {
+    /// Date expressed as follows: YYYYMMDD, where YYYY = year, MM = month (01-12) and DD = day (01-31)
     #[serde(rename = "beginServiceDate", skip_serializing_if = "Option::is_none")]
     pub begin_service_date: Option<String>,
+    /// Date expressed as follows: YYYYMMDD, where YYYY = year, MM = month (01-12) and DD = day (01-31)
     #[serde(rename = "endServiceDate", skip_serializing_if = "Option::is_none")]
     pub end_service_date: Option<String>,
+    /// Date expressed as follows: YYYYMMDD, where YYYY = year, MM = month (01-12) and DD = day (01-31)
     #[serde(rename = "serviceDate", skip_serializing_if = "Option::is_none")]
     pub service_date: Option<String>,
     #[serde(rename = "validDateInformation", skip_serializing_if = "Option::is_none")]
