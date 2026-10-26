@@ -11,8 +11,8 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// PayToPlanNameIdentificationCodeQualifier : The type of identification code used to identify the organization. Can be set to `PI` - Payer Identification or `XV` - Centers for Medicare and Medicaid Services PlanID. Use `XV` when reporting the Health Plan ID (HPID) or Other Entity Identifier (OEID).
-/// The type of identification code used to identify the organization. Can be set to `PI` - Payer Identification or `XV` - Centers for Medicare and Medicaid Services PlanID. Use `XV` when reporting the Health Plan ID (HPID) or Other Entity Identifier (OEID).
+/// PayToPlanNameIdentificationCodeQualifier : The type of identification code used to identify the organization. Can be set to `PI` - Payer Identification or `XV` - Centers for Medicare and Medicaid Services PlanID.  `XV` is deprecated.
+/// The type of identification code used to identify the organization. Can be set to `PI` - Payer Identification or `XV` - Centers for Medicare and Medicaid Services PlanID.  `XV` is deprecated.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum PayToPlanNameIdentificationCodeQualifier {
     #[serde(rename = "PI")]

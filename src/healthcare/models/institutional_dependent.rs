@@ -16,7 +16,7 @@ pub struct InstitutionalDependent {
     /// The dependent's address. Every claim must include this information in either the `subscriber` (when the patient is the subscriber) or `dependent` (when the patient is a dependent) object. You must include at least the `address1` and `city` properties in this object. The `state` and `postalCode` properties are also required for all United States and Canadian addresses.   - The address should be the patient's correct address at the time of service.   - If you don't know the patient's address, first submit a [Real-Time Eligibility Check](https://www.stedi.com/docs/healthcare/api-reference/post-healthcare-eligibility) for the patient and then copy the address from either the `subscriber` or `dependent` object in the response.   - If the patient doesn't have a current address, you can populate the `address1` property with `UNKNOWN` and populate the city, state, and zip code with appropriate values based on your discretion. However, we still recommend running an eligibility check when possible, so you can use the address the payer has on file. Some payers may have explicit rules for how to handle this situation - check the payer's specific requirements before using this approach.
     #[serde(rename = "address", skip_serializing_if = "Option::is_none")]
     pub address: Option<Box<models::InstitutionalAddress>>,
-    /// The patient's date of birth.
+    /// The patient's date of birth, formatted as `YYYYMMDD`.
     #[serde(rename = "dateOfBirth")]
     pub date_of_birth: String,
     /// The patient's first name.
