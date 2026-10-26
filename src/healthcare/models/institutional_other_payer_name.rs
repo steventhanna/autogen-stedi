@@ -40,7 +40,7 @@ pub struct InstitutionalOtherPayerName {
     /// The other payer's referral number. Required when this payer has assigned a referral number to this claim.
     #[serde(rename = "otherPayerPriorAuthorizationOrReferralNumber", skip_serializing_if = "Option::is_none")]
     pub other_payer_prior_authorization_or_referral_number: Option<String>,
-    /// Additional identification number for the other payer. The `qualifier` property can be set to `2U` - Payer Identification Number, `EI` - Employer's Identification Number, `FY` - Claim Office Number, or `NF` - National Association of Insurance Commissioners (NAIC) Code.
+    /// Additional identification number for the other payer. The `qualifier` property can be set to `2U` - Payer Identification Number, `EI` - Employer's Identification Number, `FY` - Claim Office Number, or `NF` - National Association of Insurance Commissioners (NAIC) Code.  Only set `qualifier` to `2U` when `otherPayerIdentifierTypeCode` is `XV`.
     #[serde(rename = "otherPayerSecondaryIdentifier", skip_serializing_if = "Option::is_none")]
     pub other_payer_secondary_identifier: Option<Vec<models::InstitutionalReferenceIdentification>>,
 }
