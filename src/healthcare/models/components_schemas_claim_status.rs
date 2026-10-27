@@ -35,7 +35,7 @@ pub struct ComponentsSchemasClaimStatus {
     /// The description of the `entityCode`. For example, `Home Health Care`.
     #[serde(rename = "entity", skip_serializing_if = "Option::is_none")]
     pub entity: Option<models::Entity>,
-    /// Code identifying the organizational entity, physical location, property, or individual associated with the `statusCode`. For example `1G` - Oncology Center.  Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#entity-identifiers) for a complete list.
+    /// Code identifying the organizational entity, physical location, property, or individual associated with the `statusCode`. For example `1G` - Oncology Center.  Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#entity-identifier) for a complete list.
     #[serde(rename = "entityCode", skip_serializing_if = "Option::is_none")]
     pub entity_code: Option<models::EntityCode>,
     /// This is the date of denial or approval for the claim. This date may or may not be the same as the issue date of the check, EFT, or non-payment remittance. Some payers can provide this date before they issue the remittance.  This value is returned in ISO 8601 date format (YYYY-MM-DD). For example: 2026-03-04.

@@ -17,7 +17,7 @@ pub struct ProviderSummaryInformation {
     /// A code identifying the type of facility where services were performed. This is the [Place of Service Codes](https://www.cms.gov/medicare/coding-billing/place-of-service-codes/code-sets) for Professional or Dental Services.
     #[serde(rename = "facilityTypeCode", skip_serializing_if = "Option::is_none")]
     pub facility_type_code: Option<String>,
-    /// The last day of the provider's fiscal year.
+    /// The last day of the provider's fiscal year, formatted as `YYYYMMDD`.
     #[serde(rename = "fiscalPeriodDate", skip_serializing_if = "Option::is_none")]
     pub fiscal_period_date: Option<String>,
     /// The provider number.
