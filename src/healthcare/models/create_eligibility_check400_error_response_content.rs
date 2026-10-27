@@ -16,6 +16,7 @@ use serde::{Deserialize, Serialize};
 pub enum CreateEligibilityCheck400ErrorResponseContent {
     InvalidRequestException(Box<models::InvalidRequestException>),
     EligibilityCheckSerializationException(Box<models::EligibilityCheckSerializationException>),
+    EligibilityCheckInvalidParticipantException(Box<models::EligibilityCheckInvalidParticipantException>),
     ValidationException(Box<models::ValidationException>),
 }
 
