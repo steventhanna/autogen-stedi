@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct InstitutionalLineAdjudicationInformation {
-    /// The date the claim was paid.
+    /// The date the claim was paid, formatted as `YYYYMMDD`.
     #[serde(rename = "adjudicationOrPaymentDate")]
     pub adjudication_or_payment_date: String,
     /// The LX assigned number of the service line into which this service line is bundled. It's only used to bundle service lines.
