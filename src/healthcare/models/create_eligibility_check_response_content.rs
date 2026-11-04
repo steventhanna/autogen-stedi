@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// CreateEligibilityCheckResponseContent : The eligibility check response payload.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CreateEligibilityCheckResponseContent {
-    /// Information about the dependent from the eligibility check request. Note that the payer may return the dependent in the subscriber object instead. When present, this object will always include the dependent's name for identification, but many payers also include the date of birth and other identifying information.
+    /// Information about the dependent from the eligibility check request. Note that the payer may return the dependent in the subscriber object instead. When present, this object will always include the dependent's name for identification, but many payers also include the date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the dependent's full legal name.
     #[serde(rename = "dependent", skip_serializing_if = "Option::is_none")]
     pub dependent: Option<Box<models::EligibilityCheckDependent>>,
     /// An identifier that allows Stedi to group eligibility checks for the same patient into a unified record in the Stedi portal called an [eligibility search](https://www.stedi.com/docs/healthcare/eligibility-views).  This property is for use by Stedi tools only, such as Stedi's MCP server.
@@ -41,7 +41,7 @@ pub struct CreateEligibilityCheckResponseContent {
     /// Information about the entity that submitted the original eligibility check request. This may be an individual practitioner, a medical group, a hospital, or another type of healthcare provider. This object will always include at least one identifier, such as the provider's [NPI](https://www.stedi.com/docs/healthcare/national-provider-identifier), tax ID, or EIN.
     #[serde(rename = "provider", skip_serializing_if = "Option::is_none")]
     pub provider: Option<Box<models::EligibilityCheckProvider>>,
-    /// Information about the primary policyholder for the insurance plan listed in the original eligibility check request. The response will always include either the subscriber's name or member ID for identification, but most payers will also return the subscriber's date of birth and other identifying information.
+    /// Information about the primary policyholder for the insurance plan listed in the original eligibility check request. The response will always include either the subscriber's name or member ID for identification, but most payers will also return the subscriber's date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the subscriber's full legal name.
     #[serde(rename = "subscriber", skip_serializing_if = "Option::is_none")]
     pub subscriber: Option<Box<models::EligibilityCheckSubscriber>>,
     /// Issues with your eligibility request that could affect the results, or information about the response. For example, warnings can help explain why the request was rejected.
