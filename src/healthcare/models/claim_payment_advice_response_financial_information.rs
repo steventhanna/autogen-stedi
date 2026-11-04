@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// ClaimPaymentAdviceResponseFinancialInformation : Information about a payment, including the payment method, payment amount, and account details for both the sender and receiver.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ClaimPaymentAdviceResponseFinancialInformation {
-    /// The date the payer considers the transaction to be settled. If the payment is made by automated clearinghouse (ACH), this is the date the funds are available to the provider. If the payment is made by check, this is the date the check is issued. If the payment is made by Federal Reserve Funds/wire transfer, this is the date that the payer anticipates the money to move.
+    /// The date the payer considers the transaction to be settled, formatted as `YYYYMMDD`. If the payment is made by automated clearinghouse (ACH), this is the date the funds are available to the provider. If the payment is made by check, this is the date the check is issued. If the payment is made by Federal Reserve Funds/wire transfer, this is the date that the payer anticipates the money to move.
     #[serde(rename = "checkIssueOrEFTEffectiveDate", skip_serializing_if = "Option::is_none")]
     pub check_issue_or_eft_effective_date: Option<String>,
     /// A code indicating whether the payment is a credit or debit. Can be set to `C` - Credit or `D` - Debit. Visit [ERA code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#credit-or-debit-flag-code) for usage notes.

@@ -18,8 +18,8 @@ pub struct EligibilityCheckRequestProviderPersonName {
     #[serde(rename = "firstName", skip_serializing_if = "Option::is_none")]
     pub first_name: Option<String>,
     /// The provider's last name.
-    #[serde(rename = "lastName")]
-    pub last_name: String,
+    #[serde(rename = "lastName", skip_serializing_if = "Option::is_none")]
+    pub last_name: Option<String>,
     /// The provider's middle name or middle initial.
     #[serde(rename = "middleName", skip_serializing_if = "Option::is_none")]
     pub middle_name: Option<String>,
@@ -30,10 +30,10 @@ pub struct EligibilityCheckRequestProviderPersonName {
 
 impl EligibilityCheckRequestProviderPersonName {
     /// The name of a provider who is a person.
-    pub fn new(last_name: String) -> EligibilityCheckRequestProviderPersonName {
+    pub fn new() -> EligibilityCheckRequestProviderPersonName {
         EligibilityCheckRequestProviderPersonName {
             first_name: None,
-            last_name,
+            last_name: None,
             middle_name: None,
             suffix: None,
         }
