@@ -266,6 +266,8 @@ pub mod time_qualifier_code;
 pub use self::time_qualifier_code::TimeQualifierCode;
 pub mod time_qualifier_name;
 pub use self::time_qualifier_name::TimeQualifierName;
+pub mod too_many_requests_exception_response_content;
+pub use self::too_many_requests_exception_response_content::TooManyRequestsExceptionResponseContent;
 pub mod unauthorized_exception_response_content;
 pub use self::unauthorized_exception_response_content::UnauthorizedExceptionResponseContent;
 pub mod unit_for_measurement;

@@ -34,13 +34,13 @@ pub struct Provider {
     /// The provider's facility network identification number. Only include when required by a payer.
     #[serde(rename = "facilityNetworkIdNumber", skip_serializing_if = "Option::is_none")]
     pub facility_network_id_number: Option<String>,
-    /// The provider's first name. This property is required if the provider is an individual.
+    /// The provider's first name. Use when the provider is an individual.
     #[serde(rename = "firstName", skip_serializing_if = "Option::is_none")]
     pub first_name: Option<String>,
     /// The two-character state ID of the state that assigned the `stateLicenseNumber`. Only include when required by a payer.
     #[serde(rename = "informationReceiverAdditionalIdentifierState", skip_serializing_if = "Option::is_none")]
     pub information_receiver_additional_identifier_state: Option<String>,
-    /// The provider's last name. This property is required if the provider is an individual.
+    /// The provider's last name. Use when the provider is an individual.
     #[serde(rename = "lastName", skip_serializing_if = "Option::is_none")]
     pub last_name: Option<String>,
     /// The provider's Medicaid provider number. Only include when required by a payer.
@@ -52,7 +52,7 @@ pub struct Provider {
     /// The provider's [National Provider Identifier (NPI)](https://www.stedi.com/docs/healthcare/national-provider-identifier). This identifier is required for all healthcare providers who are eligible to receive an NPI. Some non-traditional providers such as transportation services, durable medical equipment (DME) suppliers, or alternative medicine practitioners are not eligible to receive an NPI. If the provider doesn't have an NPI, requests with alternate IDs are virtually never supported. In the rare circumstance that a payer has instructed you to use an alternate ID, the payer will typically require you to supply either their `taxId` or `ssn` instead.
     #[serde(rename = "npi", skip_serializing_if = "Option::is_none")]
     pub npi: Option<String>,
-    /// The provider's business name. This property is required if the provider is not an individual.
+    /// The provider's business name. Use when the provider isn't an individual.
     #[serde(rename = "organizationName", skip_serializing_if = "Option::is_none")]
     pub organization_name: Option<String>,
     /// Only used for payer-to-payer transactions, which are not currently supported. Do not use.

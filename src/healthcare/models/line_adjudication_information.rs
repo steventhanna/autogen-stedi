@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// LineAdjudicationInformation : Includes service line adjudication information for coordination of benefits between the initial payers of a health care claim and all subsequent payers.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LineAdjudicationInformation {
-    /// The date the other payer adjudicated or paid the claim.
+    /// The date the other payer adjudicated or paid the claim, formatted as `YYYYMMDD`.
     #[serde(rename = "adjudicationOrPaymentDate")]
     pub adjudication_or_payment_date: String,
     /// The LX assigned number of the service line into which this service line is bundled. It's only used to bundle service lines.
