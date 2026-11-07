@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// UpdateTaskPostResponseContent : Output for UpdateTaskPost operation. Identical to UpdateTaskOutput.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UpdateTaskPostResponseContent {
-    /// The updated task record.
+    /// The updated task record. Text values for the `BANK_ACCOUNT_NUMBER` and `BANK_ROUTING_NUMBER` task fields show at most their last four characters. Every other character is replaced with `*`.
     #[serde(rename = "task")]
     pub task: Box<models::Task>,
 }
