@@ -62,7 +62,7 @@ pub struct CreateEnrollmentResponseContent {
     /// The date and time when the enrollment was submitted. If the enrollment is in `DRAFT` status, `submittedAt` is not present. When the enrollment transitions from draft to `STEDI_ACTION_REQUIRED`, `submittedAt` is updated to the submission time. If the enrollment was created and submitted immediately, the `submittedAt` time will be equal or close to the `createdAt` time.
     #[serde(rename = "submittedAt", skip_serializing_if = "Option::is_none")]
     pub submitted_at: Option<chrono::DateTime<chrono::FixedOffset>>,
-    /// Tasks associated with this enrollment representing work that needs to be completed. Each task has a responsible party and specific definition.
+    /// Tasks associated with this enrollment representing work that needs to be completed. Each task has a responsible party and specific definition. Text values for the `BANK_ACCOUNT_NUMBER` and `BANK_ROUTING_NUMBER` task fields show at most their last four characters. Every other character is replaced with `*`.
     #[serde(rename = "tasks", skip_serializing_if = "Option::is_none")]
     pub tasks: Option<Vec<models::Task>>,
     /// The type of transactions included in the enrollment.

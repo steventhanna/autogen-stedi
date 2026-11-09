@@ -16,7 +16,7 @@ pub struct OtherProcedureInformation {
     /// The code from the code set specified in `qualifierCode`. Don't submit the decimal for ICD codes; the decimal is implied.
     #[serde(rename = "otherProcedureCode")]
     pub other_procedure_code: String,
-    /// The date when the procedure was performed.
+    /// The date when the procedure was performed, formatted as `YYYYMMDD`.
     #[serde(rename = "otherProcedureDate", skip_serializing_if = "Option::is_none")]
     pub other_procedure_date: Option<String>,
     /// Identifies an industry code list. This can be set to `BBQ`: International Classification of Diseases Clinical Modification (ICD-10-PCS) Other Procedure Codes or `BQ`: International Classification of Diseases Clinical Modification (ICD-9-CM) Other Procedure Codes. Note that ICD-9-CM codes are deprecated and shouldn't be used in new claim submissions.
