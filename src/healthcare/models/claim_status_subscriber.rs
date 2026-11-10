@@ -11,41 +11,45 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// ClaimStatusSubscriber : Information about the subscriber listed in the referenced claim. - You must set both the `dateOfBirth` and `gender` properties when the subscriber is the patient unless the gender is unknown. Stedi determines that the subscriber is the patient when the `dependent` object is not included in the request. - If either `dateOfBirth` or `gender` is set, you must include both properties unless the gender is unknown.
+/// ClaimStatusSubscriber : Information about the subscriber listed in the referenced claim. - You must set both the `dateOfBirth` and `gender` properties when the subscriber is the patient unless the gender is unknown. Stedi determines that the subscriber is the patient when the `dependent` object is not included in the request. - If either `dateOfBirth` or `gender` is set, you must include both properties unless the gender is unknown. - You must set either `organizationName` or both `firstName` and `lastName`. Don't set `organizationName` together with `firstName`, `lastName`, or `suffix`.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ClaimStatusSubscriber {
     /// The subscriber's date of birth.
     #[serde(rename = "dateOfBirth", skip_serializing_if = "Option::is_none")]
     pub date_of_birth: Option<String>,
-    /// The subscriber's first name as specified on their policy.
-    #[serde(rename = "firstName")]
-    pub first_name: String,
+    /// The subscriber's first name as specified on their policy. Required when the subscriber is an individual.
+    #[serde(rename = "firstName", skip_serializing_if = "Option::is_none")]
+    pub first_name: Option<String>,
     #[serde(rename = "gender", skip_serializing_if = "Option::is_none")]
     pub gender: Option<models::ClaimStatusSubscriberGender>,
     /// The group number associated with the subscriber's insurance policy.
     #[serde(rename = "groupNumber", skip_serializing_if = "Option::is_none")]
     pub group_number: Option<String>,
-    /// The subscriber's last name as specified on their policy. The subscriber can be an individual or a business entity.
-    #[serde(rename = "lastName")]
-    pub last_name: String,
+    /// The subscriber's last name as specified on their policy. Required when the subscriber is an individual. Use `organizationName` when the subscriber is an organization.
+    #[serde(rename = "lastName", skip_serializing_if = "Option::is_none")]
+    pub last_name: Option<String>,
     /// The subscriber's insurance member ID. This is the unique identifier for the subscriber on the insurance policy.
     #[serde(rename = "memberId")]
     pub member_id: String,
-    /// The subscriber's name suffix, such as Jr., Sr., or III. Only include the subscriber's personal name suffix - **don't** include professional or academic titles, such as M.D. or MBA.
+    /// The subscriber's organization name. Use when the subscriber is not an individual, such as the employer on a workers' compensation claim. Can't be used with `firstName`, `lastName`, or `suffix`.
+    #[serde(rename = "organizationName", skip_serializing_if = "Option::is_none")]
+    pub organization_name: Option<String>,
+    /// The subscriber's name suffix, such as Jr., Sr., or III. Only include the subscriber's personal name suffix - **don't** include professional or academic titles, such as M.D. or MBA. Can't be used with `organizationName`.
     #[serde(rename = "suffix", skip_serializing_if = "Option::is_none")]
     pub suffix: Option<String>,
 }
 
 impl ClaimStatusSubscriber {
-    /// Information about the subscriber listed in the referenced claim. - You must set both the `dateOfBirth` and `gender` properties when the subscriber is the patient unless the gender is unknown. Stedi determines that the subscriber is the patient when the `dependent` object is not included in the request. - If either `dateOfBirth` or `gender` is set, you must include both properties unless the gender is unknown.
-    pub fn new(first_name: String, last_name: String, member_id: String) -> ClaimStatusSubscriber {
+    /// Information about the subscriber listed in the referenced claim. - You must set both the `dateOfBirth` and `gender` properties when the subscriber is the patient unless the gender is unknown. Stedi determines that the subscriber is the patient when the `dependent` object is not included in the request. - If either `dateOfBirth` or `gender` is set, you must include both properties unless the gender is unknown. - You must set either `organizationName` or both `firstName` and `lastName`. Don't set `organizationName` together with `firstName`, `lastName`, or `suffix`.
+    pub fn new(member_id: String) -> ClaimStatusSubscriber {
         ClaimStatusSubscriber {
             date_of_birth: None,
-            first_name,
+            first_name: None,
             gender: None,
             group_number: None,
-            last_name,
+            last_name: None,
             member_id,
+            organization_name: None,
             suffix: None,
         }
     }
