@@ -17,6 +17,7 @@ pub struct LineAdjustmentInformation {
     pub bundled_or_unbundled_line_number: Option<String>,
     #[serde(rename = "claimAdjustment", skip_serializing_if = "Option::is_none")]
     pub claim_adjustment: Option<Box<models::InstitutionalClaimAdjustment>>,
+    /// Date expressed as follows: YYYYMMDD, where YYYY = year, MM = month (01-12) and DD = day (01-31)
     #[serde(rename = "claimPaidDate")]
     pub claim_paid_date: String,
     #[serde(rename = "otherPayerPrimaryIdentifier")]

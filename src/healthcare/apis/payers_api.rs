@@ -215,7 +215,7 @@ pub async fn list_payer_records_csv(configuration: &configuration::Configuration
 }
 
 /// Search for payers by name, ID, or alias.
-pub async fn search_payers(configuration: &configuration::Configuration, page_size: Option<i32>, page_token: Option<&str>, query: Option<&str>, eligibility_check: Option<models::TransactionFilterValue>, claim_status: Option<models::TransactionFilterValue>, professional_claim_submission: Option<models::TransactionFilterValue>, dental_claim_submission: Option<models::TransactionFilterValue>, institutional_claim_submission: Option<models::TransactionFilterValue>, claim_payment: Option<models::TransactionFilterValue>, coordination_of_benefits: Option<models::TransactionFilterValue>, unsolicited_claim_attachment: Option<models::TransactionFilterValue>, coverage_types: Option<Vec<models::CoverageType>>, operating_states: Option<Vec<models::OperatingStateCode>>) -> Result<models::SearchPayersResponseContent, Error<SearchPayersError>> {
+pub async fn search_payers(configuration: &configuration::Configuration, page_size: Option<i32>, page_token: Option<&str>, query: Option<&str>, eligibility_check: Option<models::TransactionFilterValue>, claim_status: Option<models::TransactionFilterValue>, professional_claim_submission: Option<models::TransactionFilterValue>, dental_claim_submission: Option<models::TransactionFilterValue>, institutional_claim_submission: Option<models::TransactionFilterValue>, claim_payment: Option<models::TransactionFilterValue>, coordination_of_benefits: Option<models::TransactionFilterValue>, unsolicited_claim_attachment: Option<models::TransactionFilterValue>, electronic_funds_transfer: Option<models::TransactionFilterValue>, claim_payment_advice_with_electronic_funds_transfer: Option<models::TransactionFilterValue>, coverage_types: Option<Vec<models::CoverageType>>, operating_states: Option<Vec<models::OperatingStateCode>>, programs: Option<Vec<models::Program>>) -> Result<models::SearchPayersResponseContent, Error<SearchPayersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
@@ -228,8 +228,11 @@ pub async fn search_payers(configuration: &configuration::Configuration, page_si
     let p_query_claim_payment = claim_payment;
     let p_query_coordination_of_benefits = coordination_of_benefits;
     let p_query_unsolicited_claim_attachment = unsolicited_claim_attachment;
+    let p_query_electronic_funds_transfer = electronic_funds_transfer;
+    let p_query_claim_payment_advice_with_electronic_funds_transfer = claim_payment_advice_with_electronic_funds_transfer;
     let p_query_coverage_types = coverage_types;
     let p_query_operating_states = operating_states;
+    let p_query_programs = programs;
 
     let uri_str = format!("{}/payers/search", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -267,6 +270,12 @@ pub async fn search_payers(configuration: &configuration::Configuration, page_si
     if let Some(ref param_value) = p_query_unsolicited_claim_attachment {
         req_builder = req_builder.query(&[("unsolicitedClaimAttachment", &param_value.to_string())]);
     }
+    if let Some(ref param_value) = p_query_electronic_funds_transfer {
+        req_builder = req_builder.query(&[("electronicFundsTransfer", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_claim_payment_advice_with_electronic_funds_transfer {
+        req_builder = req_builder.query(&[("claimPaymentAdviceWithElectronicFundsTransfer", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_query_coverage_types {
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("coverageTypes".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
@@ -277,6 +286,12 @@ pub async fn search_payers(configuration: &configuration::Configuration, page_si
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("operatingStates".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("operatingStates", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref param_value) = p_query_programs {
+        req_builder = match "multi" {
+            "multi" => req_builder.query(&param_value.into_iter().map(|p| ("programs".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => req_builder.query(&[("programs", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
     if let Some(ref user_agent) = configuration.user_agent {

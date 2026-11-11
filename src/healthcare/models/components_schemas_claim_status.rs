@@ -35,7 +35,7 @@ pub struct ComponentsSchemasClaimStatus {
     /// The description of the `entityCode`. For example, `Home Health Care`.
     #[serde(rename = "entity", skip_serializing_if = "Option::is_none")]
     pub entity: Option<models::Entity>,
-    /// Code identifying the organizational entity, physical location, property, or individual associated with the `statusCode`. For example `1G` - Oncology Center.  Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#entity-identifiers) for a complete list.
+    /// Code identifying the organizational entity, physical location, property, or individual associated with the `statusCode`. For example `1G` - Oncology Center.  Visit [Claims code lists](https://www.stedi.com/docs/healthcare/claims-code-lists#entity-identifier) for a complete list.
     #[serde(rename = "entityCode", skip_serializing_if = "Option::is_none")]
     pub entity_code: Option<models::EntityCode>,
     /// This is the date of denial or approval for the claim. This date may or may not be the same as the issue date of the check, EFT, or non-payment remittance. Some payers can provide this date before they issue the remittance.  This value is returned in ISO 8601 date format (YYYY-MM-DD). For example: 2026-03-04.
@@ -50,7 +50,7 @@ pub struct ComponentsSchemasClaimStatus {
     /// The description of the `statusCategoryCode`.
     #[serde(rename = "statusCategoryCodeValue", skip_serializing_if = "Option::is_none")]
     pub status_category_code_value: Option<String>,
-    /// The status code used to identify the status of an entire claim or a service line. For example, `20` - Accepted for Processing.   This is either a Health Care Claim Status Code or a National Council for Prescription Drug Programs (NCPDP) Reject/Payment Code, when the status is related to pharmacy claims.   Visit [Claim Status Codes]([Health Care Claim Status Code](https://x12.org/codes/claim-status-codes) in the official X12 documentation or the [NCPDP website](https://ncpdp.org/) for a complete list of codes and their values.
+    /// The status code used to identify the status of an entire claim or a service line. For example, `20` - Accepted for Processing.   This is either a Health Care Claim Status Code or a National Council for Prescription Drug Programs (NCPDP) Reject/Payment Code, when the status is related to pharmacy claims.   Visit [Claim Status Codes](https://x12.org/codes/claim-status-codes) in the official X12 documentation or the [NCPDP website](https://ncpdp.org/) for a complete list of codes and their values.
     #[serde(rename = "statusCode", skip_serializing_if = "Option::is_none")]
     pub status_code: Option<String>,
     /// The description of the `statusCode`.

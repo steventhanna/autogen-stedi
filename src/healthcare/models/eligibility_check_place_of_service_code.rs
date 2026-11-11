@@ -17,6 +17,8 @@ use serde::{Deserialize, Serialize};
 pub enum EligibilityCheckPlaceOfServiceCode {
     #[serde(rename = "01")]
     Variant01,
+    #[serde(rename = "02")]
+    Variant02,
     #[serde(rename = "03")]
     Variant03,
     #[serde(rename = "04")]
@@ -29,6 +31,10 @@ pub enum EligibilityCheckPlaceOfServiceCode {
     Variant07,
     #[serde(rename = "08")]
     Variant08,
+    #[serde(rename = "09")]
+    Variant09,
+    #[serde(rename = "10")]
+    Variant10,
     #[serde(rename = "11")]
     Variant11,
     #[serde(rename = "12")]
@@ -39,6 +45,14 @@ pub enum EligibilityCheckPlaceOfServiceCode {
     Variant14,
     #[serde(rename = "15")]
     Variant15,
+    #[serde(rename = "16")]
+    Variant16,
+    #[serde(rename = "17")]
+    Variant17,
+    #[serde(rename = "18")]
+    Variant18,
+    #[serde(rename = "19")]
+    Variant19,
     #[serde(rename = "20")]
     Variant20,
     #[serde(rename = "21")]
@@ -53,6 +67,8 @@ pub enum EligibilityCheckPlaceOfServiceCode {
     Variant25,
     #[serde(rename = "26")]
     Variant26,
+    #[serde(rename = "27")]
+    Variant27,
     #[serde(rename = "31")]
     Variant31,
     #[serde(rename = "32")]
@@ -83,6 +99,8 @@ pub enum EligibilityCheckPlaceOfServiceCode {
     Variant56,
     #[serde(rename = "57")]
     Variant57,
+    #[serde(rename = "58")]
+    Variant58,
     #[serde(rename = "60")]
     Variant60,
     #[serde(rename = "61")]
@@ -91,6 +109,8 @@ pub enum EligibilityCheckPlaceOfServiceCode {
     Variant62,
     #[serde(rename = "65")]
     Variant65,
+    #[serde(rename = "66")]
+    Variant66,
     #[serde(rename = "71")]
     Variant71,
     #[serde(rename = "72")]
@@ -109,17 +129,24 @@ impl std::fmt::Display for EligibilityCheckPlaceOfServiceCode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Variant01 => write!(f, "01"),
+            Self::Variant02 => write!(f, "02"),
             Self::Variant03 => write!(f, "03"),
             Self::Variant04 => write!(f, "04"),
             Self::Variant05 => write!(f, "05"),
             Self::Variant06 => write!(f, "06"),
             Self::Variant07 => write!(f, "07"),
             Self::Variant08 => write!(f, "08"),
+            Self::Variant09 => write!(f, "09"),
+            Self::Variant10 => write!(f, "10"),
             Self::Variant11 => write!(f, "11"),
             Self::Variant12 => write!(f, "12"),
             Self::Variant13 => write!(f, "13"),
             Self::Variant14 => write!(f, "14"),
             Self::Variant15 => write!(f, "15"),
+            Self::Variant16 => write!(f, "16"),
+            Self::Variant17 => write!(f, "17"),
+            Self::Variant18 => write!(f, "18"),
+            Self::Variant19 => write!(f, "19"),
             Self::Variant20 => write!(f, "20"),
             Self::Variant21 => write!(f, "21"),
             Self::Variant22 => write!(f, "22"),
@@ -127,6 +154,7 @@ impl std::fmt::Display for EligibilityCheckPlaceOfServiceCode {
             Self::Variant24 => write!(f, "24"),
             Self::Variant25 => write!(f, "25"),
             Self::Variant26 => write!(f, "26"),
+            Self::Variant27 => write!(f, "27"),
             Self::Variant31 => write!(f, "31"),
             Self::Variant32 => write!(f, "32"),
             Self::Variant33 => write!(f, "33"),
@@ -142,10 +170,12 @@ impl std::fmt::Display for EligibilityCheckPlaceOfServiceCode {
             Self::Variant55 => write!(f, "55"),
             Self::Variant56 => write!(f, "56"),
             Self::Variant57 => write!(f, "57"),
+            Self::Variant58 => write!(f, "58"),
             Self::Variant60 => write!(f, "60"),
             Self::Variant61 => write!(f, "61"),
             Self::Variant62 => write!(f, "62"),
             Self::Variant65 => write!(f, "65"),
+            Self::Variant66 => write!(f, "66"),
             Self::Variant71 => write!(f, "71"),
             Self::Variant72 => write!(f, "72"),
             Self::Variant81 => write!(f, "81"),

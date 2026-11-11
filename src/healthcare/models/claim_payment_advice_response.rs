@@ -35,7 +35,7 @@ pub struct ClaimPaymentAdviceResponse {
     /// Payment and remittance reassociation details for transaction tracking.
     #[serde(rename = "paymentAndRemitReassociationDetails", skip_serializing_if = "Option::is_none")]
     pub payment_and_remit_reassociation_details: Option<Box<models::ClaimPaymentAdviceResponsePaymentAndRemitReassociationDetails>>,
-    /// The end date for the adjudication production cycle for claims included in this ERA.
+    /// The end date for the adjudication production cycle for claims included in this ERA, formatted as `YYYYMMDD`.
     #[serde(rename = "productionDate", skip_serializing_if = "Option::is_none")]
     pub production_date: Option<String>,
     /// Provider-level adjustment information for debit or credit transactions such as: accelerated payments, cost report settlements for a fiscal year, and timeliness report penalties unrelated to a specific claim or service. These adjustments can either decrease the payment (a positive number) or increase the payment (a negative number).
