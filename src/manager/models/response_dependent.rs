@@ -11,7 +11,7 @@
 use crate::manager::models;
 use serde::{Deserialize, Serialize};
 
-/// ResponseDependent : Information about the dependent listed in the original eligibility check request. Note that a dependent submitted in the request may be returned in the subscriber object. When present, this object will always include the dependent's name for identification, but many payers will also return the date of birth and other identifying information.
+/// ResponseDependent : Information about the dependent listed in the original eligibility check request. Note that a dependent submitted in the request may be returned in the subscriber object. When present, this object will always include the dependent's name for identification, but many payers will also return the date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the dependent's full legal name.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ResponseDependent {
     #[serde(rename = "aaaErrors", skip_serializing_if = "Option::is_none")]
@@ -115,7 +115,7 @@ pub struct ResponseDependent {
 }
 
 impl ResponseDependent {
-    /// Information about the dependent listed in the original eligibility check request. Note that a dependent submitted in the request may be returned in the subscriber object. When present, this object will always include the dependent's name for identification, but many payers will also return the date of birth and other identifying information.
+    /// Information about the dependent listed in the original eligibility check request. Note that a dependent submitted in the request may be returned in the subscriber object. When present, this object will always include the dependent's name for identification, but many payers will also return the date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the dependent's full legal name.
     pub fn new() -> ResponseDependent {
         ResponseDependent {
             aaa_errors: None,

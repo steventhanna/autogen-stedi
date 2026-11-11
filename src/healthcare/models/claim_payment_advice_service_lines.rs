@@ -29,10 +29,10 @@ pub struct ClaimPaymentAdviceServiceLines {
     /// Adjustments applied to this service line.
     #[serde(rename = "serviceAdjustments", skip_serializing_if = "Option::is_none")]
     pub service_adjustments: Option<Vec<models::ClaimAdjustments>>,
-    /// The date the service was rendered. Used for single-day services.
+    /// The date the service was rendered, formatted as `YYYYMMDD`. Used for single-day services.
     #[serde(rename = "serviceDate", skip_serializing_if = "Option::is_none")]
     pub service_date: Option<String>,
-    /// The date the service ended. Used for multi-day services.
+    /// The date the service ended, formatted as `YYYYMMDD`. Used for multi-day services.
     #[serde(rename = "serviceEndDate", skip_serializing_if = "Option::is_none")]
     pub service_end_date: Option<String>,
     /// Service identification details.
@@ -41,7 +41,7 @@ pub struct ClaimPaymentAdviceServiceLines {
     /// Payment information for this service line.
     #[serde(rename = "servicePaymentInformation", skip_serializing_if = "Option::is_none")]
     pub service_payment_information: Option<Box<models::ClaimPaymentAdviceServiceLinesServicePaymentInformation>>,
-    /// The date the service began. Used for multi-day services.
+    /// The date the service began, formatted as `YYYYMMDD`. Used for multi-day services.
     #[serde(rename = "serviceStartDate", skip_serializing_if = "Option::is_none")]
     pub service_start_date: Option<String>,
     /// Supplemental amount information for this service.
