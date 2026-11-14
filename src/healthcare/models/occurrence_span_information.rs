@@ -16,10 +16,10 @@ pub struct OccurrenceSpanInformation {
     /// The occurrence span code.
     #[serde(rename = "occurrenceSpanCode")]
     pub occurrence_span_code: String,
-    /// The end date for the occurrence span.
+    /// The end date for the occurrence span, formatted as `YYYYMMDD`.
     #[serde(rename = "occurrenceSpanCodeEndDate")]
     pub occurrence_span_code_end_date: String,
-    /// The start date for the occurrence span.
+    /// The start date for the occurrence span, formatted as `YYYYMMDD`.
     #[serde(rename = "occurrenceSpanCodeStartDate")]
     pub occurrence_span_code_start_date: String,
 }

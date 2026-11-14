@@ -57,7 +57,7 @@ pub struct ClaimInformation {
     /// Required when condition information applies to the claim. You can include up to 24 codes in the array. Visit the National Uniform Claim Committee for a complete list of possible [condition codes](https://www.nucc.org/index.php/code-sets-mainmenu-41/condition-codes-mainmenu-38).
     #[serde(rename = "conditionInformation", skip_serializing_if = "Option::is_none")]
     pub condition_information: Option<Vec<models::ConditionInformation>>,
-    /// The patient's date of death.
+    /// The patient's date of death, formatted as `YYYYMMDD`.
     #[serde(rename = "deathDate", skip_serializing_if = "Option::is_none")]
     pub death_date: Option<String>,
     #[serde(rename = "delayReasonCode", skip_serializing_if = "Option::is_none")]

@@ -20,13 +20,13 @@ pub struct InstitutionalClaimDateInformation {
     /// The time the patient was discharged from the hospital or facility. This property is **required** on final inpatient claims. Can be expressed as a time in format HHMM.
     #[serde(rename = "dischargeHour", skip_serializing_if = "Option::is_none")]
     pub discharge_hour: Option<String>,
-    /// The date the repricer received the claim. Required when a repricer is passing the claim onto the payer.
+    /// The date the repricer received the claim, formatted as `YYYYMMDD`. Required when a repricer is passing the claim onto the payer.
     #[serde(rename = "repricerReceivedDate", skip_serializing_if = "Option::is_none")]
     pub repricer_received_date: Option<String>,
-    /// The beginning date of the statement.
+    /// The beginning date of the statement, formatted as `YYYYMMDD`.
     #[serde(rename = "statementBeginDate")]
     pub statement_begin_date: String,
-    /// The ending date of the statement.
+    /// The ending date of the statement, formatted as `YYYYMMDD`.
     #[serde(rename = "statementEndDate")]
     pub statement_end_date: String,
 }

@@ -22,7 +22,7 @@ pub struct ReportsClaimAcknowledgmentResponse {
     /// A number the payer assigns to the transaction to identify it within their system.
     #[serde(rename = "referenceIdentification", skip_serializing_if = "Option::is_none")]
     pub reference_identification: Option<String>,
-    /// The date the payer created the transaction.
+    /// The date the payer created the transaction, formatted as `YYYYMMDD`.
     #[serde(rename = "transactionSetCreationDate", skip_serializing_if = "Option::is_none")]
     pub transaction_set_creation_date: Option<String>,
     /// The time the payer created the transaction, expressed in 24-hour clock time. May be formatted as HHMM, HHMMSS, HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99).

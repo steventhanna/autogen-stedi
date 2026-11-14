@@ -49,6 +49,8 @@ pub enum ExecutionFaultCode {
     FailedToAckInterchange,
     #[serde(rename = "FILE_NOT_FOUND")]
     FileNotFound,
+    #[serde(rename = "HOST_KEY_MISMATCH")]
+    HostKeyMismatch,
     #[serde(rename = "INVALID_EVENT")]
     InvalidEvent,
     #[serde(rename = "INVALID_CONFIGURATION")]
@@ -119,6 +121,7 @@ impl std::fmt::Display for ExecutionFaultCode {
             Self::FailedToAck => write!(f, "FAILED_TO_ACK"),
             Self::FailedToAckInterchange => write!(f, "FAILED_TO_ACK_INTERCHANGE"),
             Self::FileNotFound => write!(f, "FILE_NOT_FOUND"),
+            Self::HostKeyMismatch => write!(f, "HOST_KEY_MISMATCH"),
             Self::InvalidEvent => write!(f, "INVALID_EVENT"),
             Self::InvalidConfiguration => write!(f, "INVALID_CONFIGURATION"),
             Self::MismatchedPartnershipConnection => write!(f, "MISMATCHED_PARTNERSHIP_CONNECTION"),
