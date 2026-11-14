@@ -25,6 +25,7 @@ pub enum CreateEligibilityCheckError {
     Status404(models::ResourceNotFoundExceptionResponseContent),
     Status413(models::ContentTooLargeExceptionResponseContent),
     Status429(models::CreateEligibilityCheck429ErrorResponseContent),
+    Status451(models::EligibilityCheckNonUsOriginExceptionResponseContent),
     Status500(models::CreateEligibilityCheck500ErrorResponseContent),
     Status503(models::ServiceUnavailableExceptionResponseContent),
     Status504(models::GatewayTimeoutExceptionResponseContent),
@@ -110,7 +111,7 @@ pub async fn create_eligibility_check(configuration: &configuration::Configurati
     }
 }
 
-/// Submit a real-time 270/271 eligibility check in JSON format
+/// This is the legacy JSON endpoint for real-time 270/271 eligibility checks. We strongly recommend using the new Real-Time Eligibility Check JSON endpoint (POST /eligibility-check) for new integrations.
 pub async fn eligibility_check(configuration: &configuration::Configuration, eligibility_check_request_content: models::EligibilityCheckRequestContent, x_forwarded_for: Option<&str>) -> Result<models::EligibilityCheckResponseContent, Error<EligibilityCheckError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_eligibility_check_request_content = eligibility_check_request_content;

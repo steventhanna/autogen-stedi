@@ -17,7 +17,7 @@ pub struct ProviderAdjustments {
     /// List of adjustments applied to the provider.
     #[serde(rename = "adjustments", skip_serializing_if = "Option::is_none")]
     pub adjustments: Option<Vec<models::Adjustments>>,
-    /// The last day of the provider's fiscal year.
+    /// The last day of the provider's fiscal year, formatted as `YYYYMMDD`.
     #[serde(rename = "fiscalPeriodDate", skip_serializing_if = "Option::is_none")]
     pub fiscal_period_date: Option<String>,
     /// This is the provider's NPI.

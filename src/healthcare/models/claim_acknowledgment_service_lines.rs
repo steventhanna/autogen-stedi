@@ -13,10 +13,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ClaimAcknowledgmentServiceLines {
-    /// The starting date of the service.
+    /// The starting date of the service, formatted as `YYYYMMDD`.
     #[serde(rename = "beginServiceLineDate", skip_serializing_if = "Option::is_none")]
     pub begin_service_line_date: Option<String>,
-    /// The ending date of the service.
+    /// The ending date of the service, formatted as `YYYYMMDD`.
     #[serde(rename = "endServiceLineDate", skip_serializing_if = "Option::is_none")]
     pub end_service_line_date: Option<String>,
     /// A unique identifier for the service line that matches the `providerControlNumber` submitted in the original claim. You can use this value to correlate the payer's response with specific service lines from the original claim.
@@ -27,7 +27,7 @@ pub struct ClaimAcknowledgmentServiceLines {
     /// The status of the specific service line.
     #[serde(rename = "serviceClaimStatuses", skip_serializing_if = "Option::is_none")]
     pub service_claim_statuses: Option<Vec<models::ServiceClaimStatus>>,
-    /// The date of the service.
+    /// The date of the service, formatted as `YYYYMMDD`.
     #[serde(rename = "serviceLineDate", skip_serializing_if = "Option::is_none")]
     pub service_line_date: Option<String>,
 }
