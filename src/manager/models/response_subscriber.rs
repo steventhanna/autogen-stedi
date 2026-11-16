@@ -11,7 +11,7 @@
 use crate::manager::models;
 use serde::{Deserialize, Serialize};
 
-/// ResponseSubscriber : Information about the primary policyholder for the insurance plan listed in the original eligibility check request. The response will always include either the subscriber's name or member ID for identification, but most payers will also return the subscriber's date of birth and other identifying information.
+/// ResponseSubscriber : Information about the primary policyholder for the insurance plan listed in the original eligibility check request. The response will always include either the subscriber's name or member ID for identification, but most payers will also return the subscriber's date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the subscriber's full legal name.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ResponseSubscriber {
     #[serde(rename = "aaaErrors", skip_serializing_if = "Option::is_none")]
@@ -115,7 +115,7 @@ pub struct ResponseSubscriber {
 }
 
 impl ResponseSubscriber {
-    /// Information about the primary policyholder for the insurance plan listed in the original eligibility check request. The response will always include either the subscriber's name or member ID for identification, but most payers will also return the subscriber's date of birth and other identifying information.
+    /// Information about the primary policyholder for the insurance plan listed in the original eligibility check request. The response will always include either the subscriber's name or member ID for identification, but most payers will also return the subscriber's date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the subscriber's full legal name.
     pub fn new() -> ResponseSubscriber {
         ResponseSubscriber {
             aaa_errors: None,

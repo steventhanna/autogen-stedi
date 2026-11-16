@@ -19,7 +19,7 @@ pub struct Subscriber {
     pub address: Option<Box<models::RequestSubscriberDependentAddress>>,
     #[serde(rename = "contactInformation", skip_serializing_if = "Option::is_none")]
     pub contact_information: Option<Box<models::ContactInformationSubscriberDependent>>,
-    /// The subscriber's date of birth. This property is **required** if the subscriber is an individual.
+    /// The subscriber's date of birth, formatted as `YYYYMMDD`. This property is **required** if the subscriber is an individual.
     #[serde(rename = "dateOfBirth", skip_serializing_if = "Option::is_none")]
     pub date_of_birth: Option<String>,
     /// The subscriber's first name. This property is **recommended** when the subscriber is an individual. Omit when the subscriber is an organization. Some payers reject requests without the `firstName` property.

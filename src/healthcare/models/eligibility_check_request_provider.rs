@@ -11,7 +11,7 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// EligibilityCheckRequestProvider : Information about the entity requesting the eligibility check. This may be an individual practitioner, a medical group, a hospital, or another type of healthcare provider.  - You must provide the provider's name as either a person (with `name.person`) or an organization (with `name.organization`).  - You must also provide an identifier - this is typically the provider's [National Provider Identifier](https://www.stedi.com/docs/healthcare/national-provider-identifier) (`npi`). If the provider doesn't have an NPI, you can supply an alternative, such as their `tin` or `ssn`.  - Don't include additional properties, such as `tin` or `address`, unless they are specifically required or suggested by the payer.
+/// EligibilityCheckRequestProvider : Information about the entity requesting the eligibility check. This may be an individual practitioner, a medical group, a hospital, or another type of healthcare provider.  - We recommend omitting the provider's name. If omitted, Stedi uses the name associated with the provider's `npi` record in the National Plan and Provider Enumeration System (NPPES). We only recommend explicitly setting the provider name if you believe that the provider name on file with the payer differs from the provider name in NPPES. If you set it, provide it as either a person (with `name.person`) or an organization (with `name.organization`).  - You must also provide an identifier - this is typically the provider's [National Provider Identifier](https://www.stedi.com/docs/healthcare/national-provider-identifier) (`npi`). If the provider doesn't have an NPI, you can supply an alternative, such as their `tin` or `ssn`.  - Don't include additional properties, such as `tin` or `address`, unless they are specifically required or suggested by the payer.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EligibilityCheckRequestProvider {
     /// Additional identification numbers for the provider. Only include when specifically required by a payer.
@@ -23,9 +23,9 @@ pub struct EligibilityCheckRequestProvider {
     /// The Employer Identification Number (EIN), distinct from the Federal Taxpayer Identification Number in `tin`. Only include when the payer requires it.
     #[serde(rename = "ein", skip_serializing_if = "Option::is_none")]
     pub ein: Option<String>,
-    /// The provider's name, as either a person or an organization.
-    #[serde(rename = "name")]
-    pub name: Box<models::EligibilityCheckRequestProviderName>,
+    /// The provider's name, as either a person or an organization. We recommend omitting this. Certain payers return different benefits information depending on the correctness of the provider name submitted. If omitted, Stedi uses the name associated with the provider's `npi` record in the National Plan and Provider Enumeration System (NPPES). We only recommend explicitly setting the provider name if you believe that the provider name on file with the payer differs from the provider name in NPPES.
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
+    pub name: Option<Box<models::EligibilityCheckRequestProviderName>>,
     /// The provider's [National Provider Identifier (NPI)](https://www.stedi.com/docs/healthcare/national-provider-identifier).  All healthcare providers eligible for an NPI must provide this identifier. Some non-traditional providers such as transportation services, durable medical equipment (DME) suppliers, or alternative medicine practitioners can't receive an NPI. If the provider doesn't have an NPI, payers virtually never support requests with alternate IDs. In the rare circumstance that a payer has instructed you to use an alternate ID, the payer will typically require you to supply either their `tin` or `ssn` instead.
     #[serde(rename = "npi", skip_serializing_if = "Option::is_none")]
     pub npi: Option<String>,
@@ -50,13 +50,13 @@ pub struct EligibilityCheckRequestProvider {
 }
 
 impl EligibilityCheckRequestProvider {
-    /// Information about the entity requesting the eligibility check. This may be an individual practitioner, a medical group, a hospital, or another type of healthcare provider.  - You must provide the provider's name as either a person (with `name.person`) or an organization (with `name.organization`).  - You must also provide an identifier - this is typically the provider's [National Provider Identifier](https://www.stedi.com/docs/healthcare/national-provider-identifier) (`npi`). If the provider doesn't have an NPI, you can supply an alternative, such as their `tin` or `ssn`.  - Don't include additional properties, such as `tin` or `address`, unless they are specifically required or suggested by the payer.
-    pub fn new(name: models::EligibilityCheckRequestProviderName) -> EligibilityCheckRequestProvider {
+    /// Information about the entity requesting the eligibility check. This may be an individual practitioner, a medical group, a hospital, or another type of healthcare provider.  - We recommend omitting the provider's name. If omitted, Stedi uses the name associated with the provider's `npi` record in the National Plan and Provider Enumeration System (NPPES). We only recommend explicitly setting the provider name if you believe that the provider name on file with the payer differs from the provider name in NPPES. If you set it, provide it as either a person (with `name.person`) or an organization (with `name.organization`).  - You must also provide an identifier - this is typically the provider's [National Provider Identifier](https://www.stedi.com/docs/healthcare/national-provider-identifier) (`npi`). If the provider doesn't have an NPI, you can supply an alternative, such as their `tin` or `ssn`.  - Don't include additional properties, such as `tin` or `address`, unless they are specifically required or suggested by the payer.
+    pub fn new() -> EligibilityCheckRequestProvider {
         EligibilityCheckRequestProvider {
             additional_information: None,
             address: None,
             ein: None,
-            name: Box::new(name),
+            name: None,
             npi: None,
             pharmacy_processor_number: None,
             provider: None,

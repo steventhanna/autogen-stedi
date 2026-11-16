@@ -16,7 +16,7 @@ pub struct ProviderClaimStatus {
     /// The status of the entire claim.
     #[serde(rename = "providerStatuses", skip_serializing_if = "Option::is_none")]
     pub provider_statuses: Option<Vec<models::ProviderStatus>>,
-    /// The date the claim status information is effective.
+    /// The date the claim status information is effective, formatted as `YYYYMMDD`.
     #[serde(rename = "statusInformationEffectiveDate", skip_serializing_if = "Option::is_none")]
     pub status_information_effective_date: Option<String>,
 }

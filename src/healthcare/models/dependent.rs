@@ -19,7 +19,7 @@ pub struct Dependent {
     pub address: Option<Box<models::RequestSubscriberDependentAddress>>,
     #[serde(rename = "contactInformation", skip_serializing_if = "Option::is_none")]
     pub contact_information: Option<Box<models::ContactInformationSubscriberDependent>>,
-    /// The patient's date of birth
+    /// The patient's date of birth, formatted as `YYYYMMDD`.
     #[serde(rename = "dateOfBirth")]
     pub date_of_birth: String,
     /// The patient's first name.
