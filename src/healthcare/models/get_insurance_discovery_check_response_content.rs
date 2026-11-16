@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GetInsuranceDiscoveryCheckResponseContent {
-    /// The number of potential coverage matches for the patient. This will be `0` if Stedi didn't find any matching coverage.
+    /// The number of potential coverage matches for the patient. This is `0` if Stedi didn't find any matching coverage.
     #[serde(rename = "coveragesFound", skip_serializing_if = "Option::is_none")]
     pub coverages_found: Option<i32>,
     /// A unique ID for this insurance discovery check. You can use it to retrieve the results asynchronously through the [Insurance Discovery Check Results](https://www.stedi.com/docs/healthcare/api-reference/get-insurance-discovery-results) endpoint.
@@ -22,12 +22,12 @@ pub struct GetInsuranceDiscoveryCheckResponseContent {
     /// When a payer rejects your eligibility check, the response contains one or more [`AAA` errors](https://www.stedi.com/docs/healthcare/eligibility-troubleshooting#payer-aaa-errors) that specify the reasons for the rejection and any recommended follow-up actions.  Any errors that occur at the `payer`, `provider`, `subscriber`, or `dependents` levels are also included in this array, allowing you to review all errors in a central location. If there are no `AAA` errors, this array will be empty.
     #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
     pub errors: Option<Vec<models::EligibilityCheckError>>,
-    /// An array of potential coverage matches for the patient. This will only be populated if the insurance discovery check `status` is `COMPLETE`. Each item in the array contains information about a potential match, including the provider, subscriber, payer, and plan information.
+    /// An array of potential coverage matches for the patient. It contains items only when the insurance discovery check `status` is `COMPLETE`. Each item in the array contains information about a potential match, including the provider, subscriber, payer, and plan information.
     #[serde(rename = "items", skip_serializing_if = "Option::is_none")]
     pub items: Option<Vec<models::InsuranceDiscoveryResponseFields>>,
     #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
     pub meta: Option<Box<models::InsuranceDiscoveryMetadata>>,
-    /// The status of the discovery check. This is either `PENDING` or `COMPLETE`.     - If the status is `COMPLETE`, the `items` array will contain any potential coverage matches Stedi found for the patient.     - If the status is `PENDING`, the check is still in progress. You can immediately begin polling the [Insurance Discovery Check Results](https://www.stedi.com/docs/healthcare/api-reference/get-insurance-discovery-results) endpoint to retrieve the results asynchronously.
+    /// The status of the discovery check. This is `PENDING`, `COMPLETE`, or `ERROR`.  - If the status is `COMPLETE`, the `items` array contains any potential coverage matches Stedi found for the patient.  - If the status is `PENDING`, the check is still in progress. You can immediately begin polling the [Insurance Discovery Check Results](https://www.stedi.com/docs/healthcare/api-reference/get-insurance-discovery-results) endpoint to retrieve the results asynchronously.  - If the status is `ERROR`, Stedi wasn't able to complete the insurance discovery check. Stedi returns this status with HTTP `502`, and the `items` array is empty.
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
     pub status: Option<models::DiscoveryStatus>,
     /// Issues with your insurance discovery check that may affect the results. For example, Stedi issues a warning when enrolling with a payer would improve the results for future requests.

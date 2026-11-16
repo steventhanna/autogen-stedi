@@ -19,7 +19,7 @@ pub struct EligibilityRawX12CheckResponseContent {
     /// An identifier for the payer's response.
     #[serde(rename = "controlNumber", skip_serializing_if = "Option::is_none")]
     pub control_number: Option<String>,
-    /// Information about the patient when they are a dependent. When the patient is a dependent, this array will contain a single object with the patient's information. When the patient is a subscriber, or considered to be a subscriber because they have a unique member ID, their information is returned in the `subscriber` object, and this array will be empty.   When present, this object will always include the dependent's name for identification, but many payers will also return the date of birth and other identifying information.
+    /// Information about the patient when they are a dependent. When the patient is a dependent, this array will contain a single object with the patient's information. When the patient is a subscriber, or considered to be a subscriber because they have a unique member ID, their information is returned in the `subscriber` object, and this array will be empty.   When present, this object will always include the dependent's name for identification, but many payers will also return the date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the dependent's full legal name.
     #[serde(rename = "dependents", skip_serializing_if = "Option::is_none")]
     pub dependents: Option<Vec<models::ResponseDependent>>,
     /// An identifier that allows Stedi to group eligibility checks for the same patient into a unified record in the Stedi portal called an [eligibility search](https://www.stedi.com/docs/healthcare/eligibility-views).  This property is for use by Stedi tools only, such as Stedi's MCP server.
@@ -54,7 +54,7 @@ pub struct EligibilityRawX12CheckResponseContent {
     pub status: Option<String>,
     #[serde(rename = "subscriber", skip_serializing_if = "Option::is_none")]
     pub subscriber: Option<Box<models::ResponseSubscriber>>,
-    /// A unique identifier for the eligibility request. It's used to trace the transaction. Stedi always generates a trace number for internal tracking, and the payer may generate one as well. You can also optionally [supply your own trace number](https://www.stedi.com/docs/healthcare/send-eligibility-checks#trn) in a `TRN` segment.  Stedi returns its internal trace number in this array as well as the trace numbers from you and the payer (if provided).
+    /// A unique identifier for the eligibility request. It's used to trace the transaction. Stedi always generates a trace number for internal tracking, and the payer may generate one as well. You can also optionally [supply your own trace number](https://www.stedi.com/docs/healthcare/send-eligibility-checks#trace-number) in a `TRN` segment.  Stedi returns its internal trace number in this array as well as the trace numbers from you and the payer (if provided).
     #[serde(rename = "subscriberTraceNumbers", skip_serializing_if = "Option::is_none")]
     pub subscriber_trace_numbers: Option<Vec<models::SubscriberTraceNumber>>,
     /// An ID for the payer you identified in the original eligibility check request. This value may differ from the `tradingPartnerServiceId` you submitted in the original request because it reflects the payer's internal concept of their ID, not necessarily the ID Stedi uses to route requests to this payer.

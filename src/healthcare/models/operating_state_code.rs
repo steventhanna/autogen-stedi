@@ -11,8 +11,8 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// OperatingStateCode : US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates throughout the entire United States.
-/// US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates throughout the entire United States.
+/// OperatingStateCode : US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates in all 50 U.S. states. Supported territories are listed separately.
+/// US state codes, territories, or `NATIONAL` indicating the geographic regions where a payer operates. When set to `NATIONAL`, the payer operates in all 50 U.S. states. Supported territories are listed separately.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum OperatingStateCode {
     #[serde(rename = "AL")]
@@ -127,6 +127,8 @@ pub enum OperatingStateCode {
     As,
     #[serde(rename = "MP")]
     Mp,
+    #[serde(rename = "FM")]
+    Fm,
     #[serde(rename = "NATIONAL")]
     National,
     /// Any value not defined in the spec (payers may return non-compliant values).
@@ -194,6 +196,7 @@ impl std::fmt::Display for OperatingStateCode {
             Self::Gu => write!(f, "GU"),
             Self::As => write!(f, "AS"),
             Self::Mp => write!(f, "MP"),
+            Self::Fm => write!(f, "FM"),
             Self::National => write!(f, "NATIONAL"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }

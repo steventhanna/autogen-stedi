@@ -11,8 +11,8 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// DeliveryPatternTimeQualifier : The name of the `deliveryPatternTimeCode`.  Payers may sometimes return other non-compliant values.
-/// The name of the `deliveryPatternTimeCode`.  Payers may sometimes return other non-compliant values.
+/// DeliveryPatternTimeQualifier : The name of the `deliveryPatternTimeQualifierCode`. For example, `A.M.`.  Payers may sometimes return other non-compliant values.
+/// The name of the `deliveryPatternTimeQualifierCode`. For example, `A.M.`.  Payers may sometimes return other non-compliant values.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DeliveryPatternTimeQualifier {
     #[serde(rename = "1st Shift (Normal Working Hours)")]

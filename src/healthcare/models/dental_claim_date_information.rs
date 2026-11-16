@@ -13,13 +13,13 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DentalClaimDateInformation {
-    /// The date of the accident related to this claim. Required when `relatedCausesCode` is set to `AA` - Auto Accident or `OA` - Other Accident. Also required when `relatedCausesCode` is set to `EM` - Employment and this claim is the result of an accident.
+    /// The date of the accident related to this claim, formatted as `YYYYMMDD`. Required when `relatedCausesCode` is set to `AA` - Auto Accident or `OA` - Other Accident. Also required when `relatedCausesCode` is set to `EM` - Employment and this claim is the result of an accident.
     #[serde(rename = "accidentDate", skip_serializing_if = "Option::is_none")]
     pub accident_date: Option<String>,
-    /// The date the appliance was placed.
+    /// The date the appliance was placed, formatted as `YYYYMMDD`.
     #[serde(rename = "appliancePlacementDate", skip_serializing_if = "Option::is_none")]
     pub appliance_placement_date: Option<String>,
-    /// The date the repricing entity received the initial claim. Required when a repricer is passing the claim onto the payer.
+    /// The date the repricing entity received the initial claim, formatted as `YYYYMMDD`. Required when a repricer is passing the claim onto the payer.
     #[serde(rename = "repricerReceivedDate", skip_serializing_if = "Option::is_none")]
     pub repricer_received_date: Option<String>,
     /// A single service date or a range of service dates.
