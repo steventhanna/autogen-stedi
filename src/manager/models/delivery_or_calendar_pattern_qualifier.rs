@@ -11,8 +11,8 @@
 use crate::manager::models;
 use serde::{Deserialize, Serialize};
 
-/// DeliveryOrCalendarPatternQualifier : The name of the `deliveryOrCalendarPatternCode`. For example, `Last Working Day of Period`.  Payers may sometimes return other non-compliant values.
-/// The name of the `deliveryOrCalendarPatternCode`. For example, `Last Working Day of Period`.  Payers may sometimes return other non-compliant values.
+/// DeliveryOrCalendarPatternQualifier : The name of the `deliveryOrCalendarPatternQualifierCode`. For example, `Last Working Day of Period`.  Payers may sometimes return other non-compliant values.
+/// The name of the `deliveryOrCalendarPatternQualifierCode`. For example, `Last Working Day of Period`.  Payers may sometimes return other non-compliant values.
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DeliveryOrCalendarPatternQualifier {
     #[serde(rename = "1st Week of the Month")]

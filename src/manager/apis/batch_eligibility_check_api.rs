@@ -24,6 +24,7 @@ pub enum BatchEligibilityChecksError {
     Status403(models::AccessDeniedExceptionResponseContent),
     Status404(models::ResourceNotFoundExceptionResponseContent),
     Status409(models::ResourceConflictExceptionResponseContent),
+    Status429(models::TooManyRequestsExceptionResponseContent),
     Status500(models::InternalFailureExceptionResponseContent),
     UnknownValue(serde_json::Value),
 }
