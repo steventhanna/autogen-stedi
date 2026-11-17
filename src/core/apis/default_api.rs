@@ -1585,7 +1585,7 @@ pub async fn list_execution_transactions(configuration: &configuration::Configur
 }
 
 /// Fetch a list of executions, sorted by the date they were created from newest to oldest.
-pub async fn list_executions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, direction: Option<models::Direction>, fault_code: Option<models::ExecutionFaultCode>, partnership_id: Option<&str>, status: Option<models::ExecutionStatus>, mode: Option<models::ExecutionMode>, from: Option<chrono::DateTime<chrono::FixedOffset>>, to: Option<chrono::DateTime<chrono::FixedOffset>>, display_name: Option<&str>) -> Result<models::ListExecutionsResponseContent, Error<ListExecutionsError>> {
+pub async fn list_executions(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, direction: Option<models::Direction>, fault_code: Option<models::ExecutionFaultCode>, partnership_id: Option<&str>, status: Option<models::ExecutionStatus>, mode: Option<models::ExecutionMode>, from: Option<chrono::DateTime<chrono::FixedOffset>>, to: Option<chrono::DateTime<chrono::FixedOffset>>) -> Result<models::ListExecutionsResponseContent, Error<ListExecutionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
@@ -1596,7 +1596,6 @@ pub async fn list_executions(configuration: &configuration::Configuration, page_
     let p_query_mode = mode;
     let p_query_from = from;
     let p_query_to = to;
-    let p_query_display_name = display_name;
 
     let uri_str = format!("{}/executions", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -1627,9 +1626,6 @@ pub async fn list_executions(configuration: &configuration::Configuration, page_
     }
     if let Some(ref param_value) = p_query_to {
         req_builder = req_builder.query(&[("to", &param_value.to_rfc3339_opts(chrono::SecondsFormat::Secs, true))]);
-    }
-    if let Some(ref param_value) = p_query_display_name {
-        req_builder = req_builder.query(&[("displayName", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

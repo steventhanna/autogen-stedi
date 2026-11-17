@@ -11,7 +11,7 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// EligibilityCheckDependent : Information about the dependent from the eligibility check request. Note that the payer may return the dependent in the subscriber object instead. When present, this object will always include the dependent's name for identification, but many payers also include the date of birth and other identifying information.
+/// EligibilityCheckDependent : Information about the dependent from the eligibility check request. Note that the payer may return the dependent in the subscriber object instead. When present, this object will always include the dependent's name for identification, but many payers also include the date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the dependent's full legal name.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EligibilityCheckDependent {
     /// Additional identifying information for the dependent.
@@ -47,7 +47,7 @@ pub struct EligibilityCheckDependent {
 }
 
 impl EligibilityCheckDependent {
-    /// Information about the dependent from the eligibility check request. Note that the payer may return the dependent in the subscriber object instead. When present, this object will always include the dependent's name for identification, but many payers also include the date of birth and other identifying information.
+    /// Information about the dependent from the eligibility check request. Note that the payer may return the dependent in the subscriber object instead. When present, this object will always include the dependent's name for identification, but many payers also include the date of birth and other identifying information. Some payers truncate names to fit their own technical limits, so the payer may not return the dependent's full legal name.
     pub fn new(name: models::EligibilityCheckQualifiedPersonName) -> EligibilityCheckDependent {
         EligibilityCheckDependent {
             additional_information: None,

@@ -14,22 +14,22 @@ use serde::{Deserialize, Serialize};
 /// DentalServiceLineDateInformation : Identify specific dates related to the service rendered.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DentalServiceLineDateInformation {
-    /// The date the appliance was placed. Required when the orthodontic appliance placement date is different than the date you supplied in `claimInformation.claimDateInformation.appliancePlacementDate`.
+    /// The date the appliance was placed, formatted as `YYYYMMDD`. Required when the orthodontic appliance placement date is different than the date you supplied in `claimInformation.claimDateInformation.appliancePlacementDate`.
     #[serde(rename = "applianceDate", skip_serializing_if = "Option::is_none")]
     pub appliance_date: Option<String>,
-    /// The estimated date when the previous appliance was placed. Either this property or `priorPlacementDate` is required when the `claimInformation.serviceLines[].dentalService.prosthesisCrownOrInlayCode` for this service line is set to `R` for Replacement.
+    /// The estimated date when the previous appliance was placed, formatted as `YYYYMMDD`. Either this property or `priorPlacementDate` is required when the `claimInformation.serviceLines[].dentalService.prosthesisCrownOrInlayCode` for this service line is set to `R` for Replacement.
     #[serde(rename = "estimatedPriorPlacementDate", skip_serializing_if = "Option::is_none")]
     pub estimated_prior_placement_date: Option<String>,
-    /// The exact date when the previous appliance was placed. Either this property or `estimatedPriorPlacementDate` is required when the `claimInformation.serviceLines[].dentalService.prosthesisCrownOrInlayCode` for this service line is set to `R` for Replacement.
+    /// The exact date when the previous appliance was placed, formatted as `YYYYMMDD`. Either this property or `estimatedPriorPlacementDate` is required when the `claimInformation.serviceLines[].dentalService.prosthesisCrownOrInlayCode` for this service line is set to `R` for Replacement.
     #[serde(rename = "priorPlacementDate", skip_serializing_if = "Option::is_none")]
     pub prior_placement_date: Option<String>,
-    /// The date the orthodontic appliance was replaced.
+    /// The date the orthodontic appliance was replaced, formatted as `YYYYMMDD`.
     #[serde(rename = "replacementDate", skip_serializing_if = "Option::is_none")]
     pub replacement_date: Option<String>,
-    /// The date the treatment was completed. If you include this property, **do not** include the `serviceDate` property in this service line.
+    /// The date the treatment was completed, formatted as `YYYYMMDD`. If you include this property, **do not** include the `serviceDate` property in this service line.
     #[serde(rename = "treatmentCompletionDate", skip_serializing_if = "Option::is_none")]
     pub treatment_completion_date: Option<String>,
-    /// The date the treatment began. This may apply to the following scenarios: initial impression or preparation for a crown or denture, reporting initial endontic treatment, or reporting the implant fixture placement. If you include this property, **do not** include the `serviceDate` property in this service line.
+    /// The date the treatment began, formatted as `YYYYMMDD`. This may apply to the following scenarios: initial impression or preparation for a crown or denture, reporting initial endontic treatment, or reporting the implant fixture placement. If you include this property, **do not** include the `serviceDate` property in this service line.
     #[serde(rename = "treatmentStartDate", skip_serializing_if = "Option::is_none")]
     pub treatment_start_date: Option<String>,
 }

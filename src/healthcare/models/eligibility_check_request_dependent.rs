@@ -20,6 +20,9 @@ pub struct EligibilityCheckRequestDependent {
     /// The dependent's address.
     #[serde(rename = "address", skip_serializing_if = "Option::is_none")]
     pub address: Option<Box<models::EligibilityCheckRequestAddress>>,
+    /// The number assigned to each family member born with the same birth date, such as twins or triplets. Use to indicate the birth order when there are multiple births associated with the provided birth date. Requires `relationToSubscriber`; the request is rejected when it is omitted.
+    #[serde(rename = "birthSequenceNumber", skip_serializing_if = "Option::is_none")]
+    pub birth_sequence_number: Option<i32>,
     /// The dependent's date of birth (DOB). We **strongly recommend** including the DOB in your request. Many payers need this information to identify the patient in their system and may immediately return an error when it's not provided.
     #[serde(rename = "dateOfBirth", skip_serializing_if = "Option::is_none")]
     pub date_of_birth: Option<String>,
@@ -43,6 +46,7 @@ impl EligibilityCheckRequestDependent {
         EligibilityCheckRequestDependent {
             additional_information: None,
             address: None,
+            birth_sequence_number: None,
             date_of_birth: None,
             gender: None,
             name: Box::new(name),

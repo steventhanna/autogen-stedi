@@ -19,7 +19,7 @@ pub struct OtherPayerSecondaryIdentifierItem {
     /// The identifier for the other payer who provided this reference number. This is only required when the reference number is provided by the non-destination payer. The value must match the `claimInformation.otherSubscriberInformation[].otherPayerName.otherPayerIdentifier` property.
     #[serde(rename = "otherIdentifier", skip_serializing_if = "Option::is_none")]
     pub other_identifier: Option<String>,
-    /// Set to `2U` - Payer Identification Number, `EI` - Employer Identification Number, `FY` - Claim Office Number, or `NF` - National Association of Insurance Commissioners (NAIC) Code.
+    /// Set to `2U` - Payer Identification Number, `EI` - Employer Identification Number, `FY` - Claim Office Number, or `NF` - National Association of Insurance Commissioners (NAIC) Code.  Only set `qualifier` to `2U` when `otherPayerIdentifierTypeCode` is `XV`.
     #[serde(rename = "qualifier")]
     pub qualifier: String,
 }

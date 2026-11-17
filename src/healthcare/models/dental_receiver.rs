@@ -17,6 +17,9 @@ pub struct DentalReceiver {
     /// The business name of the payer receiving the claim, such as Aetna or Cigna.
     #[serde(rename = "organizationName")]
     pub organization_name: String,
+    /// Set to `PAPER` when you want Stedi to print this claim and mail it to the payer. Omit otherwise. Visit [Submit paper claims](https://www.stedi.com/docs/healthcare/submit-paper-claims) for details.
+    #[serde(rename = "receiverId", skip_serializing_if = "Option::is_none")]
+    pub receiver_id: Option<String>,
 }
 
 impl DentalReceiver {
@@ -24,6 +27,7 @@ impl DentalReceiver {
     pub fn new(organization_name: String) -> DentalReceiver {
         DentalReceiver {
             organization_name,
+            receiver_id: None,
         }
     }
 }
