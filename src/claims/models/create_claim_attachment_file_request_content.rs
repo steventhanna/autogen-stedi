@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// CreateClaimAttachmentFileRequestContent : Request a pre-signed URL to upload a claim attachment file.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CreateClaimAttachmentFileRequestContent {
-    /// The MIME type of the attachment file. For example: `image/png` or `application/pdf`.
+    /// The MIME type of the attachment file. For example: `image/png` or `application/pdf`.  [Paper claims](https://www.stedi.com/docs/healthcare/submit-paper-claims) only support `application/pdf`. Electronic claims support all available content types.
     #[serde(rename = "contentType")]
     pub content_type: models::ContentType,
 }

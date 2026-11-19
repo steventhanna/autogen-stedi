@@ -41,7 +41,7 @@ pub struct EligibilityCheckOutOfPocket {
     /// The locations where providers may deliver healthcare services for this benefit. Common examples include physician offices, hospitals, and patient homes. When present, this indicates facility-specific coverage details.
     #[serde(rename = "placesOfService", skip_serializing_if = "Option::is_none")]
     pub places_of_service: Option<Vec<models::EligibilityCheckPlaceOfService>>,
-    /// The plan coverage description from EB05. Populated when the EB05 value doesn't relate to a plan (e.g., payer used EB05 for benefit-level info rather than a plan name).
+    /// The plan coverage description the payer sent for this benefit entry. Payers typically send the plan name, but some send benefit-level information instead. Stedi omits this property when it matches the plan's `name`. When the plan has no `name`, check this property for the payer's plan information.
     #[serde(rename = "planCoverageDescription", skip_serializing_if = "Option::is_none")]
     pub plan_coverage_description: Option<String>,
     /// Code indicating whether the benefit is subject to prior authorization or certification.  Payers may sometimes return other non-compliant values.

@@ -33,7 +33,7 @@ pub struct InformationClaimStatus {
     /// The description of the `statusInformationActionCode`.
     #[serde(rename = "statusInformationActionCodeValue", skip_serializing_if = "Option::is_none")]
     pub status_information_action_code_value: Option<models::ClaimLevelStatusInformationActionCodeValue>,
-    /// The effective date of the status information.
+    /// The effective date of the status information, formatted as `YYYYMMDD`.
     #[serde(rename = "statusInformationEffectiveDate", skip_serializing_if = "Option::is_none")]
     pub status_information_effective_date: Option<String>,
     /// Additional free-form information about the claim status.
