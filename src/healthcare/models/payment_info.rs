@@ -23,7 +23,7 @@ pub struct PaymentInfo {
     /// Basic claim payment information including amounts and status.
     #[serde(rename = "claimPaymentInfo", skip_serializing_if = "Option::is_none")]
     pub claim_payment_info: Option<Box<models::PaymentInfoClaimPaymentInfo>>,
-    /// The date the claim was received by the payer.
+    /// The date the claim was received by the payer, formatted as `YYYYMMDD`.
     #[serde(rename = "claimReceivedDate", skip_serializing_if = "Option::is_none")]
     pub claim_received_date: Option<String>,
     /// The claim period end date in ISO 8601 format (YYYY-MM-DD). This format is intentionally inconsistent with other date properties to maintain backwards compatibility.
@@ -44,7 +44,7 @@ pub struct PaymentInfo {
     /// Corrected priority payer information.
     #[serde(rename = "correctedPriorityPayer", skip_serializing_if = "Option::is_none")]
     pub corrected_priority_payer: Option<Box<models::CorrectedPriorityPayer>>,
-    /// The expiration date of the patient's coverage.
+    /// The expiration date of the patient's coverage, formatted as `YYYYMMDD`.
     #[serde(rename = "coverageExpirationDate", skip_serializing_if = "Option::is_none")]
     pub coverage_expiration_date: Option<String>,
     /// Crossover carrier information.

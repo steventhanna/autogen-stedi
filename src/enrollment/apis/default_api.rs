@@ -823,13 +823,14 @@ pub async fn list_enrollments(configuration: &configuration::Configuration, page
 }
 
 /// Lists providers with optional filtering and pagination.
-pub async fn list_providers(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, filter: Option<&str>, provider_npis: Option<Vec<String>>, provider_tax_ids: Option<Vec<String>>) -> Result<models::ListProvidersResponseContent, Error<ListProvidersError>> {
+pub async fn list_providers(configuration: &configuration::Configuration, page_size: Option<f64>, page_token: Option<&str>, filter: Option<&str>, provider_npis: Option<Vec<String>>, provider_tax_ids: Option<Vec<String>>, sort_by: Option<Vec<String>>) -> Result<models::ListProvidersResponseContent, Error<ListProvidersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page_size = page_size;
     let p_query_page_token = page_token;
     let p_query_filter = filter;
     let p_query_provider_npis = provider_npis;
     let p_query_provider_tax_ids = provider_tax_ids;
+    let p_query_sort_by = sort_by;
 
     let uri_str = format!("{}/providers", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -853,6 +854,12 @@ pub async fn list_providers(configuration: &configuration::Configuration, page_s
         req_builder = match "multi" {
             "multi" => req_builder.query(&param_value.into_iter().map(|p| ("providerTaxIds".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => req_builder.query(&[("providerTaxIds", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref param_value) = p_query_sort_by {
+        req_builder = match "multi" {
+            "multi" => req_builder.query(&param_value.into_iter().map(|p| ("sortBy".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => req_builder.query(&[("sortBy", &param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
     if let Some(ref user_agent) = configuration.user_agent {

@@ -19,6 +19,9 @@ pub struct ServiceClaimStatus {
     /// The status of the service.
     #[serde(rename = "serviceStatuses", skip_serializing_if = "Option::is_none")]
     pub service_statuses: Option<Vec<models::ServiceLineStatus>>,
+    /// Additional free-form information about the service line status.
+    #[serde(rename = "statusMessage", skip_serializing_if = "Option::is_none")]
+    pub status_message: Option<String>,
 }
 
 impl ServiceClaimStatus {
@@ -26,6 +29,7 @@ impl ServiceClaimStatus {
         ServiceClaimStatus {
             effective_date: None,
             service_statuses: None,
+            status_message: None,
         }
     }
 }

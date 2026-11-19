@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// ExportEnrollmentsCsvResponseContent : Output containing export results. If no enrollments found, downloadUrl and filename will be undefined and recordCount will be 0.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ExportEnrollmentsCsvResponseContent {
-    /// A presigned URL for downloading the generated CSV file from S3. Undefined if no enrollments found.
+    /// A pre-signed URL for downloading the generated CSV file. This URL expires after 15 minutes. Undefined if no enrollments found.
     #[serde(rename = "downloadUrl", skip_serializing_if = "Option::is_none")]
     pub download_url: Option<String>,
     /// The filename of the generated CSV file. Undefined if no enrollments found.

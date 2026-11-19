@@ -17,7 +17,7 @@ pub struct CreateEnrollmentDocumentDownloadResponseContent {
     /// The document ID for the PDF document associated with the `downloadUrl`.
     #[serde(rename = "documentId")]
     pub document_id: String,
-    /// The pre-signed URL to download the document.
+    /// The pre-signed URL to download the document. This URL expires after 15 minutes. To get a new URL, call this endpoint again.
     #[serde(rename = "downloadUrl")]
     pub download_url: String,
 }

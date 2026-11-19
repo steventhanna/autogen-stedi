@@ -14,14 +14,16 @@ use serde::{Deserialize, Serialize};
 /// BenefitsServiceDelivery : The delivery or usage pattern for the benefits.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct BenefitsServiceDelivery {
+    /// The code for the routine shipments, deliveries, or calendar pattern, such as `9` (Last Working Day of Period). This property contains the same code as `deliveryOrCalendarPatternQualifierCode`. For the code's name, use `deliveryOrCalendarPatternQualifier`.  Payers may sometimes return other non-compliant values. This shape is deprecated: Use `deliveryOrCalendarPatternQualifierCode` instead.
     #[serde(rename = "deliveryOrCalendarPatternCode", skip_serializing_if = "Option::is_none")]
-    pub delivery_or_calendar_pattern_code: Option<models::DeliveryOrCalendarPatternQualifier>,
+    pub delivery_or_calendar_pattern_code: Option<models::DeliveryOrCalendarPatternQualifierCode>,
     #[serde(rename = "deliveryOrCalendarPatternQualifier", skip_serializing_if = "Option::is_none")]
     pub delivery_or_calendar_pattern_qualifier: Option<models::DeliveryOrCalendarPatternQualifier>,
     #[serde(rename = "deliveryOrCalendarPatternQualifierCode", skip_serializing_if = "Option::is_none")]
     pub delivery_or_calendar_pattern_qualifier_code: Option<models::DeliveryOrCalendarPatternQualifierCode>,
+    /// The code for the time of routine shipments or deliveries, such as `D` (A.M.). This property contains the same code as `deliveryPatternTimeQualifierCode`. For the code's name, use `deliveryPatternTimeQualifier`.  Payers may sometimes return other non-compliant values. This shape is deprecated: Use `deliveryPatternTimeQualifierCode` instead.
     #[serde(rename = "deliveryPatternTimeCode", skip_serializing_if = "Option::is_none")]
-    pub delivery_pattern_time_code: Option<models::DeliveryPatternTimeQualifier>,
+    pub delivery_pattern_time_code: Option<models::DeliveryPatternTimeQualifierCode>,
     #[serde(rename = "deliveryPatternTimeQualifier", skip_serializing_if = "Option::is_none")]
     pub delivery_pattern_time_qualifier: Option<models::DeliveryPatternTimeQualifier>,
     /// Code specifying the time for routine shipments or deliveries. Visit [Eligibility code lists](https://www.stedi.com/docs/healthcare/eligibility-code-lists#delivery-pattern-time-codes) for a complete list.  Payers may sometimes return other non-compliant values.
