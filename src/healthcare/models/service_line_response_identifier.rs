@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ServiceLineResponseIdentifier {
-    /// A unique identifier for the service line, matching the value provided for the `claimInformation.serviceLines[].providerControlNumber` property in the claim submission. If you didn't provide a value for `providerControlNumber`, this property contains a randomly generated a ULID for the service line.
+    /// A unique identifier for the service line, matching the value provided for the `claimInformation.serviceLines[].providerControlNumber` property in the claim submission. If you didn't provide a value for `providerControlNumber`, this property contains a randomly generated ULID for the service line.
     #[serde(rename = "lineItemControlNumber", skip_serializing_if = "Option::is_none")]
     pub line_item_control_number: Option<String>,
 }

@@ -83,7 +83,7 @@ pub struct EligibilityCheckBenefits {
     /// A list of historical benefits information for the patient.
     #[serde(rename = "priorYearsHistory", skip_serializing_if = "Option::is_none")]
     pub prior_years_history: Option<Vec<models::EligibilityCheckPriorYearsHistory>>,
-    /// A list of reserve benefits for the patient.  This type is primarily used by Medicare (HETS) to indicate lifetime reserve benefit amounts separate from annual limits. For example, Medicare Lifetime Reserve days – the limited pool of additional inpatient hospital days a patient can use after exhausting a benefit period.
+    /// A list of reserve benefits for the patient.  This type is primarily used by Medicare (HETS) to indicate lifetime reserve benefit amounts separate from annual limits. For example, Medicare Lifetime Reserve days - the limited pool of additional inpatient hospital days a patient can use after exhausting a benefit period.
     #[serde(rename = "reserve", skip_serializing_if = "Option::is_none")]
     pub reserve: Option<Vec<models::EligibilityCheckReserve>>,
     /// A list of benefits requiring a second surgical opinion for coverage.  Indicates the plan requires a second surgical opinion before this benefit is available. This is a precondition for obtaining the benefit.

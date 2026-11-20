@@ -23,6 +23,8 @@ pub enum EnrollmentProcessTimeframe {
     Days,
     #[serde(rename = "WEEKS")]
     Weeks,
+    #[serde(rename = "OVER_4_WEEKS")]
+    Over4Weeks,
     /// Any value not defined in the spec (payers may return non-compliant values).
     #[serde(untagged)]
     UnknownValue(String),
@@ -36,6 +38,7 @@ impl std::fmt::Display for EnrollmentProcessTimeframe {
             Self::Hours => write!(f, "HOURS"),
             Self::Days => write!(f, "DAYS"),
             Self::Weeks => write!(f, "WEEKS"),
+            Self::Over4Weeks => write!(f, "OVER_4_WEEKS"),
             Self::UnknownValue(s) => write!(f, "{s}"),
         }
     }

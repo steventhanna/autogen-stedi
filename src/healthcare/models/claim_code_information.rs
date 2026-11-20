@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// ClaimCodeInformation : Supply information specific to hospital claims, such as the priority of the admission.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ClaimCodeInformation {
-    /// Code indicating the source of the admission, such as the emergency room (ER), a doctor’s referral, or another facility.  This code is **required** for all institutional claims except when the `claimInformation.placeOfServiceCode` is set to `14` (Non-Patient Laboratory). Stedi rejects claims that don't meet this requirement [Full code list](https://med.noridianmedicare.com/web/jea/topics/claim-submission/point-of-origin-codes).
+    /// Code indicating the source of the admission, such as the emergency room (ER), a doctor's referral, or another facility.  This code is **required** for all institutional claims except when the `claimInformation.placeOfServiceCode` is set to `14` (Non-Patient Laboratory). Stedi rejects claims that don't meet this requirement [Full code list](https://med.noridianmedicare.com/web/jea/topics/claim-submission/point-of-origin-codes).
     #[serde(rename = "admissionSourceCode", skip_serializing_if = "Option::is_none")]
     pub admission_source_code: Option<String>,
     /// The code indicating the priority of the admission.

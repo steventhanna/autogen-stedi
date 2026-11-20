@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ClaimStatusRequestContent {
-    /// Stedi generates a control number for each claim status check, so you don’t need to include this property in your request.
+    /// Stedi generates a control number for each claim status check, so you don't need to include this property in your request.
     #[serde(rename = "controlNumber", skip_serializing_if = "Option::is_none")]
     pub control_number: Option<String>,
     /// Information about the dependent listed in the referenced claim. You must submit the dependent's `firstName`, `lastName`, `dateOfBirth`, and `gender` (if known). If the claim set the dependent's gender to `U` for unknown, you should omit the `gender` property.
@@ -21,7 +21,7 @@ pub struct ClaimStatusRequestContent {
     pub dependent: Option<Box<models::Member>>,
     #[serde(rename = "encounter", skip_serializing_if = "Option::is_none")]
     pub encounter: Option<Box<models::ClaimStatusEncounter>>,
-    /// Information about the billing provider and (optionally) service providers related to the referenced claim.   - Exactly one billing provider is **required** in this array. Requests that include only a service provider are rejected with a `400` error.   - For each provider, you must set the `providerType` and one of the following identifiers: `npi`, `taxId`, or `etin`.   - When the `providerType` = `BillingProvider`, we recommend setting `etin` as the identifier.
+    /// Information about the billing provider and (optionally) service providers related to the referenced claim.   - Exactly one billing provider is **required** in this array. Requests that include only a service provider are rejected with a `400` error.   - For each provider, you must set the `providerType` and one of the following identifiers: `npi`, `taxId`, or `etin`.   - We recommend omitting the provider's name. If omitted, Stedi uses the name associated with the provider's `npi` record in the National Plan and Provider Enumeration System (NPPES). This applies to the `ServiceProvider`, or to the `BillingProvider` when there's no `ServiceProvider`. We only recommend explicitly setting the provider name if you believe that the provider name on file with the payer differs from the provider name in NPPES.   - When the `providerType` = `BillingProvider`, we recommend setting `etin` as the identifier.
     #[serde(rename = "providers")]
     pub providers: Vec<models::StatusRequestProvider>,
     #[serde(rename = "serviceLineInformation", skip_serializing_if = "Option::is_none")]

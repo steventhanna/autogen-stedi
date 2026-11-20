@@ -19,7 +19,7 @@ pub struct InstitutionalProvidersObject {
     /// The provider's contact information. Only applies to the billing provider. You must include at least one communication method (phone, fax, or email) in this object.
     #[serde(rename = "contactInformation", skip_serializing_if = "Option::is_none")]
     pub contact_information: Option<Box<models::InstitutionalContactInformation>>,
-    /// The provider's employer ID, also known as an EIN or TIN. Must be a string of exactly nine numbers with no separators. This is **required** for the billing provider, and doesn’t apply to other provider types.
+    /// The provider's employer ID, also known as an EIN or TIN. Must be a string of exactly nine numbers with no separators. This is **required** for the billing provider, and doesn't apply to other provider types.
     #[serde(rename = "employerId", skip_serializing_if = "Option::is_none")]
     pub employer_id: Option<String>,
     /// The provider's first name.

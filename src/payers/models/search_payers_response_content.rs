@@ -11,7 +11,7 @@
 use crate::payers::models;
 use serde::{Deserialize, Serialize};
 
-/// SearchPayersResponseContent : Authenticated output — see `SearchPayers`.
+/// SearchPayersResponseContent : Authenticated output - see `SearchPayers`.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SearchPayersResponseContent {
     /// Matching payers sorted by relevance, with the most relevant matches listed first.
@@ -26,7 +26,7 @@ pub struct SearchPayersResponseContent {
 }
 
 impl SearchPayersResponseContent {
-    /// Authenticated output — see `SearchPayers`.
+    /// Authenticated output - see `SearchPayers`.
     pub fn new(items: Vec<models::SearchResult>, stats: models::SearchResultsStats) -> SearchPayersResponseContent {
         SearchPayersResponseContent {
             items,

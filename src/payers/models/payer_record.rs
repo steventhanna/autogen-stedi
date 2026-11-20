@@ -40,10 +40,10 @@ pub struct PayerRecord {
     /// A list of US state codes, territories, or `NATIONAL` that indicates the geographic regions where this payer operates. For example: `[\"CA\", \"OR\"]` for a regional payer, or `[\"NATIONAL\"]` for a payer that operates in all 50 U.S. states. Supported territories are listed separately.  When this array isn't in the response, it means Stedi hasn't classified the payer's operating states yet.
     #[serde(rename = "operatingStates", skip_serializing_if = "Option::is_none")]
     pub operating_states: Option<Vec<models::OperatingStateCode>>,
-    /// The identifier for the corporate or brand group to which the payer belongs. The parent payer group is organizational metadata only – it doesn't affect routing, enrollment, or transaction support. Payers sharing a parent payer group may have different enrollment processes or other behaviors. This property is only returned when the payer has a parent payer group.
+    /// The identifier for the corporate or brand group to which the payer belongs. The parent payer group is organizational metadata only - it doesn't affect routing, enrollment, or transaction support. Payers sharing a parent payer group may have different enrollment processes or other behaviors. This property is only returned when the payer has a parent payer group.
     #[serde(rename = "parentPayerGroupId", skip_serializing_if = "Option::is_none")]
     pub parent_payer_group_id: Option<String>,
-    /// The name of the corporate or brand group to which the payer belongs. The parent payer group is organizational metadata only – it doesn't affect routing, enrollment, or transaction support. Payers sharing a parent payer group may have different enrollment processes or other behaviors. This property is only returned when the payer has a parent payer group.
+    /// The name of the corporate or brand group to which the payer belongs. The parent payer group is organizational metadata only - it doesn't affect routing, enrollment, or transaction support. Payers sharing a parent payer group may have different enrollment processes or other behaviors. This property is only returned when the payer has a parent payer group.
     #[serde(rename = "parentPayerGroupName", skip_serializing_if = "Option::is_none")]
     pub parent_payer_group_name: Option<String>,
     /// The most commonly used ID for a payer. This value often corresponds to the name the payer uses internally and provides to patients on member ID cards.

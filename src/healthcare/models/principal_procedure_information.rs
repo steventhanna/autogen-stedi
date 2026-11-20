@@ -16,7 +16,7 @@ pub struct PrincipalProcedureInformation {
     /// The principal procedure code for the patient. It must be a valid code from the appropriate coding system. **Don't** submit the decimal for ICD codes; the decimal is implied.
     #[serde(rename = "principalProcedureCode")]
     pub principal_procedure_code: String,
-    /// The date when the procedure was performed.
+    /// The date when the procedure was performed, formatted as `YYYYMMDD`.
     #[serde(rename = "principalProcedureDate", skip_serializing_if = "Option::is_none")]
     pub principal_procedure_date: Option<String>,
     #[serde(rename = "qualifierCode")]
