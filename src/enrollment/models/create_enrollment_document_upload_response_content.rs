@@ -20,7 +20,7 @@ pub struct CreateEnrollmentDocumentUploadResponseContent {
     /// The enrollment ID for the transaction enrollment request associated with the PDF document.
     #[serde(rename = "enrollmentId")]
     pub enrollment_id: String,
-    /// The pre-signed URL you can use to upload the PDF document. This URL expires after 24 hours.
+    /// The pre-signed URL you can use to upload the PDF document. This URL expires after 15 minutes. To get a new URL, call this endpoint again.
     #[serde(rename = "uploadUrl")]
     pub upload_url: String,
 }

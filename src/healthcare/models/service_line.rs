@@ -44,7 +44,7 @@ pub struct ServiceLine {
     pub durable_medical_equipment_certification: Option<Box<models::DurableMedicalEquipmentCertification>>,
     #[serde(rename = "durableMedicalEquipmentService", skip_serializing_if = "Option::is_none")]
     pub durable_medical_equipment_service: Option<Box<models::DurableMedicalEquipmentService>>,
-    /// Used to send additional data specifically requested by the payer. Not commonly used.
+    /// Additional service line information that doesn't fit in any other property, such as the state whose laws govern the claim. Only include it when a payer or regulation requires it. Use an X12-approved format, such as:  - `LU` followed by a two-letter state code, such as `LUNY`: The state whose laws govern the claim.  - `ORIGN4` followed by the original package's 10- or 11-digit National Drug Code (NDC): (Professional claims only) The original NDC for a repackaged drug.  - `MAHSN20` or `MAHSN100`: (Professional claims only) Massachusetts Health Safety Net claims.  - `DRC` followed by a single digit: (Dental claims only) The patient's Dental Readiness Classification, for active-duty service members.  Stedi typically rejects claims with values in other formats on a service line, unless the `claimInformation.claimFilingCode` is `15` (Indemnity Insurance), `AM` (Automobile Medical), `DS` (Disability), `LM` (Liability Medical), or `WC` (Workers' Compensation Health Claim). The approved formats can change, and some payers or states have their own requirements.
     #[serde(rename = "fileInformation", skip_serializing_if = "Option::is_none")]
     pub file_information: Option<Vec<String>>,
     /// Use this object to attach standardized supplemental information to the claim when required by the payer. One example is payer documentation requirements for home health services.
@@ -89,10 +89,10 @@ pub struct ServiceLine {
     /// Sales tax, formatted as a decimal. When you include this property, the total `lineItemChargeAmount` for this service line must include this sales tax value.
     #[serde(rename = "salesTaxAmount", skip_serializing_if = "Option::is_none")]
     pub sales_tax_amount: Option<String>,
-    /// The date the service was rendered (for services performed on a single day). When you send this property with `serviceDateEnd`, it will be used as the start date for the date range in which the service was rendered.
+    /// The date the service was rendered (for services performed on a single day), formatted as `YYYYMMDD`. When you send this property with `serviceDateEnd`, it will be used as the start date for the date range in which the service was rendered.
     #[serde(rename = "serviceDate")]
     pub service_date: String,
-    /// The end date of the service period. If you send this property, you must also send `serviceDate`.
+    /// The end date of the service period, formatted as `YYYYMMDD`. If you send this property, you must also send `serviceDate`.
     #[serde(rename = "serviceDateEnd", skip_serializing_if = "Option::is_none")]
     pub service_date_end: Option<String>,
     /// Information about where the services were rendered. This can be healthcare facilities, such as surgical centers or reference labs, OR the patient's address when services were rendered in their home.   - Only include this object when the service facility location is **different** from the billing provider's address. If you include this object when the address is the same, Stedi omits all of the service facility location information from the claim submission, including the name and any identifiers.   - For telehealth services, the service facility location is the provider's address, even though the patient may have been in their home or elsewhere when receiving services.   - Don't use this object when reporting ambulance services - use `ambulancePickupLocation` and `ambulanceDropoffLocation` instead.   - Sometimes the billing provider is an actual physician group that is located at the same address as a hospital, but is in fact a separate entity. In this case, you can differentiate the service facility location by including the specific suite or building number of the physician group. This ensures that the service facility location is different from the billing provider's address and is reported accurately.

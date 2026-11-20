@@ -11,7 +11,7 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// ClaimsWarning : Warnings indicate issues that may cause some payers to reject the claim. Stedi doesn’t reject claims with warnings only - a response with warnings but no errors means Stedi still submitted the claim.  If you receive warnings, we recommend closely monitoring 277CA responses from the payer for rejections. If the claim is rejected, we recommend fixing the issues identified in the warnings before resubmitting.
+/// ClaimsWarning : Warnings indicate issues that may cause some payers to reject the claim. Stedi doesn't reject claims with warnings only - a response with warnings but no errors means Stedi still submitted the claim.  If you receive warnings, we recommend closely monitoring 277CA responses from the payer for rejections. If the claim is rejected, we recommend fixing the issues identified in the warnings before resubmitting.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ClaimsWarning {
     /// A machine-readable code indicating the type of problem.
@@ -23,7 +23,7 @@ pub struct ClaimsWarning {
 }
 
 impl ClaimsWarning {
-    /// Warnings indicate issues that may cause some payers to reject the claim. Stedi doesn’t reject claims with warnings only - a response with warnings but no errors means Stedi still submitted the claim.  If you receive warnings, we recommend closely monitoring 277CA responses from the payer for rejections. If the claim is rejected, we recommend fixing the issues identified in the warnings before resubmitting.
+    /// Warnings indicate issues that may cause some payers to reject the claim. Stedi doesn't reject claims with warnings only - a response with warnings but no errors means Stedi still submitted the claim.  If you receive warnings, we recommend closely monitoring 277CA responses from the payer for rejections. If the claim is rejected, we recommend fixing the issues identified in the warnings before resubmitting.
     pub fn new() -> ClaimsWarning {
         ClaimsWarning {
             code: None,

@@ -23,13 +23,13 @@ pub struct PaymentInfo {
     /// Basic claim payment information including amounts and status.
     #[serde(rename = "claimPaymentInfo", skip_serializing_if = "Option::is_none")]
     pub claim_payment_info: Option<Box<models::PaymentInfoClaimPaymentInfo>>,
-    /// The date the claim was received by the payer.
+    /// The date the claim was received by the payer, formatted as `YYYYMMDD`.
     #[serde(rename = "claimReceivedDate", skip_serializing_if = "Option::is_none")]
     pub claim_received_date: Option<String>,
     /// The claim period end date in ISO 8601 format (YYYY-MM-DD). This format is intentionally inconsistent with other date properties to maintain backwards compatibility.
     #[serde(rename = "claimStatementPeriodEnd", skip_serializing_if = "Option::is_none")]
     pub claim_statement_period_end: Option<String>,
-    /// The claim period start date in ISO 8601 format (YYYY-MM-DD). This format is intentionally inconsistent with other date properties to maintain backwards compatibility.  If the response doesn’t include a `claimStatementPeriodEnd`, you should assume the end date is the same as the start date.
+    /// The claim period start date in ISO 8601 format (YYYY-MM-DD). This format is intentionally inconsistent with other date properties to maintain backwards compatibility.  If the response doesn't include a `claimStatementPeriodEnd`, you should assume the end date is the same as the start date.
     #[serde(rename = "claimStatementPeriodStart", skip_serializing_if = "Option::is_none")]
     pub claim_statement_period_start: Option<String>,
     /// Supplemental information about the claim.
@@ -44,7 +44,7 @@ pub struct PaymentInfo {
     /// Corrected priority payer information.
     #[serde(rename = "correctedPriorityPayer", skip_serializing_if = "Option::is_none")]
     pub corrected_priority_payer: Option<Box<models::CorrectedPriorityPayer>>,
-    /// The expiration date of the patient's coverage.
+    /// The expiration date of the patient's coverage, formatted as `YYYYMMDD`.
     #[serde(rename = "coverageExpirationDate", skip_serializing_if = "Option::is_none")]
     pub coverage_expiration_date: Option<String>,
     /// Crossover carrier information.

@@ -17,7 +17,7 @@ pub struct DentalOtherPayerName {
     /// The payer's address.
     #[serde(rename = "otherPayerAddress", skip_serializing_if = "Option::is_none")]
     pub other_payer_address: Option<Box<models::ClaimsAddress>>,
-    /// The date the other payer adjudicated the claim. Required when this payer has previously adjudicated the claim and you aren’t including a value for `LineAdjudicationInformation.adjudicationOrPaymentDate`.
+    /// The date the other payer adjudicated the claim. Required when this payer has previously adjudicated the claim and you aren't including a value for `LineAdjudicationInformation.adjudicationOrPaymentDate`.
     #[serde(rename = "otherPayerAdjudicationOrPaymentDate", skip_serializing_if = "Option::is_none")]
     pub other_payer_adjudication_or_payment_date: Option<String>,
     /// The only valid value is `true`. Required when Required when the claim is being sent in the payer-to-payer COB model AND the destination payer is secondary to this payer AND this payer has re-adjudicated the claim.

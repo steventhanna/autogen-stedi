@@ -11,7 +11,7 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// CobEncounter : Information about the encounter. - You can submit COB checks with the `30` service type code for Health Benefit Plan Coverage. This is the broadest service type code that covers all medical services and subtypes included in the patient’s health plan. - The service dates you provide **must** be within the past 2 years. COB checks don't support requests with dates outside of this range. - Don't send service dates that are in the future. Future service dates typically result in errors from the payer. - If you don't specify a service date (either a single day or a range of dates), Stedi defaults to using the current date.
+/// CobEncounter : Information about the encounter. - You can submit COB checks with the `30` service type code for Health Benefit Plan Coverage. This is the broadest service type code that covers all medical services and subtypes included in the patient's health plan. - The service dates you provide **must** be within the past 2 years. COB checks don't support requests with dates outside of this range. - Don't send service dates that are in the future. Future service dates typically result in errors from the payer. - If you don't specify a service date (either a single day or a range of dates), Stedi defaults to using the current date.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CobEncounter {
     /// The beginning date of service. If you include this value, you must also include the `endDateOfService`.
@@ -28,7 +28,7 @@ pub struct CobEncounter {
 }
 
 impl CobEncounter {
-    /// Information about the encounter. - You can submit COB checks with the `30` service type code for Health Benefit Plan Coverage. This is the broadest service type code that covers all medical services and subtypes included in the patient’s health plan. - The service dates you provide **must** be within the past 2 years. COB checks don't support requests with dates outside of this range. - Don't send service dates that are in the future. Future service dates typically result in errors from the payer. - If you don't specify a service date (either a single day or a range of dates), Stedi defaults to using the current date.
+    /// Information about the encounter. - You can submit COB checks with the `30` service type code for Health Benefit Plan Coverage. This is the broadest service type code that covers all medical services and subtypes included in the patient's health plan. - The service dates you provide **must** be within the past 2 years. COB checks don't support requests with dates outside of this range. - Don't send service dates that are in the future. Future service dates typically result in errors from the payer. - If you don't specify a service date (either a single day or a range of dates), Stedi defaults to using the current date.
     pub fn new() -> CobEncounter {
         CobEncounter {
             beginning_date_of_service: None,

@@ -11,7 +11,7 @@
 use crate::healthcare::models;
 use serde::{Deserialize, Serialize};
 
-/// EligibilityCheckReserve : Benefits the payer holds in reserve for the patient. This type is primarily used by Medicare (HETS) to indicate lifetime reserve benefit amounts separate from annual limits. For example, Medicare Lifetime Reserve days – the limited pool of additional inpatient hospital days a patient can use after exhausting a benefit period.
+/// EligibilityCheckReserve : Benefits the payer holds in reserve for the patient. This type is primarily used by Medicare (HETS) to indicate lifetime reserve benefit amounts separate from annual limits. For example, Medicare Lifetime Reserve days - the limited pool of additional inpatient hospital days a patient can use after exhausting a benefit period.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EligibilityCheckReserve {
     /// Additional plan, group, and policy identification numbers for this benefit entry.
@@ -44,7 +44,7 @@ pub struct EligibilityCheckReserve {
     /// The locations where providers may deliver healthcare services for this benefit. Common examples include physician offices, hospitals, and patient homes. When present, this indicates facility-specific coverage details.
     #[serde(rename = "placesOfService", skip_serializing_if = "Option::is_none")]
     pub places_of_service: Option<Vec<models::EligibilityCheckPlaceOfService>>,
-    /// The plan coverage description from EB05. Populated when the EB05 value doesn't relate to a plan (e.g., payer used EB05 for benefit-level info rather than a plan name).
+    /// The plan coverage description the payer sent for this benefit entry. Payers typically send the plan name, but some send benefit-level information instead. Stedi omits this property when it matches the plan's `name`. When the plan has no `name`, check this property for the payer's plan information.
     #[serde(rename = "planCoverageDescription", skip_serializing_if = "Option::is_none")]
     pub plan_coverage_description: Option<String>,
     /// Code indicating whether the benefit is subject to prior authorization or certification.  Payers may sometimes return other non-compliant values.
@@ -62,7 +62,7 @@ pub struct EligibilityCheckReserve {
 }
 
 impl EligibilityCheckReserve {
-    /// Benefits the payer holds in reserve for the patient. This type is primarily used by Medicare (HETS) to indicate lifetime reserve benefit amounts separate from annual limits. For example, Medicare Lifetime Reserve days – the limited pool of additional inpatient hospital days a patient can use after exhausting a benefit period.
+    /// Benefits the payer holds in reserve for the patient. This type is primarily used by Medicare (HETS) to indicate lifetime reserve benefit amounts separate from annual limits. For example, Medicare Lifetime Reserve days - the limited pool of additional inpatient hospital days a patient can use after exhausting a benefit period.
     pub fn new(coverage_level: models::EligibilityCheckCoverageLevel) -> EligibilityCheckReserve {
         EligibilityCheckReserve {
             additional_information: None,

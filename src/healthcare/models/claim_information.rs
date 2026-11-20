@@ -57,7 +57,7 @@ pub struct ClaimInformation {
     /// Required when condition information applies to the claim. You can include up to 24 codes in the array. Visit the National Uniform Claim Committee for a complete list of possible [condition codes](https://www.nucc.org/index.php/code-sets-mainmenu-41/condition-codes-mainmenu-38).
     #[serde(rename = "conditionInformation", skip_serializing_if = "Option::is_none")]
     pub condition_information: Option<Vec<models::ConditionInformation>>,
-    /// The patient's date of death.
+    /// The patient's date of death, formatted as `YYYYMMDD`.
     #[serde(rename = "deathDate", skip_serializing_if = "Option::is_none")]
     pub death_date: Option<String>,
     #[serde(rename = "delayReasonCode", skip_serializing_if = "Option::is_none")]
@@ -68,7 +68,7 @@ pub struct ClaimInformation {
     /// Please use the `fileInformationList` array instead.
     #[serde(rename = "fileInformation", skip_serializing_if = "Option::is_none")]
     pub file_information: Option<String>,
-    /// An array of additional information items the payer requested. Not commonly used.
+    /// Additional claim information that doesn't fit in any other property, such as the state whose laws govern the claim. Only include it when a payer or regulation requires it. Use an X12-approved format, such as:  - `LU` followed by a two-letter state code, such as `LUNY`: The state whose laws govern the claim.  - `ORIGN4` followed by the original package's 10- or 11-digit National Drug Code (NDC): (Professional claims only) The original NDC for a repackaged drug.  - `MAHSN20` or `MAHSN100`: (Professional claims only) Massachusetts Health Safety Net claims.  - `DRC` followed by a single digit: (Dental claims only) The patient's Dental Readiness Classification, for active-duty service members.  Stedi typically rejects claims with values in other formats, unless the `claimInformation.claimFilingCode` is `15` (Indemnity Insurance), `AM` (Automobile Medical), `DS` (Disability), `LM` (Liability Medical), or `WC` (Workers' Compensation Health Claim). The approved formats can change, and some payers or states have their own requirements.
     #[serde(rename = "fileInformationList", skip_serializing_if = "Option::is_none")]
     pub file_information_list: Option<Vec<String>>,
     /// Details about the patient's healthcare diagnosis.   - Use `ABK` as the type for the principal diagnosis code and `ABF` for any other diagnosis codes you include.   - One `ABK` code is required as the first object, and then you can submit up to 11 `ABF` codes as needed. If you need to submit more codes than this, you must create additional, separate claims.

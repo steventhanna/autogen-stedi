@@ -38,7 +38,7 @@ pub struct ProfessionalClaimSubmissionServiceLine {
     /// **[CMS-1500 Box 24f]** The charge for this service line, including the provider's base charge and any applicable tax or postage. It is acceptable to set this to `0` (zero).
     #[serde(rename = "lineItemChargeAmount")]
     pub line_item_charge_amount: String,
-    /// A control number you assign to this service line for your own tracking. Each must be unique within the claim. If you don't set it, Stedi sets it for you – a random ULID.
+    /// A control number you assign to this service line for your own tracking. Each must be unique within the claim. If you don't set it, Stedi sets it for you - a random ULID.
     #[serde(rename = "lineItemControlNumber", skip_serializing_if = "Option::is_none")]
     pub line_item_control_number: Option<String>,
     /// **[CMS-1500 Box 24]** A free-text description that clarifies the procedure code and any modifiers. Provide when billing an unspecified or unlisted procedure code.
